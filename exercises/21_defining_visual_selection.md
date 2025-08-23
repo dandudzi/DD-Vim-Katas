@@ -6,6 +6,7 @@ There are 3 visual modes:
 `V` - linewise
 
 `gv` - reselect last visual mode
+`o` - redefine start selection
 
 Practice those on this block of text:
 
@@ -14,4 +15,3 @@ This is some text.
 Another one is right here.
 Here is more and more text.
 ```
-
