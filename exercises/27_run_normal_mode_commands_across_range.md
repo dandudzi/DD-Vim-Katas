@@ -3,11 +3,11 @@
 There is a block of text like this:
 
 ```javascript
-var foo = 1
-var bar = 'a'
-var baz = 'z'
-var foobar = foo + bar
-var foobarbaz = foo + bar + baz
+var foo = 1;
+var bar = "a";
+var baz = "z";
+var foobar = foo + bar;
+var foobarbaz = foo + bar + baz;
 ```
 
 `A;<Esc>` - Add semicolon to the end of first line

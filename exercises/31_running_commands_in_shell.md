@@ -1,6 +1,8 @@
 ### Running commands in shell
 
 1. Combine two commands with one shell execution:
+   `term` - opens terminal
+   `exit` - close terminal
 
 `:write !sh` - will write this file (a vim command) and start a shell
 

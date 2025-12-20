@@ -5,10 +5,10 @@ Look at this HTML sample:
 ```html
 <!DOCTYPE html>
 <html>
-  <head><title>Practical Vim</title></head>
-  <body>
-    <h1>Practical Vim</h1>
-  </body>
+  <head>
+    <title>Practical Vim</title>
+  </head>
+  <body></body>
 </html>
 ```
 

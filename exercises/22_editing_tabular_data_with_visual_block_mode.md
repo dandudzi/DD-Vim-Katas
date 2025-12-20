@@ -3,11 +3,10 @@
 Change this text:
 
 ```
-Chapter        |Page
-====================
-Normal Mode    |  15
-Insert Mode    |  31
-Visual Mode    |  44
+Chapter             Page
+Normal Mode           15
+Insert Mode           31
+Visual Mode           44
 ```
 
 Make it look like this

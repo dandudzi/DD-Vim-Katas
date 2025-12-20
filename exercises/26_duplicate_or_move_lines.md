@@ -5,7 +5,8 @@ Given this text:
 ```
 Shopping list
     Hardware store
-        Buy new hammer
+        Buy nail polish remover
+    Beauty parlor
     Beauty parlor
         Buy nail polish remover
         Buy nails
@@ -22,3 +23,7 @@ Start at 'H' on line 7
 `:11m$` - move line 11 to the end of the file
 Visual select 2 lines
 `:'<,'>m$` move the selected lines to the end of the file
+Beauty parlor
+Beauty parlor
+Buy nails
+Buy new hammer
