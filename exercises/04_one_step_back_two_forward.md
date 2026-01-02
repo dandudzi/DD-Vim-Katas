@@ -19,4 +19,4 @@ Steps:
 3. Type `+`
 4. Leave insert mode
 5. find the next "+" with `;`
-6. Repeat with `.`
+6. Repeat with `.`safdsadf
