@@ -3,7 +3,7 @@
 Change this text:
 
 ```javascript
-var foo = "method(" + argument1 + "," + argument2 + ")";
+var foo = "method("+argument1+","+argument2+")";
 ```
 
 to this:
@@ -16,7 +16,7 @@ Steps:
 
 1. find "+" with `f+`
 2. delete and switch to insert mode with `cl`
-3. Type `+`
+3. Type ` + `
 4. Leave insert mode
 5. find the next "+" with `;`
 6. Repeat with `.`safdsadf

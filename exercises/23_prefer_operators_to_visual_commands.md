@@ -3,9 +3,9 @@
 Change the text in the tags to be upper-case.
 
 ```html
-<a href="#">ONE</a>
-<a href="#">TWO</a>
-<a href="#">THREE</a>
+<a href="#">one</a>
+<a href="#">two</a>
+<a href="#">three</a>
 ```
 
 `{start}` - on the first line, first char

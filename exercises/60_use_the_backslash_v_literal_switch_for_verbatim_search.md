@@ -15,3 +15,5 @@ General rule:
 If you search for a regular expression use the `\v`, if you want to search for
 verbatim text, use the `\V` switch.
 
+`\1-9` - contains grouping in matching then we can use those in subtitution
+`\_s` - match white space or line break
