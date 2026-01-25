@@ -13,5 +13,7 @@ will pay off.
 `N` - go to the previous result - it always goes in the opposite direction
 `/<CR>` - will execute the last search forward
 `?<CR>` - will execute the last search backwards
+`gn/N` - enter visual mode with matching string
+`*` - search for word under the cursor
 
 Use the "Up" button to browse search history.

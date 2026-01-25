@@ -1,6 +1,8 @@
-###  Create complex patterns by iterating upon search history
+### Create complex patterns by iterating upon search history
 
 Change the single quotes to double quotes.
+
+``:%s/content/copy/gc` - gc allows to apply only to some of the matches the change
 
 ```
 This string contains a "quoted" word.
