@@ -1,8 +1,10 @@
+### Delete word and end of line
+
 this is something to delete
 this is something to delete
 this is something to delete
 this is something to delete
-this is somethinto delete
+this is something to delete
 
 `daw` delete word with whitespaces
 `diw` delete only word

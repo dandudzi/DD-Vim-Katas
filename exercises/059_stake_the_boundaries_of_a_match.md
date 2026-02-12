@@ -10,7 +10,7 @@ Practical Vim is really a great book.
 `/Practical Vim<CR>` - will match the word "Practical Vim"
 `/Practical \zsVim<CR>` - will match the "Vim" from the matches
 
-```test
+```text
 Match "quoted words" not quote marks.
 ```
 

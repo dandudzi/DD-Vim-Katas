@@ -13,6 +13,10 @@ This is the “read it, then instantly go back” workflow.
 
 ---
 
+### 2) Practice file
+
+Use the companion file `practice_073_practice_file.ts` in this directory to practice these drills.
+
 ### 3) Step-by-step: how to practice
 
 #### Drill A — Jump to a function definition and back

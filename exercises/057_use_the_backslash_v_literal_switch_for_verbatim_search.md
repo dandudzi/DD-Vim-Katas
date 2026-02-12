@@ -1,4 +1,4 @@
-### Use the \v literal switch for verbatim search
+### Use the \V literal switch for verbatim search
 
 Use this excerpt of text:
 

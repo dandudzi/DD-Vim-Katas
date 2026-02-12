@@ -1,4 +1,4 @@
-This is the text to proactice
+This is the text to practice
 different surroundings
 to let it go with different motions
 [sadfasj daja] {asdfasdfasf}

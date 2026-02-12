@@ -11,7 +11,7 @@ Some of the lines use capital letter, `~` would just switch casing, we need to u
 
 This is what is should look like after your changes:
 
-```test
+```text
 1) One
 2) Two
 3) Three

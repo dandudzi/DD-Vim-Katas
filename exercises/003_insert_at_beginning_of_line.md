@@ -3,9 +3,9 @@
 Change this text:
 
 ```javascript
-var foo = 1;
-var bar = "a";
-var foobar = foo + bar;
+foo = 1;
+bar = "a";
+foobar = foo + bar;
 ```
 
 to this:
@@ -18,4 +18,4 @@ var foobar = foo + bar;
 
 Use `I` to insert at the beginning of line.
 
-Add ';' to the beginning of these lines using `I`!
+Add 'var ' to the beginning of these lines using `I`, then repeat with `j.`!
