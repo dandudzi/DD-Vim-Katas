@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Repo Is
 
-A collection of 89 Vim/Neovim practice exercises ("katas") forked from `adomokos/Vim-Katas`. Each exercise is a standalone markdown file in `exercises/` that teaches a specific Vim skill through guided drills.
+A collection of 110 Vim/Neovim practice exercises ("katas") forked from `adomokos/Vim-Katas`. Each exercise is a standalone markdown file in `exercises/` that teaches a specific Vim skill through guided drills.
 
 ## Structure
 
-- `exercises/` — Numbered markdown files (`001_` through `089_`), each covering one Vim concept (motions, text objects, macros, registers, visual mode, search, etc.)
+- `exercises/` — Numbered markdown files (`001_` through `110_`), each covering one Vim concept (motions, text objects, macros, registers, visual mode, search, etc.)
 - Some exercises reference companion practice files (e.g., `practice_076_practice_file.ts`)
 
 ## No Build/Test/Lint
