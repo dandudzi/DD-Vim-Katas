@@ -10,7 +10,7 @@ Let's say we recorded this macro:
 ```
 
 `qa` - record in "a" register
-`0f.r)w~` - replace "." with ")" and tile-case word
+`0f.r)w~` - replace "." with ")" and title-case word
 `q` - quit recording macro
 
 We forgot adding the "j" to move to the next line.

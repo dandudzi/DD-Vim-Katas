@@ -88,7 +88,7 @@ Goal: comment out `formatInvoice(...)` (and only that function).
 Goal: comment out only `checkout(...)` inside `CheckoutService`.
 
 1. Start again from an uncommented state (use `u` until it’s clean).
-2. Type `gcr`
+2. Type `gcS`
 3. Press the label that selects the `checkout(...)` method.
 4. Undo and repeat, but this time select `applyDiscount(...)`.
 
@@ -96,7 +96,7 @@ Goal: comment out only `checkout(...)` inside `CheckoutService`.
 
 Goal: yank a function, then paste it elsewhere.
 
-1. Type `ys`
+1. Type `yS`
 2. Press the label for `debugLog(...)`.
 3. Move to the bottom of the file and press `p` to paste.
 4. Undo and repeat with `calculateTotal(...)`.

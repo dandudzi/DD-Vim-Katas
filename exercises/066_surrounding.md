@@ -1,3 +1,5 @@
+### Surrounding
+
 This is the text to practice
 different surroundings
 to let it go with different motions
@@ -7,7 +9,7 @@ other code
 }
 `gsa` = add surroundings
 `gsd` = remove surroundings
-`gsr` = repace surroundings
+`gsr` = replace surroundings
 `gsf` = find surroundings
-`gsh` = highights surroundings
+`gsh` = highlights surroundings
 `gsn` = replace many lines surroundings
