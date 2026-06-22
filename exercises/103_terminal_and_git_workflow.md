@@ -1,92 +1,45 @@
-## Kata: Terminal mode and git workflow — `Ctrl-/`, `<Space>gs`, `[h`/`]h`
+# Kata: Terminal Mode and Git-Hunk Review
 
-> **Note**: This kata uses LazyVim default keybindings. Your mappings may differ with other Neovim configurations.
+> **Environment:** Neovim; Git for the hunk section; Gitsigns/LazyVim mappings optional.
+> **Readiness:** `:echo executable('git')` must be `1`. Check `:verbose nmap ]h`, `[h`, and `<Space>ghp`; skip the hunk section if they do not resolve to Gitsigns.
 
-### 1) What these features do (short description)
+## Objective
+Leave Terminal mode safely, then review known Git hunks in a disposable repository without staging or resetting user work.
 
-**Terminal mode:**
-- `Ctrl-/` — toggle the floating terminal (LazyVim)
-- `<C-\><C-n>` — switch from terminal mode to normal mode (works in any Neovim terminal)
-- Inside terminal mode you can run any shell command, then return to editing
+## Setup
+```vim
+:let g:kata_103_dir=tempname() | call mkdir(g:kata_103_dir, 'p')
+:call writefile(['one', 'two', 'three', 'four'], g:kata_103_dir.'/demo.txt')
+:call system(['git','-C',g:kata_103_dir,'init','-q']) | call system(['git','-C',g:kata_103_dir,'add','demo.txt'])
+:call system(['git','-C',g:kata_103_dir,'-c','user.name=Kata','-c','user.email=kata@example.invalid','commit','-qm','base'])
+:call writefile(['ONE', 'two', 'three', 'FOUR'], g:kata_103_dir.'/demo.txt')
+:execute 'lcd '.fnameescape(g:kata_103_dir) | edit demo.txt
+```
 
-**Git integration (via plugins like lazygit, gitsigns):**
-- `<Space>gs` — open lazygit (full git UI inside Neovim)
-- `]h` — jump to next git hunk (changed block)
-- `[h` — jump to previous git hunk
-- `<Space>ghr` — reset (revert) the current hunk
-- `<Space>ghs` — stage the current hunk
-- `<Space>ghp` — preview the current hunk diff
+## Mini-Kata A: Terminal
+1. Run `:terminal`, then `printf 'terminal-ready\n'`. **Verify:** output contains `terminal-ready`.
+2. Leave Terminal mode. **Verify:** `:echo mode()` is not `t`; use Normal-mode motions in the terminal buffer.
+3. Return to Terminal mode, run `exit`, and return to `demo.txt`.
 
----
+## Mini-Kata B: Gitsigns
+1. Wait for Gitsigns to attach (`:Gitsigns debug_messages` if available). Navigate both hunks with `]h` and `[h`. **Verify:** they are at lines 1 and 4.
+2. Preview each hunk with the verified preview mapping. **Verify:** previews show `one`→`ONE` and `four`→`FOUR`.
+3. Do not stage or reset. **Verify:** `:echo system(['git','-C',g:kata_103_dir,'diff','--','demo.txt'])` still shows both hunks.
 
-### 2) Setup
+## Hints and Solution
+<details><summary>Hints</summary>
 
-These drills require:
-- A git repository with uncommitted changes (this repo works if you've modified files)
-- LazyVim with lazygit and gitsigns installed (default LazyVim extras)
+The built-in escape from Terminal mode is `<C-\><C-n>`. Plugin mappings are configuration-dependent.
+</details>
+<details><summary>Exact workflow</summary>
 
----
+Terminal: `:terminal<CR>printf 'terminal-ready\n'<CR><C-\><C-n>`, then `iexit<CR>`. Gitsigns defaults in LazyVim: `]h`, `[h`, and `<Space>ghp`, but only after readiness checks pass.
+</details>
 
-### 3) Step-by-step drills
+## Cleanup and References
+`:for g:kata_103_buf in getbufinfo() | if stridx(g:kata_103_buf.name,g:kata_103_dir)==0 | execute 'bwipeout! '.g:kata_103_buf.bufnr | endif | endfor | lcd - | call delete(g:kata_103_dir, 'rf') | unlet g:kata_103_buf g:kata_103_dir`. This removes only the generated repo. See `:help terminal`, https://github.com/lewis6991/gitsigns.nvim, and https://lazyvim.github.io/keymaps.
 
-#### Drill A — Toggle the terminal
-
-1. Press `Ctrl-/` — a floating terminal opens
-2. Run a command: `ls -la` or `git status`
-3. Press `Ctrl-/` again — the terminal hides (it's still running in the background)
-4. Press `Ctrl-/` once more — it reappears with your previous session intact
-
-#### Drill B — Terminal normal mode
-
-1. Open the terminal with `Ctrl-/`
-2. Run `git log --oneline -10`
-3. Press `<C-\><C-n>` — you're now in normal mode inside the terminal buffer
-4. Use `j`/`k` to scroll, `yy` to yank a line (e.g., a commit hash)
-5. Press `i` or `a` to return to terminal insert mode
-6. Press `Ctrl-/` to close
-
-#### Drill C — Open lazygit with `<Space>gs`
-
-1. Press `<Space>gs` — lazygit opens in a floating window
-2. Navigate the lazygit UI:
-   - `j`/`k` — move between files/changes
-   - `<Enter>` — expand a file to see its diff
-   - `<Space>` — stage/unstage a file
-   - `c` — open the commit dialog
-3. Press `q` to close lazygit and return to Neovim
-
-#### Drill D — Navigate git hunks with `]h` and `[h`
-
-Goal: review changes in a file you've modified.
-
-1. Open a file that has uncommitted changes
-2. Press `]h` — cursor jumps to the next changed hunk (block of modified lines)
-3. Press `]h` again — jumps to the next hunk
-4. Press `[h` — jumps back to the previous hunk
-5. At any hunk, press `<Space>ghp` to preview the diff for that hunk
-
-#### Drill E — Stage, reset, and review hunks
-
-1. Navigate to a hunk with `]h`
-2. Press `<Space>ghs` — stages just this hunk (not the whole file)
-3. Navigate to another hunk with `]h`
-4. Press `<Space>ghr` — reverts this hunk to the last committed version
-5. Press `<Space>ghp` on another hunk to preview before deciding
-
-This gives you `git add -p` style control directly in your editor.
-
----
-
-### Command reference
-
-| Command | Effect |
+| Keys | Effect |
 |---|---|
-| `Ctrl-/` | Toggle floating terminal (LazyVim) |
-| `<C-\><C-n>` | Terminal mode → Normal mode |
-| `i` or `a` | Normal mode → Terminal mode (inside terminal buffer) |
-| `<Space>gs` | Open lazygit |
-| `]h` | Next git hunk |
-| `[h` | Previous git hunk |
-| `<Space>ghs` | Stage current hunk |
-| `<Space>ghr` | Reset (revert) current hunk |
-| `<Space>ghp` | Preview current hunk diff |
+| `<C-\><C-n>` | Terminal mode to Normal mode |
+| `]h` / `[h` | Next / previous Gitsigns hunk when mapped |

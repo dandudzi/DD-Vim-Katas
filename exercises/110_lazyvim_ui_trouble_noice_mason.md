@@ -1,119 +1,88 @@
-## Kata: Trouble, Noice, Mason, and Neo-tree — LazyVim UI tools
+# Kata: Inspect LazyVim UI Tools Without Touching User Data
 
-> **Note**: This kata covers LazyVim-specific UI plugins. Keybindings may differ in other configurations.
+> **Environment:** Neovim with LazyVim. Trouble, Noice, Mason, and Neo-tree are independent plugins.
+> **Safety:** Setup creates an owned temporary tab and file. Mason is read-only; Neo-tree does not rename, delete, or create project files.
 
----
+## Objective
+Verify each LazyVim mapping, open the corresponding UI against deterministic owned state, and leave the original tab, buffers, tools, and project unchanged.
 
-### 1) Trouble — diagnostics and list navigation
+## Setup
+Run exactly:
 
-Trouble provides a structured, persistent window for navigating diagnostics, quickfix entries, TODOs, and LSP references.
+```vim
+:let g:kata_110_dir=tempname() | call mkdir(g:kata_110_dir, 'p')
+:call writefile(['first owned line','second owned line'], g:kata_110_dir.'/only.txt')
+:tabnew | let g:kata_110_tab=nvim_get_current_tabpage() | execute 'edit '.fnameescape(g:kata_110_dir.'/only.txt')
+:let g:kata_110_buf=bufnr('%')
+:let g:kata_110_qf=getqflist({'items':1,'title':1,'context':1,'idx':1,'quickfixtextfunc':1})
+```
 
-- `<Space>xx` — toggle Trouble (diagnostics for current buffer)
-- `<Space>xX` — toggle Trouble (workspace diagnostics)
-- `<Space>xL` — toggle Trouble (location list)
-- `<Space>xQ` — toggle Trouble (quickfix list)
-- `<Space>w<` / `<Space>w>` — resize the Trouble window (or any split)
-- `]q` / `[q` — next/prev Trouble or quickfix entry (works from any buffer)
+Start in `only.txt`, Normal mode. Verify `:echo expand('%:p') ==# g:kata_110_dir.'/only.txt'` prints `1`.
 
-#### Drill A — View and navigate diagnostics
+## Drill A - Trouble with Owned Quickfix Entries
+1. Check `:verbose nmap <Space>xQ`; continue only when it identifies Trouble's quickfix view.
+2. Populate quickfix:
 
-1. Open a file with LSP errors (e.g., a TypeScript file with type errors)
-2. Press `<Space>xx` — Trouble opens at the bottom showing diagnostics
-3. Use `j`/`k` to browse entries in the Trouble window
-4. Press `<Enter>` on an entry to jump to that location
-5. Press `<Space>w<` or `<Space>w>` to resize the Trouble window if it's too small or large
+```vim
+:call setqflist([], 'r', {'title':'kata-110', 'items':[{'bufnr':g:kata_110_buf,'lnum':1,'col':1,'text':'first'},{'bufnr':g:kata_110_buf,'lnum':2,'col':1,'text':'second'}]})
+```
 
-#### Drill B — Resize the Trouble window
+3. Open Trouble, visit both entries, and close it. **Verify:** entries point only to `only.txt` lines 1 and 2; `:echo len(getqflist())` remains `2`.
 
-1. With Trouble open, the window might be too small to read long messages
-2. Press `<Space>w>` repeatedly to widen it (or increase height for bottom splits)
-3. Press `<Space>w<` to shrink it back
-4. Alternatively, use `Ctrl-W +` / `Ctrl-W -` for height, `Ctrl-W >` / `Ctrl-W <` for width
+<details><summary>Exact Trouble solution</summary>
 
----
+After readiness and setup: `<Space>xQ`, use `j`/`k` and `<CR>`, then the same verified toggle to close. Mapping details can vary; use Trouble's `g?` help if the toggle differs.
+</details>
 
-### 2) Noice — notification and message history
+## Drill B - Noice Message History
+1. Check `<Space>sna`, `<Space>snl`, and `<Space>snd` with `:verbose nmap`; each must identify Noice.
+2. Run `:echo 'kata-110-one'` and `:echo 'kata-110-two'`.
+3. Open all messages, inspect the last, then dismiss notifications. **Verify:** history contains both markers, last is `kata-110-two`, and `getline(1,'$')` is unchanged.
 
-Noice replaces Vim's default messages, command line, and popups with modern floating UI. You can search through past notifications.
+<details><summary>Exact Noice solution</summary>
 
-- `<Space>sn` — open Noice search menu
-- `<Space>sna` — show all notifications
-- `<Space>snl` — show last notification
-- `<Space>snd` — dismiss all visible notifications
+`:echo 'kata-110-one'`, `:echo 'kata-110-two'`, then verified mappings `<Space>sna`, `<Space>snl`, and `<Space>snd`.
+</details>
 
-#### Drill C — Browse notification history
+## Drill C - Mason Readiness Without Package Changes
+1. Check `:verbose nmap <Space>cm`; it must identify Mason.
+2. Open Mason, press `g?`, inspect one installed/uninstalled status, and close with the UI's documented close key.
+3. **Verify:** no install, uninstall, or update job appears in Mason's status/log. Do not press `i`, `X`, or update mappings.
 
-1. Run several commands that produce messages (e.g., `:w`, `:s/foo/bar/g`, `:!echo test`)
-2. Press `<Space>sn` — the Noice menu opens
-3. Press `a` to see all past notifications
-4. Browse through the history — useful for finding error messages that flashed by too quickly
-5. Press `<Esc>` to close
+<details><summary>Exact Mason solution</summary>
 
-#### Drill D — Dismiss and review
+`<Space>cm`, `g?`, then `q`. This is deliberately inspection-only.
+</details>
 
-1. If a notification popup is blocking your view, press `<Space>snd` to dismiss all
-2. Later, use `<Space>snl` to review the last notification you dismissed
+## Drill D - Neo-tree on the Owned Directory
+1. Check `:verbose nmap <Space>e`; it must identify Neo-tree.
+2. Run `:execute 'lcd '.fnameescape(g:kata_110_dir)`, open Neo-tree, and select `only.txt`.
+3. **Verify:** `:echo expand('%:p') ==# g:kata_110_dir.'/only.txt'` prints `1` and the file still contains exactly two lines. Toggle Neo-tree closed.
 
----
+<details><summary>Exact Neo-tree solution</summary>
 
-### 3) Mason — LSP/formatter/linter package manager
+After changing the local directory: `<Space>e`, move to `only.txt`, `<CR>`, then `<Space>e`. Do not use Neo-tree file-operation keys.
+</details>
 
-Mason manages external tools (language servers, formatters, linters, debuggers) from inside Neovim.
+## Cleanup and References
+Close plugin UIs, restore the complete pre-kata quickfix state, then explicitly wipe only the owned file buffer:
 
-- `<Space>cm` — open Mason
-- `i` — install the package under the cursor
-- `X` — uninstall the package under the cursor
-- `Shift-U` — update all installed packages
-- `g?` — show help for Mason keybindings
+```vim
+:call nvim_set_current_tabpage(g:kata_110_tab)
+:call setqflist([], 'r', g:kata_110_qf)
+:execute 'bwipeout! '.g:kata_110_buf
+:if nvim_tabpage_is_valid(g:kata_110_tab) | call nvim_set_current_tabpage(g:kata_110_tab) | tabclose! | endif
+:call delete(g:kata_110_dir, 'rf')
+:unlet g:kata_110_qf g:kata_110_buf g:kata_110_tab g:kata_110_dir
+```
 
-#### Drill E — Install a new tool
+The saved quickfix object restores its items, title, context, index, and display function. Wiping the tab's last buffer may close that tab automatically, so the validity check avoids closing a user tab afterward. The saved buffer number and tab handle ensure the original buffers and quickfix state are unchanged.
 
-1. Press `<Space>cm` — Mason opens, showing categories of tools
-2. Browse the list — installed tools are marked with a checkmark
-3. Navigate to a tool you want (e.g., `prettier`, `eslint`, `black`)
-4. Press `i` to install it
-5. Wait for the installation to complete (shown in the status line)
-6. Press `q` to close Mason
+References: https://lazyvim.github.io/keymaps, https://github.com/folke/trouble.nvim, https://github.com/folke/noice.nvim, https://github.com/mason-org/mason.nvim, and https://github.com/nvim-neo-tree/neo-tree.nvim.
 
-#### Drill F — Update all tools
-
-1. Press `<Space>cm` to open Mason
-2. Press `Shift-U` — Mason checks for and installs updates for all tools
-3. Press `q` to close when done
-
----
-
-### 4) Neo-tree — File explorer and project navigation
-
-Neo-tree is the file explorer sidebar, useful for browsing project structure.
-
-- `<Space>e` — toggle Neo-tree (file explorer)
-- `<Space>E` — toggle Neo-tree (cwd)
-- Inside Neo-tree: `a` (add file), `d` (delete), `r` (rename), `c` (copy), `m` (move)
-
-#### Drill G — Browse and open files
-
-1. Press `<Space>e` — Neo-tree opens on the left side
-2. Use `j`/`k` to navigate the file tree
-3. Press `<Enter>` to open a file or expand a directory
-4. Press `a` to create a new file — type the filename and press `<Enter>`
-5. Press `<Space>e` again to close Neo-tree
-
----
-
-### Command reference
-
-| Command | Effect |
-|---|---|
-| `<Space>xx` | Toggle Trouble (buffer diagnostics) |
-| `<Space>xX` | Toggle Trouble (workspace diagnostics) |
-| `<Space>w<` / `<Space>w>` | Resize split window |
-| `]q` / `[q` | Next / prev Trouble/quickfix entry |
-| `<Space>sn` | Noice search menu |
-| `<Space>sna` | All notifications |
-| `<Space>snl` | Last notification |
-| `<Space>snd` | Dismiss notifications |
-| `<Space>cm` | Open Mason |
-| `i` / `X` | Install / uninstall (in Mason) |
-| `Shift-U` | Update all tools (in Mason) |
-| `<Space>e` | Toggle Neo-tree file explorer |
+| Tool | Deterministic state | Forbidden side effect |
+|---|---|---|
+| Trouble | Two owned quickfix entries | No edits |
+| Noice | Two marker messages | No buffer changes |
+| Mason | Existing package list | No install/update/uninstall |
+| Neo-tree | Owned temp directory | No create/delete/rename/move |

@@ -1,24 +1,51 @@
-### Jump between matching parentheses
+# Kata: Jump and Operate on Matching Delimiters
 
-Let's say there is this console statement:
+> **Environment:** Vim or Neovim; built-in `%` motion
 
+## Objective
+Use `%` to jump between matching delimiters and as an operator motion. Success means navigating nested pairs and deleting one complete pair-delimited region.
+
+## Initial Fixture
 ```javascript
-console.log([{'a':1},{'b':2}]);
+call([one, {two: 2}], three);
 ```
+Start in Normal mode on the opening `(` at column 5. Reset before each drill.
 
-`f(` - forward to the first '('
-`%` - jump to the closing ')'
-`h` - move left - to the last ']' bracket
-`%` - jump to the first '[' bracket
-`l` - move right - to the first curly '{'
-`%` - jump to the matching curly '}'
+## Tasks
 
-```ruby
-%w{London Berlin New\ York}
-```
+### Drill A - Match parentheses
+Jump to the matching closing parenthesis. **Verify:** cursor is on `)` at column 28.
 
-`dt{` - delete the '%w' part
-`%` - jump to the closing curly bracket
-`r]` - replace '}' with ']'
-`''` or `backtick backtick` (\`\`) - go to the position before the last jump, i.e. the location of the first curly bracket
-`r[` - replace '{' with ']'
+### Drill B - Nested matches
+Reset, move to `[`, jump to its matching `]`, then move left to `}` and jump to `{`. **Verify:** cursor ends on `{` at column 12.
+
+### Drill C - Operate
+Reset, delete from `(` through its matching `)`. **Verify:** buffer is `call;`.
+
+### Challenge
+Reset and delete only `[one, {two: 2}]` using an operator with `%`. **Verify:** `call(, three);` remains.
+
+## Hints
+<details><summary>Hints</summary>
+`%` is inclusive when used as an operator motion. First place the cursor on the opening delimiter.
+</details>
+
+## Solution
+<details><summary>Show exact keys</summary>
+- A: `%`
+- B: `0f[%h%`
+- C: `d%`
+- Challenge: `f[d%`
+</details>
+
+## Reset and Cleanup
+Use `u` after deletion drills or restore the fixture. Close with `:bwipeout!`.
+
+## Command Reference
+| Keys | Effect |
+|---|---|
+| `%` | Jump to matching item |
+| `d%` | Delete through matching item |
+
+## References
+- [`:help %`](https://vimhelp.org/motion.txt.html#%25)

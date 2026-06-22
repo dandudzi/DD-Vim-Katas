@@ -1,115 +1,59 @@
-## Kata: `[i`/`]i` — Indentation jumping, and menu cycling with Shift-Tab
+# Kata: Verify Scope Mappings, Cycle Completion, and Restore Spell Options
 
-> **Note**: Indentation jumping (`[i`/`]i`) requires LazyVim with mini.indentscope or a similar plugin. Menu cycling with `Shift-Tab` works in most Neovim completion setups.
+> **Environment:** Neovim with LazyVim. Scope and `<Tab>` mappings depend on installed plugins; keyword completion and spell commands are built in.
 
-### 1) What these do (short description)
+## Objective
+Distinguish plugin mappings from built-ins, cycle a deterministic completion list in both directions, and test buffer-local spelling without leaving files or options behind.
 
-**Indentation jumping:**
-- `[i` — jump to the **top** of the current indentation scope (previous line at a lower indent level)
-- `]i` — jump to the **bottom** of the current indentation scope (next line at a lower indent level)
-
-This lets you quickly navigate to the enclosing block without searching for brackets.
-
-**Menu cycling:**
-- `Shift-Tab` — cycle **backward** through completion menu entries (opposite of `Tab`)
-- `Tab` — cycle **forward** through entries
-- Works in completion menus, command-line menus, and picker UIs
-
-**Multilanguage spell:**
-- `:set spelllang=en,es` — check spelling in multiple languages simultaneously
-
----
-
-### 2) Practice text (paste into a buffer)
-
-```py
-class OrderProcessor:
-    def __init__(self, db, cache):
-        self.db = db
-        self.cache = cache
-        self.logger = Logger("OrderProcessor")
-
-    def process_order(self, order_id):
-        order = self.db.get_order(order_id)
-        if order is None:
-            self.logger.error(f"Order {order_id} not found")
-            return None
-
-        if order.status == "cancelled":
-            self.logger.warn(f"Order {order_id} is cancelled")
-            return None
-
-        items = order.get_items()
-        for item in items:
-            if not item.in_stock():
-                self.logger.error(f"Item {item.id} out of stock")
-                raise OutOfStockError(item)
-            self.cache.invalidate(item.id)
-
-        total = sum(item.price for item in items)
-        self.db.update_order(order_id, status="processed", total=total)
-        return total
-
-    def cancel_order(self, order_id):
-        order = self.db.get_order(order_id)
-        self.db.update_order(order_id, status="cancelled")
-        return True
+## Setup and Fixture
+```vim
+:let g:kata_108_dir=tempname() | call mkdir(g:kata_108_dir, 'p')
+:call writefile(['process product profile','','def run(items):','    for item in items:','        if item.ready:','            print(item.name)','    return len(items)','','Teh final line.'], g:kata_108_dir.'/practice.py')
+:tabnew | let g:kata_108_tab=nvim_get_current_tabpage() | execute 'edit '.fnameescape(g:kata_108_dir.'/practice.py') | let g:kata_108_buf=bufnr('%')
+:let b:kata_108_spell=&l:spell | let b:kata_108_spelllang=&l:spelllang
 ```
 
----
+Start on `print` at line 6, Normal mode.
 
-### 3) Step-by-step drills
+## Drill A - Attribute Indentation Mappings
+Run `:verbose nmap [i` and `:verbose nmap ]i`.
 
-#### Drill A — `]i` to jump to end of indentation scope
+- **Verify:** if either is mapped, its source and description explicitly identify the installed scope provider.
+- If unmapped, do not press it: built-in `[i`/`]i` have identifier-search meanings and are not generic indentation jumps.
+- Optional provider drill: only when both inspected descriptions say previous/next indent scope, use them from line 6 and verify the cursor remains within lines 3-7.
 
-1. Place cursor on `order = self.db.get_order(order_id)` (line 8, inside `process_order`)
-2. Press `]i` — cursor jumps to the bottom of the current indent scope (the `return total` line)
-3. You've navigated to the end of the function body without counting lines
+<details><summary>Exact readiness solution</summary>
 
-#### Drill B — `[i` to jump to start of indentation scope
+`:verbose nmap [i` and `:verbose nmap ]i`. Stop this drill when no scope mapping is reported.
+</details>
 
-1. Place cursor on `self.cache.invalidate(item.id)` (line 22)
-2. Press `[i` — cursor jumps up to the start of the current indent scope
-3. Keep pressing `[i` to jump further up through enclosing scopes
+## Drill B - Deterministic Completion Cycling
+1. Go to blank line 2, enter Insert mode, type `pro`, and invoke built-in keyword completion. **Verify:** the menu contains `process`, `product`, and `profile`.
+2. Use built-in next and previous completion keys. **Verify:** `<C-n>` and `<C-p>` move in opposite directions; cancel with `<C-e>` and leave line 2 unchanged.
+3. Inspect `:verbose imap <Tab>` and `:verbose imap <S-Tab>`. Only if descriptions say next/previous completion item, repeat using those mappings. **Verify:** the selection moves in opposite directions.
 
-#### Drill C — Navigate nested scopes
+<details><summary>Exact completion solution</summary>
 
-1. Place cursor on `raise OutOfStockError(item)` (line 21, deeply nested)
-2. Press `[i` — jumps to the `if not item.in_stock()` level
-3. Press `[i` again — jumps to the `for item in items` level
-4. Press `[i` again — jumps to the `def process_order` level
-5. This is like `[{` but works for indentation-based languages (Python) where there are no braces
+`2Gipro<C-x><C-n><C-n><C-p><C-e><C-u><Esc>`. Then inspect the two Insert mappings before trying `<Tab>` or `<S-Tab>`.
+</details>
 
-#### Drill D — Shift-Tab to cycle completion backward
+## Drill C - Buffer-Local Spell State
+1. Run `:setlocal spell spelllang=en`, place the cursor at the end of blank line 8, then use the next-misspelling command. **Verify:** the cursor reaches `Teh` on line 9 when an English spellfile is installed.
+2. Check another language before adding it: `:echo !empty(globpath(&runtimepath,'spell/pl.*'))`. Only when it prints `1`, run `:setlocal spelllang=en,pl`. **Verify:** `:setlocal spell? spelllang?` reports the chosen local state.
+3. Restore the saved options. **Verify:** `:echo &l:spell == b:kata_108_spell && &l:spelllang ==# b:kata_108_spelllang` prints `1`.
 
-1. Open a Python file and enter insert mode
-2. Start typing `self.` — a completion menu appears
-3. Press `Tab` — selects the next entry
-4. Press `Shift-Tab` — goes back to the previous entry
-5. Press `Shift-Tab` again — keeps cycling backward
-6. Press `<Enter>` or `Ctrl-Y` to accept the selected entry
+<details><summary>Exact spell solution</summary>
 
-This also works in command-line completion:
-1. Type `:e ex<Tab>` — autocompletes forward
-2. Press `Shift-Tab` — cycles backward through matches
+`:setlocal spell spelllang=en`, `8G$]s`, optionally `:setlocal spelllang=en,pl`, then `:let &l:spell=b:kata_108_spell | let &l:spelllang=b:kata_108_spelllang`.
+</details>
 
-#### Drill E — Multilanguage spell checking
+## Cleanup and References
+Restore options if needed, then explicitly wipe the owned file buffer before deleting its directory: `:call nvim_set_current_tabpage(g:kata_108_tab) | execute 'bwipeout! '.g:kata_108_buf | if nvim_tabpage_is_valid(g:kata_108_tab) | call nvim_set_current_tabpage(g:kata_108_tab) | tabclose! | endif | call delete(g:kata_108_dir, 'rf') | unlet g:kata_108_buf g:kata_108_tab g:kata_108_dir`. Wiping the last buffer may close the owned tab automatically, so cleanup checks the saved handle before closing it explicitly.
 
-1. Enable spell checking: `:set spell<Enter>`
-2. Set multiple languages: `:set spelllang=en,es<Enter>` (English and Spanish)
-3. Words valid in **either** language won't be marked as misspelled
-4. Navigate misspellings with `]s` (next) and `[s` (previous)
-5. Press `z=` on a misspelled word to see suggestions from all configured languages
+See `:help i_CTRL-X_CTRL-N`, `:help i_CTRL-N`, `:help spelllang`, https://lazyvim.github.io/keymaps, and the provider printed by `:verbose map`.
 
----
-
-### Command reference
-
-| Command | Effect |
-|---|---|
-| `[i` | Jump to top of current indentation scope |
-| `]i` | Jump to bottom of current indentation scope |
-| `Tab` | Next completion/menu entry |
-| `Shift-Tab` | Previous completion/menu entry |
-| `:set spelllang=en,es` | Spell check in English and Spanish |
-| `]s` / `[s` | Next / previous misspelling |
+| Keys | Provenance | Effect |
+|---|---|---|
+| `<C-x><C-n>` | Built in | Start keyword completion |
+| `<C-n>` / `<C-p>` | Built in | Next / previous candidate |
+| `[i` / `]i`, `<Tab>` / `<S-Tab>` | Configuration-dependent | Use only after mapping verification |

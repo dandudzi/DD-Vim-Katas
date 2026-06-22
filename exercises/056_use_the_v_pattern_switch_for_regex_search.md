@@ -1,24 +1,48 @@
-### Use the \v pattern switch for regex search
+# Kata: Write Very-Magic Search Patterns
 
-Let's use this snippet of CSS:
+> **Environment:** Vim or Neovim; built-in regular expressions
 
+## Objective
+Use `\v` to reduce escaping in a grouped regular expression. Success means matching exactly the three valid CSS hex colors with equivalent default-magic and very-magic patterns.
+
+## Initial Fixture
 ```css
-body {
-  color: #3c3c3c;
-}
-a {
-  color: #0000ee;
-}
-strong {
-  color: #000;
-}
+body { color: #3c3c3c; }
+a { color: #0000ee; }
+strong { color: #000; }
+bad { color: #12; }
 ```
+Start in Normal mode on line 1.
 
-`/#\([0-9a-fA-F]\{6}\|[0-9a-fA-F]\{3\}\)` - this regex will match all the hex values
+## Tasks
+### Drill A - Default magic
+Count 3- or 6-digit hex values with default Vim regex escaping. **Verify:** 3 matches on 3 lines.
 
-The `\v` switch make Vim's regex search like Perl, Python and Ruby.
+### Drill B - Very magic
+Write the equivalent pattern starting with `\v`. **Verify:** the same 3 matches.
 
-`/\v#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})` - the search works the same way, but it does not need to escape the special characters.
-`/\v#(\x{6}|\x{3})` - will be the same as above, but it's using `\x` character class
+### Drill C - Character class shorthand
+Replace the explicit hexadecimal class with Vim's `\x` class while retaining `\v`. **Verify:** still 3 matches.
 
-`/\Va.k.a` - very magic search thanks to that all characters do not have special meaning
+### Challenge
+Search through all matches with `n`; verify the cursor visits lines 1, 2, 3, then wraps to 1, never line 4.
+
+## Hints
+<details><summary>Hints</summary>
+Under `\v`, parentheses, braces, and `|` are special without backslashes. `\x` means a hexadecimal digit. `\V` is the opposite mode: very nomagic.
+</details>
+
+## Solution
+<details><summary>Show exact commands</summary>
+- A: `:%s/#\([0-9A-Fa-f]\{6}\|[0-9A-Fa-f]\{3\}\)//gn<CR>`
+- B: `:%s/\v#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})//gn<CR>`
+- C: `:%s/\v#(\x{6}|\x{3})//gn<CR>`
+- Challenge: `/\v#(\x{6}|\x{3})<CR>nnn`
+</details>
+
+## Reset and Cleanup
+Counting with substitution flag `n` does not modify text. Run `:nohlsearch` and close with `:bwipeout!`.
+
+## References
+- [`:help /\v`](https://vimhelp.org/pattern.txt.html#%2F%5Cv)
+- [`:help /\x`](https://vimhelp.org/pattern.txt.html#%2F%5Cx)

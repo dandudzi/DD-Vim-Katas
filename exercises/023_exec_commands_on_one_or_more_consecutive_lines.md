@@ -1,7 +1,11 @@
-### Exec commands on one or more consecutive lines
+# Kata: Address Lines with Ex Ranges
 
-Look at this HTML sample:
+> **Environment:** Vim or Neovim; built-in Ex commands only.
 
+## Objective
+Use absolute, relative, search, and whole-buffer Ex addresses to print or delete exact ranges.
+
+## Fixture and Start
 ```html
 <!DOCTYPE html>
 <html>
@@ -11,16 +15,29 @@ Look at this HTML sample:
   <body></body>
 </html>
 ```
+Start in Normal mode on line 1. Restore before each drill.
 
-Do the following exercises on the text above:
+## Tasks
+1. Print line 4 without moving there first. **Verify:** the message shows `<title>Practical Vim</title>`.
+2. Print from `<html>` through `</html>` using search addresses. **Verify:** six lines, lines 2-7, are printed.
+3. Challenge: print only the contents inside the outer `html` tags, then delete the empty body line using its valid absolute address. **Verify:** the print spans lines 3-6; afterward `:$=` reports 6 and `/<body>` finds no match.
 
-`:7` - move to line 7
-`:print` print current line
-`:9p` - move to line 9, print it
-`:10d` - move to line 10 and delete it in 1 command
-`:8,11p` - print range
-`:.,$p` - print from current line ('.') to the end ('$')
-`:%p` - % means the entire file
-visual select multiple lines, `:'<,'>p` - prints the visual selection
-`:/<html>/,/<\/html>/p` - print out everything within html
-`:/<html>/+1,/<\/html>/-1p` - without the html tags
+## Hints
+<details><summary>Hints</summary>A range is `address,address`; `+1` and `-1` offset search addresses.</details>
+
+## Solution
+<details><summary>Show commands</summary>
+
+1. `:4print`
+2. `:/<html>/,/<\/html>/print`
+3. `:/<html>/+1,/<\/html>/-1print` followed by `:6delete`
+</details>
+
+## Reset and Safety
+Use `u` after deletion or restore the fixture; close with `:bd!`. All edits stay in a throwaway buffer. See `:help :range`, `:help :print`, and `:help :delete`.
+
+| Command | Effect |
+|---|---|
+| `:{n}p` | Print absolute line |
+| `:/a/,/b/p` | Print between search addresses |
+| `:%p` | Print whole buffer |

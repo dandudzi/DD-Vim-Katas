@@ -1,102 +1,44 @@
-## Kata: `gf`, `gi`, and `gD` — Go to file, last insert, and declaration
+# Kata: Open a Referenced File and Resume Insertion
 
-### 1) What these commands do (short description)
+> **Environment:** Vim or Neovim. **Dependencies:** None.
 
-- `gf` — open the file whose path is under the cursor
-- `gi` — jump to the last place you were in insert mode and re-enter insert mode
-- `gD` — go to the first occurrence (global declaration) of the word under the cursor in the current file
+## Objective
+Use `gf` with a local suffix, return with `<C-o>`, and resume the last insertion with `gi`.
 
-These three `g`-prefixed commands make "edit, navigate, resume" workflows seamless.
-
----
-
-### 2) Practice text (paste into a buffer)
-
-```js
-// File: utils/helpers.js
-const { format } = require("./utils/format");
-const config = require("../config/settings.json");
-
-const MAX_RETRIES = 3;
-const DEFAULT_TIMEOUT = 5000;
-
-function fetchData(url) {
-  const timeout = DEFAULT_TIMEOUT;
-  for (let i = 0; i < MAX_RETRIES; i++) {
-    const result = makeRequest(url, timeout);
-    if (result.ok) return result.data;
-  }
-  return null;
-}
-
-function processData(raw) {
-  const data = fetchData(raw.url);
-  return format(data);
-}
+## Setup
+```vim
+:let g:kata_096_dir=tempname() | call mkdir(g:kata_096_dir.'/utils', 'p')
+:call writefile(['export const format = (x) => String(x);'], g:kata_096_dir.'/utils/format.js')
+:call writefile(['import { format } from "./utils/format";', '', 'const output = format(42);'], g:kata_096_dir.'/main.js')
+:execute 'lcd '.fnameescape(g:kata_096_dir) | edit main.js
+:let g:kata_096_main=bufnr('%') | let g:kata_096_old_sua=&l:suffixesadd | setlocal suffixesadd+=.js
 ```
 
----
+Start on `./utils/format` in line 1, Normal mode.
 
-### 3) Step-by-step drills
+## Drills
+1. Open the path under cursor and jump back. **Verify:** `gf` opens `format.js`; `<C-o>` returns to `main.js` line 1.
+2. Append ` // checked` to line 3, leave Insert mode, move to line 1, then resume insertion. Type `!`. **Verify:** line 3 ends `// checked!`.
+3. On `output` in line 3, use the global-declaration command. **Verify:** it lands on the same line's declaration; compare with `gd` only as an observation.
 
-#### Drill A — `gf` to open a file under cursor
+## Hints
+<details><summary>Hints</summary>
 
-Goal: navigate to a file referenced in code.
+`gf` consults `'path'` and `'suffixesadd'`. `gi` jumps to the last Insert position and enters Insert mode.
+</details>
 
-1. Place your cursor anywhere on `./utils/format` on line 2
-2. Press `gf` — Vim tries to open that file path
-3. If the file exists, you'll jump to it. Press `Ctrl-O` to jump back.
+## Solution
+<details><summary>Exact keys</summary>
 
-(For this drill, the file may not exist — that's fine. The point is learning the motion. In a real project, `gf` on import paths is a fast way to navigate.)
+1. On the path: `gf<C-o>`
+2. `G A // checked<Esc>gggi!<Esc>` (keys are `G`, `A`, text, `<Esc>`, `gg`, `gi`, `!`, `<Esc>`).
+3. `/output<CR>gD`
+</details>
 
-#### Drill B — `gf` with `suffixesadd`
+## Cleanup and Reference
+Run `:execute 'buffer '.g:kata_096_main | let &l:suffixesadd=g:kata_096_old_sua | for g:kata_096_buf in getbufinfo() | if stridx(g:kata_096_buf.name,g:kata_096_dir)==0 | execute 'bwipeout! '.g:kata_096_buf.bufnr | endif | endfor | lcd - | call delete(g:kata_096_dir, 'rf') | unlet g:kata_096_buf g:kata_096_main g:kata_096_old_sua g:kata_096_dir`. Only the generated directory is removed. See `:help gf`, `:help suffixesadd`, `:help gi`, `:help gD`.
 
-If `gf` fails because the file extension is missing:
-
-1. Run `:set suffixesadd+=.js,.ts,.json`
-2. Now place cursor on `./utils/format` and press `gf`
-3. Vim will try `./utils/format.js`, `./utils/format.ts`, etc.
-
-#### Drill C — `gi` to resume editing
-
-Goal: edit in one place, navigate away, then resume where you left off.
-
-1. Go to line 8 (`function fetchData`), press `A` to append, type ` // needs retry logic`
-2. Press `<Esc>` to return to normal mode
-3. Navigate elsewhere: `gg` to go to the top, browse around
-4. Press `gi` — cursor jumps back to the end of line 8 and enters insert mode
-5. Continue typing right where you left off
-6. Press `<Esc>`
-
-#### Drill D — `gi` after multiple insert positions
-
-1. Go to line 5, press `A`, type ` // max`, press `<Esc>`
-2. Go to line 6, press `A`, type ` // ms`, press `<Esc>`
-3. Navigate to the bottom of the file
-4. Press `gi` — you return to line 6 (the last insert position)
-
-`gi` always goes to the most recent insert location.
-
-#### Drill E — `gD` to find a declaration
-
-Goal: jump to where a variable is defined.
-
-1. Place cursor on `DEFAULT_TIMEOUT` on line 9 (inside the function)
-2. Press `gD` — cursor jumps to line 6 where `DEFAULT_TIMEOUT` is declared
-3. Place cursor on `MAX_RETRIES` on line 10
-4. Press `gD` — cursor jumps to line 5
-
-Compare: `gd` searches for a local declaration (nearest enclosing block), `gD` searches from the top of the file.
-
----
-
-### Command reference
-
-| Command | Effect |
+| Keys | Effect |
 |---|---|
-| `gf` | Open file under cursor |
-| `gF` | Open file under cursor, jump to line number after filename |
-| `gi` | Go to last insert position and enter insert mode |
-| `gd` | Go to local declaration of word under cursor |
-| `gD` | Go to global declaration of word under cursor |
-| `Ctrl-O` | Jump back (after `gf` or `gD`) |
+| `gf` | Edit file named under cursor |
+| `gi` | Return to last insertion and enter Insert mode |

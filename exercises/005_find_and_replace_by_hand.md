@@ -1,19 +1,40 @@
-### Find and replace by hand
+# Kata: Replace Selected Search Matches by Hand
 
-Replace the first and third occurrence of "content" with "copy" in this text:
+> **Environment:** Vim or Neovim; built-in commands only.
 
+## Objective
+Use search, `n`, a word change, and dot repeat to edit selected occurrences while skipping another.
+
+## Fixture and Start
 ```text
-"...We're waiting for content before the site can go live...
-
-...If you are content with this, let's go ahead with it...
-
-...We'll launch as soon as we have the content...”
+We need content before launch.
+She is content with the plan.
+Publish the content tomorrow.
 ```
+Start in Normal mode at line 1, column 1, with search wrapping enabled (`:set wrapscan`). Restore the fixture before each drill.
 
-Steps:
+## Tasks
+1. Search forward for `content`. **Verify:** cursor rests on line 1's match.
+2. Change that whole word to `copy`. **Verify:** line 2 still contains `content`.
+3. Challenge: reset, replace only the first and third occurrences with `copy`, using dot for the second edit. **Verify:** line 2 is unchanged and `:%s/\<content\>//gn` reports one match.
 
-1. Find the word content by `/content`
-2. Replace the word by `cw copy`
-3. Go to the next one `n`
-4. Go to the last one `n`
-5. Repeat command `.`
+## Hints
+<details><summary>Hints</summary>After the first edit, use `n` twice to skip the adjective occurrence.</details>
+
+## Solution
+<details><summary>Show keys</summary>
+
+1. `/content<CR>`
+2. `ciwcopy<Esc>`
+3. `/content<CR>ciwcopy<Esc>nn.`
+</details>
+
+## Reset and Reference
+Restore the fixture (search history may remain) and close with `:bd!`. See `:help /`, `:help n`, and `:help .`.
+
+| Keys | Effect |
+|---|---|
+| `/pattern` | Search forward |
+| `n` | Next match |
+| `ciw` | Change inner word |
+| `.` | Repeat last change |

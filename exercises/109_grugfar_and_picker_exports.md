@@ -1,91 +1,42 @@
-## Kata: Grug-far `<Space>sr` and picker exports `Ctrl-q`/`Alt-t`
+# Kata: Safe Grug-far Replacement and Picker Export
 
-> **Note**: This kata requires LazyVim with the Grug-far plugin and Telescope/fzf-lua. Keybindings may differ in other configurations.
+> **Environment:** Neovim with LazyVim, Grug-far, `rg`, and a configured picker.
+> **Readiness:** `:echo executable('rg')` must be `1`; `:verbose nmap <Space>sr` must resolve to Grug-far. Picker export keys vary by provider, so inspect the picker's help before exporting.
 
-### 1) What these do (short description)
+## Objective
+Preview and apply a project-wide replacement only inside a generated directory, then export the same two matches to quickfix.
 
-**Grug-far** (`<Space>sr`) is a search-and-replace UI that lets you:
-- Search across your entire project with a visual interface
-- Preview replacements before applying them
-- Replace in specific files, directories, or file types
+## Setup
+```vim
+:let g:kata_109_qf=getqflist({'items':1,'title':1,'context':1,'idx':1,'quickfixtextfunc':1})
+:let g:kata_109_dir=tempname() | call mkdir(g:kata_109_dir, 'p')
+:call writefile(['old_token one', 'keep'], g:kata_109_dir.'/a.txt')
+:call writefile(['old_token two'], g:kata_109_dir.'/b.txt')
+:execute 'lcd '.fnameescape(g:kata_109_dir) | edit a.txt
+```
 
-**Picker exports** (`Ctrl-q` / `Alt-t`) let you send results from any Telescope picker to a structured list:
-- `Ctrl-q` — send picker results to the **quickfix list**
-- `Alt-t` — send picker results to **Trouble**
+Only this disposable directory may be searched or replaced.
 
-This turns any search into an actionable list you can navigate and process.
+## A. Grug-far Preview and Replace
+1. Open Grug-far. Set Search to `old_token`, Replace to `new_token`, Files filter to `*.txt`, and Paths to the absolute value shown by `:echo g:kata_109_dir`. **Verify before applying:** exactly two result lines appear, both under `g:kata_109_dir`.
+2. Press `g?` in the Grug-far buffer and identify the active `Replace` and `Qf List` mappings. Current defaults use `<localleader>r` and `<localleader>q`; do not assume what `<localleader>` is.
+3. Invoke Replace, confirm if prompted, then verify `readfile(g:kata_109_dir.'/a.txt')` and `readfile(g:kata_109_dir.'/b.txt')` contain `new_token` and `keep` is unchanged.
 
----
+## B. Export Results
+Reset the two files with `:call writefile(['old_token one','keep'],g:kata_109_dir.'/a.txt') | call writefile(['old_token two'],g:kata_109_dir.'/b.txt') | execute 'silent! checktime '.bufnr(g:kata_109_dir.'/a.txt')`, then refresh Grug-far. `:checktime` reloads the already-loaded owned buffer without editing the Grug-far UI buffer. Invoke the discovered `Qf List` action. **Verify:** `:echo len(getqflist())` is `2` and every entry path begins with `g:kata_109_dir`.
 
-### 2) Setup
+For a LazyVim picker, open root grep with the mapping reported by `:verbose nmap <Space>/`, search `old_token`, open provider help, and use its documented quickfix export. `<C-q>` is common but not universal. **Verify the same two-entry quickfix list.** Trouble export is optional and must be discovered from provider help; `Alt-t` is not portable.
 
-Use this repository or any project with multiple files.
+## Hints and Solution
+<details><summary>Exact default Grug-far workflow</summary>
 
----
+`<Space>sr`; fill the four fields; `g?`; then `<localleader>r` to replace or `<localleader>q` to export, provided help confirms those defaults.
+</details>
 
-### 3) Step-by-step drills
+## Cleanup and References
+Close Grug-far, then `:cclose | for g:kata_109_buf in getbufinfo() | if stridx(g:kata_109_buf.name,g:kata_109_dir)==0 | execute 'bwipeout! '.g:kata_109_buf.bufnr | endif | endfor | call setqflist([], 'r', g:kata_109_qf) | lcd - | call delete(g:kata_109_dir, 'rf') | unlet g:kata_109_buf g:kata_109_qf g:kata_109_dir`. References: https://github.com/MagicDuck/grug-far.nvim and https://lazyvim.github.io/keymaps.
 
-#### Drill A — Open Grug-far
-
-1. Press `<Space>sr` — the Grug-far split opens
-2. You see input fields for: **Search**, **Replace**, **Files filter**, **Paths**
-3. The cursor starts in the Search field
-
-#### Drill B — Search and replace across project
-
-1. In the Grug-far window, type your search term (e.g., `cursor`)
-2. Results appear live below, showing every match with file and line
-3. Move to the Replace field (Tab or click) and type the replacement (e.g., `caret`)
-4. Review the preview — each match shows the before/after side by side
-5. Press the keybinding to apply all replacements (shown in the Grug-far UI, typically `<Space>r` inside the window)
-
-#### Drill C — Filter by file type
-
-1. Open Grug-far with `<Space>sr`
-2. Enter a search term
-3. Move to the **Files filter** field
-4. Type `*.md` — results are now limited to markdown files
-5. Or type `*.ts,*.js` — limits to TypeScript and JavaScript files
-6. This is equivalent to `--glob` in ripgrep
-
-#### Drill D — Send Telescope results to quickfix with `Ctrl-q`
-
-Goal: build a quickfix list from a fuzzy search.
-
-1. Open live grep: `<Space>/`
-2. Type a search term — results appear
-3. Instead of selecting a single result, press `Ctrl-q`
-4. All results are sent to the quickfix list
-5. The quickfix window opens automatically
-6. Navigate with `:cn`/`:cp` or `]q`/`[q`
-7. Apply changes with `:cfdo %s/old/new/g | update` (see kata 100)
-
-#### Drill E — Send filtered results to Trouble with `Alt-t`
-
-1. Open symbol search: `<Space>ss`
-2. Type to filter (e.g., `function`)
-3. Press `Alt-t` — results are sent to the Trouble window
-4. The Trouble window opens, showing your filtered results as a navigable list
-5. Use `]q`/`[q` to jump between entries from any buffer
-
-#### Drill F — Selective export from pickers
-
-1. Open live grep: `<Space>/`
-2. Type a search term
-3. Use `Tab` to **select** specific results (not all of them)
-4. Press `Ctrl-q` — only the selected results are sent to quickfix
-5. This gives you a curated list of locations to work through
-
----
-
-### Command reference
-
-| Command | Effect |
+| Action | Verification |
 |---|---|
-| `<Space>sr` | Open Grug-far search and replace UI |
-| `Ctrl-q` | Send picker results to quickfix list |
-| `Alt-t` | Send picker results to Trouble |
-| `Tab` | Toggle selection of current picker entry |
-| `<Space>/` | Live grep (Telescope) |
-| `<Space>ss` | Document symbols (Telescope) |
-| `:cfdo %s/old/new/g \| update` | Apply substitution across quickfix files |
+| Replace | Only generated `.txt` files change |
+| Qf List | Exactly two generated-file entries |

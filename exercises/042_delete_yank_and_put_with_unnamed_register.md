@@ -1,46 +1,58 @@
-### Delete yank and put with unnamed register
+# Kata: Delete, Yank, and Put Safely
 
-Let's say we made a mistake of typing this text:
+> **Environment:** Vim or Neovim; built-in registers
 
+## Objective
+Use the unnamed register for transposition and preserve a yank with the black-hole register. Success means exact text transformations with verified register contents.
+
+## Tasks
+
+### Drill A - Swap characters
+Fixture: `Practica lvim`. Start on `l` in `lvim`. Swap it with the preceding space. **Verify:** `Practical vim`.
+
+### Drill B - Swap lines
+Fixture:
+```text
+2) two
+1) one
+3) three
 ```
-Practica lvim
-```
+Start on line 1. Move it below line 2. **Verify:** lines are ordered 1, 2, 3.
 
-Start on the last character 'm'
-`F space` - to search for space backwards
-`x` - to cut
-`p` - to paste
-
-`xp` - transpose two chars
-
-Similar concept can be used for lines
-
-```
-2) line two
-1) line one
-3) line three
-```
-
-Start on the first line
-`dd` - to cut out the line
-`p` - to insert
-
-`ddp` - to transpose lines
-`yyp` - to duplicate lines
-
-## Using the unnamed register
-
+### Drill C - Preserve a yank
+Fixture:
 ```javascript
 collection = getCollection();
-process(somethingInTheWay, target);
+process(wrongName, target);
 ```
+Start on `collection`. Yank it, delete `wrongName` without changing the unnamed register, then put the yank in its place. **Verify:** second line is `process(collection, target);` and `:reg 0` contains `collection`.
 
-`yiw` - yanks the word collection into the register
-`jww` - moved to the beginning of "somethingInTheWay"
-`dw` - deletes the word
-`P` - pastes before comma
+### Challenge
+Reset Drill C and complete it without entering Visual mode.
 
-But oops, try this instead of `dw`
-`"_de` - deletes the word, but does not put it into register
+## Hints
+<details><summary>Hints</summary>
+`x` writes the deleted character to the unnamed register; `p` puts it after the cursor. Register `"_` discards deletions, while register `0` retains the latest yank.
+</details>
 
-`"_d{motion}` - deletes the word without putting it into the register
+## Solution
+<details><summary>Show exact keys</summary>
+- A: `F<Space>xp`
+- B: `ddp`
+- C/Challenge: `yiwj2w"_diw"0P`
+</details>
+
+## Reset and Cleanup
+Restore the relevant fixture before each drill. Close the scratch buffer with `:bwipeout!`; registers may retain kata text only.
+
+## Command Reference
+| Keys | Effect |
+|---|---|
+| `x` / `dd` | Delete character / line into unnamed register |
+| `p` / `P` | Put after / before |
+| `"_d{motion}` | Delete into black-hole register |
+| `"0p` | Put latest yank |
+
+## References
+- [`:help quote_`](https://vimhelp.org/change.txt.html#quote_)
+- [`:help quote0`](https://vimhelp.org/change.txt.html#quote0)

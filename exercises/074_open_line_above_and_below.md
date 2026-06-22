@@ -1,95 +1,51 @@
-## Kata: `o` / `O` — Open a new line below or above
+# Kata: Open Lines Above and Below
 
-### 1) What `o` and `O` do (short description)
+> **Environment:** Vim or Neovim. **Dependencies:** None.
 
-- `o` — open a new blank line **below** the current line and enter insert mode
-- `O` — open a new blank line **above** the current line and enter insert mode
+## Objective
+Use `o`, `O`, and dot repeat to insert complete lines relative to existing lines.
 
-These are among the most common ways to enter insert mode. They save you from having to press `A` then `<Enter>` (or `ko` for above).
-
----
-
-### 2) Practice text (paste into a buffer)
-
-```js
+## Fixture and Start
+```javascript
 function greet(name) {
   const greeting = "Hello, " + name;
   return greeting;
 }
 
-const users = ["Alice", "Bob", "Charlie"];
+const users = [
+  "Alice",
+  "Bob",
+  "Charlie",
+];
 ```
 
----
+Use a new buffer and start at `gg0`, Normal mode. Reset before each drill.
 
-### 3) Step-by-step drills
+## Drills
+1. Add `console.log(greeting);` below the `const greeting` line using the open-below command. **Verify:** it is line 3 with two-space indentation.
+2. Add `// Greets a user by name` above the function using the open-above command. **Verify:** the function begins on line 2.
+3. Add `// processed` below each separate user line, making the first change once and repeating it. **Verify:** three comment lines exist, each directly below its user.
+4. Challenge: produce all changes together; the array syntax and user order must remain unchanged.
 
-#### Drill A — Add a line below with `o`
+## Hints
+<details><summary>Hints</summary>
 
-Goal: add a `console.log` after the `const greeting` line.
+`o`/`O` enter Insert mode on a newly opened line. Dot repeats the complete insertion, including opening a line.
+</details>
 
-1. Put your cursor on the line `const greeting = "Hello, " + name;`
-2. Press `o`
-3. Type `console.log(greeting);`
-4. Press `<Esc>`
+## Solution
+<details><summary>Exact keys</summary>
 
-**Before:**
-```js
-function greet(name) {
-  const greeting = "Hello, " + name;
-  return greeting;
-}
-```
+1. `/const greeting<CR>oconsole.log(greeting);<Esc>`
+2. `ggO// Greets a user by name<Esc>`
+3. `/"Alice"<CR>o// processed<Esc>j.j.`
+4. Apply the three sequences above, accounting for inserted lines by searching for targets rather than using line numbers.
+</details>
 
-**After:**
-```js
-function greet(name) {
-  const greeting = "Hello, " + name;
-  console.log(greeting);
-  return greeting;
-}
-```
+## Reset, Cleanup, and Reference
+Use `u` per change or restore fixture; `:bwipe!`. See `:help o`, `:help O`, `:help .`.
 
-#### Drill B — Add a line above with `O`
-
-Goal: add a comment above the function.
-
-1. Put your cursor on the line `function greet(name) {`
-2. Press `O`
-3. Type `// Greets a user by name`
-4. Press `<Esc>`
-
-**Before:**
-```js
-function greet(name) {
-  const greeting = "Hello, " + name;
-  return greeting;
-}
-```
-
-**After:**
-```js
-// Greets a user by name
-function greet(name) {
-  const greeting = "Hello, " + name;
-  return greeting;
-}
-```
-
-#### Drill C — Combine `o` with dot repeat
-
-Goal: add the same line after each user in a list.
-
-1. Put your cursor on the `"Alice"` line
-2. Press `o`
-3. Type `// processed`
-4. Press `<Esc>`
-5. Move down to `"Bob"` and press `.` — the same `o` + text is repeated
-6. Move down to `"Charlie"` and press `.` again
-
----
-
-### Constraints (optional)
-
-- Never use `A<Enter>` or `ko` — only `o` and `O`.
-- Practice until you instinctively reach for `o`/`O` instead of navigating to end-of-line first.
+| Keys | Effect |
+|---|---|
+| `o` / `O` | Open line below / above and enter Insert mode |
+| `.` | Repeat last change |

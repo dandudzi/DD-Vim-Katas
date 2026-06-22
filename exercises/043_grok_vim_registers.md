@@ -1,46 +1,57 @@
-### Grok Vim registers
+# Kata: Choose the Correct Vim Register
 
-Given this text
+> **Environment:** Vim or Neovim
+> **Dependencies:** Clipboard drill requires `:echo has('clipboard')` to print `1`; skip it otherwise.
 
+## Objective
+Distinguish named, yank, black-hole, expression, and clipboard registers. Success means placing known values without accidental register overwrites.
+
+## Initial Fixture
 ```text
-1) This is the first block of text
-2) Another block of text
+alpha
+beta
+result:
 ```
+Start on line 1 in Normal mode.
 
-`"ayy` - will yank the first line into register "a"
-`"byy` - yank the 2nd line into register "b"
-`"bp` - paste in from register "b" first
-`"ap` - paste in from register "a" after
+## Tasks
 
-Use the yank register to fix the text from previous kata
+### Drill A - Named registers
+Yank `alpha` into `a` and `beta` into `b`; append them after `result:` in order `beta alpha`. **Verify:** line 3 is `result: beta alpha` and `:reg a b` contains the two words.
 
-```javascript
-collection = getCollection();
-process(somethingInTheWay, target);
-```
+### Drill B - Yank register survives deletion
+Reset. Yank `alpha`, delete `beta`, then append the yank from register `0` to `result:`. **Verify:** line 3 is `result: alpha`.
 
-`yiw` - to yank the word into yank register
-`jww` - to go to next line to the beginning of "somethingInTheWay"
-`dw` - will delete the word
-`"0P` - will insert the word from the yank register
+### Drill C - Expression register
+At the end of `result:`, enter Insert mode and insert the value of `6*35`. **Verify:** line 3 is `result:210`.
 
-`:reg "0` - will inspect the yank and unnamed registers
+### Challenge - Clipboard, when available
+Select all three lines and yank them to the `+` register. **Verify:** `:echo getreg('+')` contains all three lines. The correct Visual form is `ggVG"+y`, not `"+yy`.
 
-`"_` - is the black hole register, nothing returns from there
+## Hints
+<details><summary>Hints</summary>
+Prefix a yank or put with `"{register}`. In Insert mode, `<C-r>=` evaluates an expression.
+</details>
 
-`"+` - system clip board
-`"*` - system selection
+## Solution
+<details><summary>Show exact keys</summary>
+- A: `"ayiwj"byiwGA<Space><Esc>"bpA<Space><Esc>"ap`
+- B: `yiwjddGA<Space><Esc>"0p`
+- C: `GA<C-r>=6*35<CR><Esc>`
+- Challenge: `ggVG"+y`
+</details>
 
-Visual select this entire doc, yank its content into `"+yy`, go to
-Pages and insert it into a new document there
+## Reset and Cleanup
+Restore the fixture between drills. Clear kata registers with `:let @a='' | let @b=''`; clipboard cleanup is intentionally omitted to avoid overwriting prior clipboard data again.
 
-`"=` - expressions register
+## Command Reference
+| Register | Meaning |
+|---|---|
+| `a-z` | Named registers |
+| `0` | Latest yank |
+| `_` | Black hole |
+| `=` | Expression register |
+| `+` | System clipboard, when supported |
 
-`i` - switch to insert mode
-`<C-r>=` - switches to expression register
-`6*35<CR>` - will provide the text "210" and drop back into insert mode
-
-## More registers
-`<C-r>%` - name of the current file
-`<C-r>#` - name of the alternate file
-`<C-r>.` - last inserted text
+## References
+- [`:help registers`](https://vimhelp.org/change.txt.html#registers)

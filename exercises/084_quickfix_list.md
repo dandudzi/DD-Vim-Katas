@@ -1,87 +1,48 @@
-## Kata: Quickfix list — `:copen`, `:cn`, `:cp`, and friends
+# Kata: Build and Navigate a Quickfix List
 
-### 1) What the quickfix list is (short description)
+> **Environment:** Vim or Neovim. **Dependencies:** None; uses built-in `:vimgrep`.
 
-The quickfix list is a special Vim window that holds a list of locations (file + line number + text). It's used for:
+## Objective
+Populate quickfix from known files, inspect its size/order, and navigate with `:cnext` and `:cprev`.
 
-- Search results from `:vimgrep`
-- Compiler errors from `:make`
-- LSP diagnostics
-- Any tool that outputs file:line:message format
+## Setup
+Run exactly:
 
-Key commands:
+```vim
+:let g:kata_084_qf=getqflist({'items':1,'title':1,'context':1,'idx':1,'quickfixtextfunc':1})
+:let g:kata_084_dir=tempname() | call mkdir(g:kata_084_dir, 'p')
+:call writefile(['alpha TODO', 'plain', 'omega TODO'], g:kata_084_dir.'/one.txt')
+:call writefile(['TODO beta', 'plain'], g:kata_084_dir.'/two.txt')
+:execute 'edit '.fnameescape(g:kata_084_dir.'/one.txt')
+```
 
-- `:copen` — open the quickfix window
-- `:cclose` — close the quickfix window
-- `:cn` (or `:cnext`) — jump to the next entry
-- `:cp` (or `:cprev`) — jump to the previous entry
-- `:cfirst` — jump to the first entry
-- `:clast` — jump to the last entry
-- `]q` / `[q` — next/prev quickfix entry (if mapped, default in many configs)
+Start in the file window, Normal mode. These files are disposable.
 
----
+## Drills
+1. Populate quickfix with every `TODO` in the two files. **Verify:** `:echo len(getqflist())` prints `3`; `:clist` shows `one.txt` lines 1 and 3, then `two.txt` line 1.
+2. Open quickfix and choose the third entry with `<CR>`. **Verify:** current buffer is `two.txt`, line 1.
+3. Close quickfix, go to first, next twice, then previous once. **Verify:** final location is `one.txt`, line 3.
+4. Replace the list with matches for `plain`. **Verify:** list length is `2`; no `TODO` entry remains.
 
-### 2) Setup
+## Hints
+<details><summary>Hints</summary>
 
-For this drill, use the exercises in this repository. You need multiple files with matching content.
+`:vimgrep /pattern/gj files` adds all matches (`g`) and avoids jumping (`j`). A new `:vimgrep` replaces the current list.
+</details>
 
----
+## Solution
+<details><summary>Exact commands</summary>
 
-### 3) Step-by-step drills
+1. `:execute 'vimgrep /TODO/gj '.fnameescape(g:kata_084_dir).'/*.txt'`
+2. `:copen`, `G<CR>`
+3. `:cclose | cfirst | cnext | cnext | cprev`
+4. `:execute 'vimgrep /plain/gj '.fnameescape(g:kata_084_dir).'/*.txt'`
+</details>
 
-#### Drill A — Populate the quickfix list with `:vimgrep`
-
-Goal: search across multiple files and navigate results.
-
-1. From the root of this repository, open Vim
-2. Run `:vimgrep /cursor/ exercises/*.md`
-   - This searches for "cursor" in all exercise files
-3. Run `:copen` — the quickfix window appears at the bottom, showing every match with filename, line number, and matching text
-4. Press `<Enter>` on any entry to jump to that location
-
-#### Drill B — Navigate with `:cn` and `:cp`
-
-1. After running the vimgrep above, close the quickfix window with `:cclose`
-2. Type `:cn<Enter>` — jumps to the next match
-3. Type `:cn<Enter>` — jumps to the next one
-4. Type `:cp<Enter>` — jumps back to the previous match
-5. Type `:cfirst<Enter>` — jumps to the very first match
-6. Type `:clast<Enter>` — jumps to the very last match
-
-#### Drill C — Use the quickfix window interactively
-
-1. Run `:copen` to open the quickfix window
-2. Navigate the quickfix window like any buffer — use `j`/`k` to move between entries
-3. Press `<Enter>` to jump to the file and line of the selected entry
-4. The cursor moves to the target file; the quickfix window stays open
-5. Switch back to the quickfix window and select a different entry
-
-#### Drill D — Refine your search
-
-1. Run a new search: `:vimgrep /pattern/ exercises/*.md`
-2. Notice the quickfix list is replaced with new results
-3. Run `:copen` to see the new list
-4. Navigate with `:cn`/`:cp`
-
-#### Drill E — Quickfix with a grep-style search
-
-For more powerful searches, use `:grep` (uses external grep/ripgrep):
-
-1. Run `:grep "visual mode" exercises/`
-2. Run `:copen` to see results
-3. Navigate with `:cn`/`:cp`
-
----
-
-### Command reference
+## Cleanup and Reference
+`:cclose | for g:kata_084_buf in getbufinfo() | if stridx(g:kata_084_buf.name,g:kata_084_dir)==0 | execute 'bwipeout! '.g:kata_084_buf.bufnr | endif | endfor | call setqflist([], 'r', g:kata_084_qf) | call delete(g:kata_084_dir, 'rf') | unlet g:kata_084_buf g:kata_084_qf g:kata_084_dir`. Never substitute a real project path. See `:help quickfix`, `:help :vimgrep`.
 
 | Command | Effect |
 |---|---|
-| `:vimgrep /pat/ files` | Search files, populate quickfix |
-| `:copen` | Open quickfix window |
-| `:cclose` | Close quickfix window |
-| `:cn` | Next quickfix entry |
-| `:cp` | Previous quickfix entry |
-| `:cfirst` | First entry |
-| `:clast` | Last entry |
-| `:cdo s/old/new/g` | Run substitution on every quickfix entry |
+| `:copen` / `:cclose` | Open / close quickfix window |
+| `:cnext` / `:cprev` | Next / previous entry |

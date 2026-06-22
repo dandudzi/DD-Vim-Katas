@@ -1,28 +1,73 @@
-### Running commands in shell
+# Kata: Filter Buffer Text Through the Shell
 
-1. Combine two commands with one shell execution:
-   `term` - opens terminal
-   `exit` - close terminal
+> **Environment:** Vim or Neovim on Unix-like systems
+> **Dependencies:** POSIX `sort`; confirm `:echo executable('sort')` prints `1`.
 
-`:write !sh` - will write this file (a vim command) and start a shell
+## Objective
+Use `:!`, `:read !`, and range `!` to run a command without replacing text, insert its output, and filter selected lines. Success means producing the exact sorted fixture while leaving its header unchanged.
 
-2. Sort the content of this text:
+## Initial Fixture
 
+```text
+name,team
+Zoe,blue
+Amy,amber
+Ian,cyan
 ```
-first name, last name, email
-john,smith,john@example.com
-drew,neil,drew@vimcast.org
-jane,doe,jane@example.com
+
+Use an unnamed scratch buffer. Start in Normal mode on line 1.
+
+## Tasks
+
+### Drill A - Run without editing
+Run `printf shell-ready` through the shell. **Verify:** the message contains `shell-ready` and the buffer is unchanged.
+
+### Drill B - Read output
+Append one line containing `generated` using shell output. **Verify:** line 5 is exactly `generated`.
+
+### Drill C - Filter a range
+Reset, then sort only data lines by the second comma-separated field. **Verify:** the buffer is:
+
+```text
+name,team
+Amy,amber
+Zoe,blue
+Ian,cyan
 ```
 
-Visual highlight the lines to be sorted
-`:'<,'>!sort -t',' -k2` - the sort shell command is used to sort the lines
+### Challenge
+Repeat Drill C using a Visual-line selection rather than a numeric range.
 
-3. Pull up command history in vim
+## Hints
 
-`q:` will show normal mode history
-`q/` will show search history
+<details><summary>Hints</summary>
 
-You can navigate the history with `j`, `k` or arrow buttons and repeat the command with `Enter`.
+`:!` displays output; `:read !` inserts output; `[range]!` replaces a range with filtered output.
 
-To close the history window press `:q<cr>`.
+</details>
+
+## Solution
+
+<details><summary>Show exact commands</summary>
+
+- A: `:!printf shell-ready<CR>`
+- B: `G:read !printf generated<CR>`
+- C: `:2,4!sort -t, -k2,2<CR>`
+- Challenge: `jV2j:!sort -t, -k2,2<CR>`
+
+</details>
+
+## Reset and Cleanup
+Use `:enew!` and restore the fixture. Close the scratch buffer with `:bwipeout!`. Shell filters replace text, so never practise them on unsaved user data.
+
+## Command Reference
+
+| Command | Effect |
+|---|---|
+| `:!cmd` | Run `cmd`; do not insert output |
+| `:read !cmd` | Insert command output below the addressed line |
+| `:[range]!cmd` | Replace range with filtered output |
+
+## References
+- [`:help :!`](https://vimhelp.org/change.txt.html#%3A%21)
+- [`:help :read!`](https://vimhelp.org/insert.txt.html#%3Aread%21)

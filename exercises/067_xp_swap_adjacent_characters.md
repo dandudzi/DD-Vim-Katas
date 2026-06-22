@@ -1,34 +1,57 @@
-## Command: `xp`
+# Kata: Swap Adjacent Characters with `xp`
 
-**What it does:** deletes the character under the cursor (`x`) and puts it back **after** the cursor (`p`) — effectively **swapping the current character with the one to its right**.
+> **Environment:** Vim or Neovim. **Dependencies:** None.
 
-## Practice text
+## Objective
+Fix transposition typos with `xp` and repeat a search/fix workflow without Insert mode.
 
-Fix all typos by swapping adjacent letters with `xp` (don’t use insert mode fixes like `cw`, `r`, etc.):
-
+## Fixture and Start
 ```text
-I typed teh command too fast and now the sentence looks odd.
-
-Please check form A and form B before submitting.
-
-It should be and, not adn, in the API docs.
-
-I keep writing thier instead of their when I’m tired.
-
-One more: teh form has adn duplicated in teh footer.
+teh adn form thier
+clean text stays clean
+teh form has adn
 ```
 
-## Steps (how to practice)
+Use a new buffer, insert the fixture, then give it an owned temporary name:
 
-1. Search for any of the typo words:
-   - `/\v<(teh|adn|form|thier)>`
-2. On the match, move the cursor onto the **left** character of the swapped pair:
-   - `teh` → put cursor on `e` (so `t[e]h`)
-   - `adn` → put cursor on `d` (so `a[d]n`)
-   - `form` (should be `from`) → put cursor on `o` (so `f[o]rm`)
-   - `thier` (should be `their`) → put cursor on `i` (so `th[i]er`)
-3. Press `xp` to swap the two characters.
-4. Jump to the next typo with `n`.
-5. Repeat steps 2–4 until there are no matches left (`n` stops finding anything).
+```vim
+:let g:kata_067_file=tempname().'.txt'
+:execute 'write! '.fnameescape(g:kata_067_file)
+:let g:kata_067_qf=getqflist({'items':1,'title':1,'context':1,'idx':1,'quickfixtextfunc':1})
+```
 
-Optional self-check: rerun the search (`/...`) after you think you’re done and confirm it finds nothing.
+Start at `gg0` in Normal mode. Do not use `r`, `s`, `i`, or `c` for fixes.
+
+## Drills
+1. Put the cursor on `e` in the first `teh` and swap it with `h`. **Verify:** the first word is `the`.
+2. Reset. Fix all four typos on line 1 using `xp`. **Verify:** line 1 is `the and from their`.
+3. Reset. Search for each bad form and fix every occurrence. **Verify:**
+
+```text
+the and from their
+clean text stays clean
+the from has and
+```
+
+Write the corrected disposable buffer with `:update`. Then run `:call setqflist([], 'r')` followed by `:vimgrep /\v<(teh|adn|form|thier)>/ %`. **Verify:** Vim reports `E480: No match`; that error is the expected no-match result, and `:echo len(getqflist())` remains `0`.
+
+## Hints
+<details><summary>Hints</summary>
+
+`x` deletes the character under the cursor; `p` puts it after the new cursor position. The cursor must begin on the left character of the reversed pair.
+</details>
+
+## Solution
+<details><summary>Exact keys</summary>
+
+1. `gg0lxp`
+2. `/teh<CR>lxp`, `/adn<CR>lxp`, `/form<CR>lxp`, `/thier<CR>2lxp`
+3. Use `/\v<(teh|adn|form|thier)><CR>`; on each match move to the reversed pair (`l`, `l`, `l`, or `2l` respectively), press `xp`, then repeat the search.
+</details>
+
+## Cleanup and Reference
+Restore between early drills with `u` or by reinserting the fixture. Clean up only the owned file and restore the complete saved quickfix state with `:call setqflist([], 'r', g:kata_067_qf) | bwipe! | call delete(g:kata_067_file) | unlet g:kata_067_qf g:kata_067_file`. See `:help x`, `:help p`, `:help :vimgrep`.
+
+| Keys | Effect |
+|---|---|
+| `xp` | Swap the character under cursor with the one to its right |

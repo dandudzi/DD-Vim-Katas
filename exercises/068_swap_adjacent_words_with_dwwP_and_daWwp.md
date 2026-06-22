@@ -1,52 +1,52 @@
-## Commands
+# Kata: Swap Adjacent Words Reliably
 
-- `dwwP`: deletes the current `word`, moves to the next `word`, then puts the deleted word **before** it — net effect: **swap the current word with the next word** (for plain space-separated words).
-- `daWwp`: deletes a `WORD` (big word, includes punctuation like `key=value`) plus trailing space, moves to the next _small-word_ chunk (often punctuation like `,`), then puts after it — useful for **reordering a `key=value` token across punctuation**.
+> **Environment:** Vim or Neovim. **Dependencies:** None.
 
-## Practice text
+## Objective
+Swap adjacent plain words with a tested delete-motion-put sequence while preserving surrounding text.
 
-Fix the text using only the specified command for each section.
-
+## Fixture and Start
 ```text
-SECTION A (use dwwP only)
-
-We shipped the build broken yesterday.
-A login fix quick is already merged.
-The parser throws an error fatal on empty input.
-Please keep the changes small and review fast.
-
-SECTION B (use daWwp only)
-
-env=prod api,cache
-timeout=30 fast,slow
-path=/tmp downloads,uploads
-url=https://example.com docs,build
+We shipped broken build yesterday.
+A quick fix is merged.
+The parser reports fatal error now.
+Please review fast today.
 ```
 
-## Steps
+Use a new buffer and start on `broken` in line 1. Reset before each drill.
 
-### A) Practice `dwwP` (swap two plain words)
+## Constraints
+Use delete, word motions, and put; do not use Insert mode. This kata intentionally drops the former `daWwp` punctuation recipe: its result depended on punctuation and cursor placement and did not produce the documented output.
 
-1. Search for a swapped pair (pick one to start):
-   1. `/build broken`
-   2. or `/fix quick`
-   3. or `/error fatal`
-   4. or `/review fast`
-2. Put the cursor on the **first** word of the pair (e.g. on `broken` in `build broken`).
-3. Press `dwwP`.
-4. Jump to the next occurrence with `n`.
+## Drills
+1. Swap `broken build`. **Verify:** line 1 becomes `We shipped build broken yesterday.`
+2. Swap `quick fix` and `fatal error`. **Verify:** lines 2-3 become `A fix quick is merged.` and `The parser reports error fatal now.`
+3. Reset and correct all four lines. **Verify:**
 
-### B) Practice `daWwp` (move `key=value` across the comma)
+```text
+We shipped build broken yesterday.
+A fix quick is merged.
+The parser reports error fatal now.
+Please fast review today.
+```
 
-Goal per line: move the `key=value` token **after** the word before the comma (e.g. `env=prod api,cache` → `api,env=prod cache`).
+## Hints
+<details><summary>Hints</summary>
 
-1. Search for the next `key=value` token:
-   - `/=`
-2. Put the cursor anywhere inside the `key=value` token at the start of the line (e.g. on `env=prod`).
-3. Press `daWwp`.
-4. Press `n` to go to the next line with `=`.
-5. Repeat until SECTION B becomes:
-   - `api,env=prod cache`
-   - `fast,timeout=30 slow`
-   - `downloads,path=/tmp uploads`
-   - `docs,url=https://example.com build`
+Start on the first word. Delete it plus the following space with `dw`, move one word right, then put before that position.
+</details>
+
+## Solution
+<details><summary>Exact keys</summary>
+
+For each pair, start on the first word and use `dwwP`. Example: `/broken build<CR>dwwP`. Repeat for `/quick fix`, `/fatal error`, and `/review fast`.
+
+The old kata placed the cursor on the wrong word. From the corrected start on the first word, `dwwP` produces the documented swap.
+</details>
+
+## Cleanup and Reference
+Reset with `u` or restore the fixture; `:bwipe!` afterward. See `:help dw`, `:help e`, `:help p`.
+
+| Keys | Effect |
+|---|---|
+| `dwwP` | Delete first word+space, move past the second word, put first before the next word |

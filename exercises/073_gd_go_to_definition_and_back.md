@@ -1,60 +1,50 @@
-## Kata: `gd` (go to definition/declaration) + jump back (`<C-o>`, `<C-i>`)
+# Kata: Jump to a Definition and Back
 
-### 1) What `gd` does (short description)
+> **Environment:** Vim or Neovim. This kata uses built-in `gd`, not an LSP mapping.
+> **Portability:** Run `:verbose nmap gd`; if remapped, use `:normal! gd` or temporarily remove the mapping.
 
-`gd` jumps to the **definition** (or **declaration**, depending on your setup/LSP) of the symbol under your cursor (function, variable, type, method, etc.).
+## Objective
+Use built-in `gd` for same-file local declarations and traverse the jump list with `<C-o>` and `<C-i>`.
 
-After jumping, you can return to where you were using:
+## Fixture and Start
+Create a new buffer containing:
 
-- `<C-o>` — jump **back** in jump history
-- `<C-i>` — jump **forward** in jump history
+```c
+int normalize(int value) {
+  return value < 0 ? -value : value;
+}
 
-This is the “read it, then instantly go back” workflow.
+int report(int raw) {
+  int cleaned = normalize(raw);
+  return cleaned;
+}
+```
 
----
+Run `:set filetype=c`, then place the cursor on `cleaned` in `return cleaned;`, Normal mode.
 
-### 2) Practice file
+## Drills
+1. Jump to the local declaration of `cleaned` and return. **Verify:** `gd` lands on `cleaned` in line 6; `<C-o>` returns to line 7.
+2. From `normalize` on line 6, jump to its declaration, then walk back and forward. **Verify:** `gd` lands on line 1, `<C-o>` returns to line 6, `<C-i>` returns to line 1.
+3. Challenge: start at line 7, visit the `cleaned` declaration, then the `normalize` declaration, and return to line 7 using jump history only.
 
-Use the companion file `practice_073_practice_file.ts` in this directory to practice these drills.
+## Hints
+<details><summary>Hints</summary>
 
-### 3) Step-by-step: how to practice
+Built-in `gd` searches for a local declaration in the current file. LSP definition behavior is separate and configuration-dependent.
+</details>
 
-#### Drill A — Jump to a function definition and back
+## Solution
+<details><summary>Exact keys</summary>
 
-Goal: use `gd` + `<C-o>` as a single “round trip”.
+1. On line 7 `cleaned`: `gd<C-o>`
+2. On line 6 `normalize`: `gd<C-o><C-i>`
+3. `gdf=wgd<C-o><C-o>` (after the first `gd`, `f=w` moves from `cleaned` through `=` to `normalize` before the second `gd`).
+</details>
 
-1. Put your cursor on `makeUser` in: `const u1 = makeUser(...)`
-2. Press `gd`  
-   You should land on `function makeUser(...)`.
-3. Read 1–2 lines to confirm what it does.
-4. Press `<C-o>` to jump back to the usage line.
-5. Repeat 5 times until it feels automatic.
+## Cleanup and Reference
+`:bwipe!`. The former companion-file/LSP assumption is removed. See `:help gd`, `:help CTRL-O`, `:help CTRL-I`.
 
-#### Drill B — Chain jumps, then walk back/forward in history
-
-Goal: build a small jump stack.
-
-1. From the usage section, put cursor on `makeUser` → `gd`
-2. Inside `makeUser`, put cursor on `normalizeName` → `gd`
-3. Now press `<C-o>` twice to go back step-by-step:
-   - back to `makeUser`
-   - back to the original usage
-4. Press `<C-i>` twice to move forward again:
-   - forward to `makeUser`
-   - forward to `normalizeName`
-
-#### Drill C — Jump to type definitions
-
-Goal: practice `gd` on types, not only functions.
-
-1. Put cursor on `User` in `function printReport(user: User): string`
-2. Press `gd` to jump to the `type User = { ... }` definition.
-3. Press `<C-o>` to return.
-4. Do the same for `UserId`.
-
----
-
-### Constraints (optional, for stronger muscle memory)
-
-- Don’t use search (`/`) to locate definitions—only `gd`.
-- After every `gd`, always return with `<C-o>` (unless you intentionally continue chaining with another `gd`).
+| Keys | Effect |
+|---|---|
+| `gd` | Find local declaration in current file |
+| `<C-o>` / `<C-i>` | Older / newer jump-list position |

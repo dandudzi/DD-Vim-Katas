@@ -1,100 +1,46 @@
-## Kata: Telescope fuzzy finding — `<Space>ss`, `<Space>/`, `<Space>,`
+# Kata: Fuzzy-Find Files, Text, and Buffers
 
-> **Note**: This kata uses LazyVim default keybindings. If you use a different Neovim config, your mappings may differ. The concepts (fuzzy-find symbols, live grep, buffer picker) apply to any Telescope setup.
+> **Environment:** Neovim with LazyVim and its configured picker (Snacks, Telescope, or fzf-lua).
+> **Readiness:** Run `:verbose nmap <Space><Space>`, `:verbose nmap <Space>/`, and `:verbose nmap <Space>,`. Continue only when each mapping has a picker description. Provider keys inside the picker can vary.
 
-### 1) What Telescope does (short description)
+## Objective
+Use LazyVim's picker mappings to open a known file, grep a known token, switch buffers, and resume the previous picker.
 
-Telescope is a fuzzy finder plugin for Neovim. In LazyVim, the key pickers are:
+## Setup
+```vim
+:let g:kata_102_dir=tempname() | call mkdir(g:kata_102_dir, 'p')
+:call writefile(['ALPHA_TOKEN', 'shared'], g:kata_102_dir.'/alpha-note.txt')
+:call writefile(['BETA_TOKEN', 'shared'], g:kata_102_dir.'/beta-code.txt')
+:execute 'lcd '.fnameescape(g:kata_102_dir) | edit alpha-note.txt | edit beta-code.txt
+```
 
-- `<Space>sf` — find files by name
-- `<Space>ss` — search document symbols (functions, classes, variables in current file)
-- `<Space>sS` — search workspace symbols (across the entire project)
-- `<Space>/` — live grep (search file contents across the project)
-- `<Space>,` — open buffer picker (switch between open files)
-- `<Space>sr` — resume the last Telescope picker
+Start in `beta-code.txt`, Normal mode.
 
-Inside any picker:
-- Type to filter results
-- `Ctrl-N` / `Ctrl-P` (or arrow keys) — move up/down
-- `<Enter>` — select and open
-- `<Esc>` — close the picker
+## Drills
+1. Open the root file picker, filter `alpha note`, and select the result. **Verify:** `:echo expand('%:t')` is `alpha-note.txt`.
+2. Open root live grep, search `BETA_TOKEN`, and choose the only result. **Verify:** current file is `beta-code.txt`, line 1.
+3. Open the buffer picker, filter `alpha`, and select it. **Verify:** `alpha-note.txt` is current and `:ls` still lists both files.
+4. Resume the latest picker, close it without selection, and confirm the buffer did not change.
 
----
+## Hints
+<details><summary>Hints</summary>
 
-### 2) Setup
+Current LazyVim defaults commonly use `<Space><Space>` for root files, `<Space>/` for root grep, `<Space>,` for buffers, and `<Space>sR` for resume. Trust `:verbose nmap` over this document when customized.
+</details>
 
-These drills work best in a project with multiple files. Use this repository or any codebase.
+## Solution
+<details><summary>Default LazyVim keys</summary>
 
----
+1. `<Space><Space>`, type `alpha note`, select with the provider's documented next/previous keys, `<CR>`.
+2. `<Space>/`, type `BETA_TOKEN`, `<CR>`.
+3. `<Space>,`, type `alpha`, `<CR>`.
+4. Verify `:verbose nmap <Space>sR`, press `<Space>sR`, then `<Esc>`.
+</details>
 
-### 3) Step-by-step drills
+## Cleanup and References
+`:for g:kata_102_buf in getbufinfo() | if stridx(g:kata_102_buf.name,g:kata_102_dir)==0 | execute 'bwipeout! '.g:kata_102_buf.bufnr | endif | endfor | lcd - | call delete(g:kata_102_dir, 'rf') | unlet g:kata_102_buf g:kata_102_dir`. No real project is searched or changed. References: https://lazyvim.github.io/keymaps and the picker provider shown by `:verbose nmap`.
 
-#### Drill A — Find files with `<Space>sf`
-
-Goal: quickly open a file without knowing its exact path.
-
-1. Press `<Space>sf` — the file finder opens
-2. Type `quick` — the list filters to files containing "quick" in their path
-3. Use `Ctrl-N`/`Ctrl-P` to select the right file
-4. Press `<Enter>` to open it
-
-Tip: you can type fragments out of order. `084 quick` and `quick 084` both match `084_quickfix_list.md`.
-
-#### Drill B — Search symbols with `<Space>ss`
-
-Goal: jump to a function or heading in the current file.
-
-1. Open a file with multiple functions or headings
-2. Press `<Space>ss` — lists all symbols (functions, classes, headings)
-3. Type a few characters of the function name
-4. Press `<Enter>` to jump to it
-
-This is faster than scrolling or searching with `/`.
-
-#### Drill C — Search project symbols with `<Space>sS`
-
-Goal: find a function anywhere in the project.
-
-1. Press `<Space>sS` — searches symbols across all project files
-2. Type the function or class name
-3. Select and press `<Enter>` to jump to its definition
-4. Press `Ctrl-O` to jump back
-
-#### Drill D — Live grep with `<Space>/`
-
-Goal: search for a string across all files.
-
-1. Press `<Space>/` — the live grep picker opens
-2. Type `quickfix` — results update as you type, showing every file and line containing "quickfix"
-3. Use `Ctrl-N`/`Ctrl-P` to browse results
-4. Press `<Enter>` to jump to a result
-
-Tip: after the search term, type a space then a filename fragment to narrow by file. For example: `quickfix exercises` limits results to the exercises directory.
-
-#### Drill E — Switch buffers with `<Space>,`
-
-Goal: quickly switch between open files.
-
-1. Open several files (use `<Space>sf` to open 3-4 files)
-2. Press `<Space>,` — shows all open buffers
-3. Type a few characters of the filename you want
-4. Press `<Enter>` to switch to it
-
-This is much faster than `:bnext`/`:bprev` cycling.
-
----
-
-### Command reference (LazyVim defaults)
-
-| Keybinding | Picker | Effect |
-|---|---|---|
-| `<Space>sf` | Find files | Fuzzy-find files by name |
-| `<Space>ss` | Document symbols | Symbols in current file |
-| `<Space>sS` | Workspace symbols | Symbols across project |
-| `<Space>/` | Live grep | Search contents across files |
-| `<Space>,` | Buffers | Switch open buffers |
-| `<Space>sr` | Resume | Reopen last picker |
-| `<Space>s"` | Registers | Browse registers |
-| `Ctrl-N`/`Ctrl-P` | — | Navigate picker results |
-| `<Enter>` | — | Open selected item |
-| `<Esc>` | — | Close picker |
+| Mapping | LazyVim action |
+|---|---|
+| `<Space><Space>` / `<Space>/` | Find files / grep root |
+| `<Space>,` / `<Space>sR` | Buffers / resume picker |
