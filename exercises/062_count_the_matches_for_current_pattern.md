@@ -10,4 +10,4 @@ will pay off.
 ```
 
 `/time` - to search for the word 'time'
-`%s///gn` - to count the number of matches
+`:%s///gn` - to count the number of matches

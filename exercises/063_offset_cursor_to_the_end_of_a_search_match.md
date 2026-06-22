@@ -11,6 +11,9 @@ Which langs would you like to learn?
 Task: replace "lang" with "language".
 
 `{start} on A of Aim` - initial position
-`/lang/e<CR>` - find the word 'lang'
-`auage<Esc>` - add "uage" to "lang"
-`n.n.` - repeat it twice
+`/lang/e<CR>` - search for 'lang', `/e` offsets cursor to the end of the match (on 'g')
+`a` - enter Insert mode after the cursor (append)
+`uage<Esc>` - type "uage" to turn "lang" into "language", then exit Insert mode
+`n` - jump to next 'lang' match (cursor lands on 'g' due to `/e` offset)
+`.` - repeat the last edit (`auage<Esc>`)
+`n.` - repeat for the third match
