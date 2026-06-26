@@ -1,118 +1,99 @@
-## Kata: Folding — `zo`, `zc`, `za`, `zR`, `zM`, `zf`
+# Kata: Folding Basics
 
-### 1) What folding does (short description)
+> **Environment:** Vim or Neovim; built-in folding only.
+> **Dependencies:** None.
+> **Portability:** Uses manual folds with `zf`, `zo`, `zc`, `za`, `zR`, and `zM`.
 
-Folding collapses sections of text into a single line, letting you hide detail and focus on structure. Key commands:
+## Objective
 
-- `zf{motion}` — **create** a fold (manual foldmethod)
-- `zo` — **open** the fold under the cursor
-- `zc` — **close** the fold under the cursor
-- `za` — **toggle** the fold (open if closed, close if open)
-- `zR` — **open all** folds in the file
-- `zM` — **close all** folds in the file
-- `zd` — **delete** the fold under the cursor (manual foldmethod)
+Use manual folds to collapse and reopen sections of a buffer for a quick
+structural overview.
 
-Fold methods (`:set foldmethod=`):
-- `manual` — create folds by hand with `zf`
-- `indent` — folds based on indentation level
-- `syntax` — folds based on language syntax (requires syntax highlighting)
-- `marker` — folds between `{{{` and `}}}` markers
+Success means: you can create two manual folds, peek into one with `zo`, close
+it again with `zc`, toggle with `za`, and switch the whole file between fully
+open and fully closed states with `zR` and `zM`.
 
----
+## Setup
 
-### 2) Practice text (paste into a buffer)
+Open a scratch buffer and insert exactly:
 
-```py
+```python
 class OrderProcessor:
     def validate_order(self, order):
         if not order.items:
             raise ValueError("Empty order")
-        if not order.customer:
-            raise ValueError("No customer")
-        for item in order.items:
-            if item.quantity <= 0:
-                raise ValueError(f"Invalid quantity: {item.quantity}")
         return True
 
     def calculate_total(self, order):
-        subtotal = sum(item.price * item.quantity for item in order.items)
+        subtotal = sum(item.price for item in order.items)
         tax = subtotal * 0.08
-        shipping = 5.99 if subtotal < 50 else 0
-        return subtotal + tax + shipping
-
-    def process_payment(self, order, total):
-        gateway = PaymentGateway()
-        result = gateway.charge(order.customer.card, total)
-        if not result.success:
-            raise PaymentError(result.message)
-        return result.transaction_id
-
-    def send_confirmation(self, order, transaction_id):
-        email = EmailService()
-        email.send(
-            to=order.customer.email,
-            subject="Order Confirmed",
-            body=f"Your order {order.id} is confirmed. Transaction: {transaction_id}"
-        )
+        return subtotal + tax
 
     def process(self, order):
         self.validate_order(order)
-        total = self.calculate_total(order)
-        txn_id = self.process_payment(order, total)
-        self.send_confirmation(order, txn_id)
-        return txn_id
+        return self.calculate_total(order)
 ```
 
----
+Run `:setlocal foldmethod=manual` and start on line 2.
 
-### 3) Step-by-step drills
+## Drills
 
-#### Drill A — Create and use manual folds
+1. Create a fold for `validate_order` with `zf` and a motion. Verify that line
+   2 becomes a closed fold header.
+2. Create a second fold for `calculate_total`. Verify both methods can now be
+   collapsed independently.
+3. Use `zo`, `zc`, and `za` on one closed fold. Verify the fold opens, closes,
+   and toggles without changing buffer text.
+4. Use `zM` to close all folds, then `zR` to reopen them all. Verify the class
+   body collapses to summaries and then returns fully visible.
 
-1. Run `:set foldmethod=manual`
-2. Put cursor on the line `def validate_order(self, order):`
-3. Press `V` to start visual line mode
-4. Select down to the `return True` line
-5. Press `zf` — the selected lines collapse into a fold
-6. You should see something like: `+-- 9 lines: def validate_order...`
-7. Press `zo` to open it
-8. Press `zc` to close it again
-9. Press `za` to toggle it
+## Challenge
 
-#### Drill B — Fold all methods
+Reset the fixture. Create folds for the first two methods, close them both,
+peek into `calculate_total`, close it again, then reopen the whole file.
 
-1. Repeat drill A for each method: `calculate_total`, `process_payment`, `send_confirmation`, and `process`
-2. When all are folded, the file shows just the class line and fold summaries — a high-level overview
-3. Press `zo` on `calculate_total` to peek at just that method
-4. Press `zc` to close it again
+## Hints
 
-#### Drill C — `zR` and `zM` for global control
+<details>
+<summary>Hints</summary>
 
-1. With all methods folded, press `zR` — every fold in the file opens
-2. Press `zM` — every fold closes
-3. Press `zR` again — all open
-4. Practice toggling between the zoomed-out and zoomed-in view
+`zfap` is a fast way to create a manual fold around one method-sized paragraph.
+This kata stays on manual fold creation and visibility only.
 
-#### Drill D — Use `zf` with motions
+</details>
 
-1. Press `zR` to open all folds, then `:set foldmethod=manual`
-2. Put cursor on the `def calculate_total` line
-3. Press `zfap` — creates a fold around the paragraph (the method block)
-4. Press `za` to toggle it
+## Solution
 
-#### Drill E — Delete a fold
+<details>
+<summary>Exact keys</summary>
 
-1. Put cursor on a closed fold
-2. Press `zd` — the fold is removed (the text is still there, just not foldable anymore)
+1. On line 2: `zfap`
+2. On line 7: `zfap`
+3. On a closed fold: `zo`, `zc`, `za`
+4. `zM`, then `zR`
 
----
+Challenge: `2Gzfap7GzfapzMggjzozczR`
 
-### Tip: indent-based folding
+</details>
 
-For a quick way to get folds without manual creation:
+## Cleanup and Scope
 
-```
-:set foldmethod=indent
-```
+Close the scratch buffer with `:bd!`.
 
-Then use `zo`, `zc`, `za`, `zR`, `zM` to navigate. Each indentation level becomes a fold level.
+This is the foundation kata for creating and opening manual folds. Advanced
+follow-ups now live elsewhere:
+
+- [150_run_command_on_visible_fold_lines.md](150_run_command_on_visible_fold_lines.md) for `:folddoopen`
+- [166_navigate_between_folds.md](166_navigate_between_folds.md) for `zj` and `zk`
+- [167_adjust_fold_depth_incrementally.md](167_adjust_fold_depth_incrementally.md) for `zr` and `zm`
+
+## Command Reference
+
+| Keys | Effect |
+|---|---|
+| `zf{motion}` | Create a manual fold |
+| `zo` | Open the fold under the cursor |
+| `zc` | Close the fold under the cursor |
+| `za` | Toggle the fold under the cursor |
+| `zR` | Open all folds |
+| `zM` | Close all folds |

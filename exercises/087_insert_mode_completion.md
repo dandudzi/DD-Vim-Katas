@@ -1,111 +1,90 @@
-## Kata: Insert mode completion — `Ctrl-N`, `Ctrl-P`, `Ctrl-X` submodes
+# Kata: Insert-Mode Completion Basics
 
-### 1) What insert mode completion does (short description)
+> **Environment:** Vim or Neovim; built-in completion only.
+> **Dependencies:** None.
+> **Portability:** Uses built-in insert-mode completion with `<C-n>`, `<C-p>`,
+> `<C-y>`, `<C-e>`, and `<C-x><C-l>`.
 
-Vim has built-in completion that works without any plugins or LSP. While in insert mode:
+## Objective
 
-- `Ctrl-N` — complete with **next** matching word (searches forward)
-- `Ctrl-P` — complete with **previous** matching word (searches backward)
-- `Ctrl-X Ctrl-L` — complete a **whole line**
-- `Ctrl-X Ctrl-F` — complete a **filename/path**
-- `Ctrl-X Ctrl-]` — complete from **tags**
+Complete repeated text from the current buffer without plugins or LSP.
 
-These scan all open buffers, included files, and tags for matches. Even with LSP/autocompletion plugins, knowing the built-in completion is valuable as a fallback.
+Success means: you can use `<C-n>` and `<C-p>` to cycle keyword matches,
+accept one candidate with `<C-y>`, cancel another with `<C-e>`, and reuse a
+whole line with `<C-x><C-l>`.
 
----
+## Setup
 
-### 2) Practice text (paste into a buffer)
+Open a scratch buffer and insert exactly:
 
-```ts
-interface ShoppingCart {
-  customerId: string;
-  customerName: string;
-  customerEmail: string;
-  items: CartItem[];
-  totalPrice: number;
-  discountCode: string;
-}
+```text
+customerId
+customerName
+customerEmail
+discountCode
 
-function createCart(customerId: string, customerName: string): ShoppingCart {
-  return {
-    customerId: customerId,
-    customerName: customerName,
-    customerEmail: "",
-    items: [],
-    totalPrice: 0,
-    discountCode: "",
-  };
-}
+cus
+disc
 
-function addItemToCart(cart: ShoppingCart, item: CartItem): void {
-  cart.items.push(item);
-  cart.totalPrice += item.price * item.quantity;
-}
-
-function applyDiscount(cart: ShoppingCart, code: string): void {
-
-}
 ```
 
----
+Start in Insert mode at the end of `cus` on line 6.
 
-### 3) Step-by-step drills
+## Drills
 
-#### Drill A — Basic word completion with `Ctrl-N`
+1. On line 6, use `<C-n>` and `<C-p>` to cycle through the `customer...`
+   matches. Verify you can land on `customerName`.
+2. Accept the selected candidate with `<C-y>`. Verify line 6 becomes exactly
+   `customerName`.
+3. Move to line 7 after `disc`, trigger completion, and cancel it with
+   `<C-e>`. Verify line 7 stays exactly `disc`.
+4. Open a new line below, type `cust`, and use `<C-x><C-l>` only after first
+   creating a full line elsewhere that begins with `customerEmail`. Verify you
+   can reuse that entire line as one completion unit.
 
-Goal: complete long variable names without typing them fully.
+## Challenge
 
-1. Put cursor at the end of the `applyDiscount` function body (the blank line)
-2. Press `i` to enter insert mode
-3. Type `cart.cus` — then press `Ctrl-N`
-4. A popup menu appears with matches: `customerId`, `customerName`, `customerEmail`
-5. Press `Ctrl-N` to cycle forward through options
-6. Press `Ctrl-P` to cycle backward
-7. Press `<Enter>` or just keep typing to accept the current match
+Reset the fixture. Turn line 6 into `customerEmail`, leave line 7 unchanged as
+`disc`, and insert one reused whole line below them.
 
-#### Drill B — `Ctrl-P` (search backward)
+## Hints
 
-1. At the end of the `applyDiscount` function, enter insert mode
-2. Type `disc` — then press `Ctrl-P`
-3. It finds `discountCode` (searching backward from cursor)
-4. Accept it and continue typing
+<details>
+<summary>Hints</summary>
 
-#### Drill C — Whole-line completion with `Ctrl-X Ctrl-L`
+`<C-n>` and `<C-p>` move through candidates. `<C-y>` accepts the current one.
+`<C-e>` closes the popup and keeps only what you typed. `<C-x><C-l>` completes
+a whole line instead of one word.
 
-Goal: duplicate a similar line without retyping it.
+</details>
 
-1. Inside `applyDiscount`, enter insert mode on the blank line
-2. Type `  cart.` — then press `Ctrl-X Ctrl-L`
-3. A list of matching lines appears (lines starting with `  cart.` from the buffer)
-4. Select the one you want with `Ctrl-N`/`Ctrl-P`
-5. Press `<Enter>` to accept
+## Solution
 
-#### Drill D — Filename completion with `Ctrl-X Ctrl-F`
+<details>
+<summary>Exact keys</summary>
 
-Goal: type a file path using completion.
+1. On `cus`: `<C-n>` or `<C-p>` until the right `customer...` entry is
+   selected
+2. `<C-y>`
+3. On `disc`: `<C-n><C-e>`
+4. `o cust<C-x><C-l><C-y><Esc>` after a matching full line exists
 
-1. Anywhere in the file, enter insert mode
-2. Type `// See exercises/` — then press `Ctrl-X Ctrl-F`
-3. A list of files in the `exercises/` directory appears
-4. Use `Ctrl-N`/`Ctrl-P` to select
-5. Press `<Enter>` to accept
+</details>
 
----
+## Cleanup and Scope
 
-### Tip
+Close the scratch buffer with `:bd!`.
 
-If a popup appears and you want to dismiss it without accepting:
+This foundation kata stays on core buffer-local completion and popup control.
+It no longer tries to survey every completion source. Advanced or specialized
+follow-ups belong in separate drills.
 
-- `Ctrl-E` — close the popup and keep what you typed
-- `<Esc>` — close the popup and exit insert mode
+## Command Reference
 
-### Key reference
-
-| Shortcut | Completes |
+| Keys | Effect |
 |---|---|
-| `Ctrl-N` | Next keyword match |
-| `Ctrl-P` | Previous keyword match |
-| `Ctrl-X Ctrl-L` | Whole line |
-| `Ctrl-X Ctrl-F` | Filename |
-| `Ctrl-X Ctrl-]` | Tags |
-| `Ctrl-X Ctrl-O` | Omni completion (if configured) |
+| `<C-n>` | Select the next completion match |
+| `<C-p>` | Select the previous completion match |
+| `<C-y>` | Accept the current completion |
+| `<C-e>` | Cancel completion and keep typed text |
+| `<C-x><C-l>` | Complete a whole line |
