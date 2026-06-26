@@ -45,6 +45,9 @@ In default magic, `\<` and `\>` are zero-width word-boundary atoms; they do not 
 ## Reset and Cleanup
 Use `u` after the challenge or restore fixture; `:nohlsearch`; close with `:bwipeout!`.
 
+## LazyVim Note
+Flash can jump to visible word occurrences, but word-boundary correctness still belongs to the Vim pattern. Check Flash mappings with `:verbose nmap s` before optional practice, and keep `\<the\>` or `\v<the>` for exact complete-word matching.
+
 ## Command Reference
 | Pattern | Meaning |
 |---|---|

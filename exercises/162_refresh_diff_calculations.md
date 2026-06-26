@@ -188,6 +188,9 @@ within-line edits often need an explicit refresh.
   location is currently highlighted by diff mode.
 - This kata focuses on within-line edits because they are a common case where
   `:diffupdate` is needed explicitly.
+- Git-adjacent note: sign columns from Git plugins refresh through their own
+  plugin state, while `:diffupdate` refreshes Vim's active diff windows and diff
+  folds. Use the command for editor diff mode, not as a generic Git-sign refresh.
 
 ## Command Reference
 

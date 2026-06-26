@@ -51,5 +51,9 @@ Window commands begin with `<C-w>`; `v` and `s` choose the split orientation, an
 
 The documented sequence assumes the exact `splitright`/`splitbelow` state established in Setup; restoring it prevents configuration leakage.
 
+## Notes and Portability
+
+- LazyVim note: window picker or resize mappings may exist in a local config, but `<C-w>` commands are the portable base. Verify any alternative with `:verbose nmap <leader>wm` or the exact keys from your config before using it in a drill.
+
 ## References
 - [`:help CTRL-W`](https://vimhelp.org/windows.txt.html#CTRL-W)

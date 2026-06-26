@@ -160,6 +160,7 @@ After `g]` prints the list, type the entry number immediately and press `<CR>`.
 - Built-in behavior: `g]` is standard in Vim and Neovim.
 - Duplicate-tag detail: on BSD `ctags`, duplicate names are not all emitted automatically, so this kata appends the missing lines itself for deterministic results.
 - Selection order: this kata relies on the appended tag lines making `alpha.c` entry `1` and `beta.c` entry `2`.
+- LazyVim/LSP contrast: references, definitions, implementations, and type definitions can be offered by picker-style UI, quickfix, or Trouble depending on configuration. Use `:LspInfo` and capability checks before treating those lists as equivalent to tag selection.
 
 ## Command Reference
 

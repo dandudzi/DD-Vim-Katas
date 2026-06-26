@@ -22,6 +22,7 @@ Success means: a failing log opens the quickfix window, and a clean log leaves i
 1. Run the commands below exactly once:
 
 ```vim
+:let g:kata_156_qf = getqflist({'items': 1, 'title': 1, 'context': 1, 'idx': 1, 'quickfixtextfunc': 1})
 :let g:kata_156_dir = tempname()
 :call mkdir(g:kata_156_dir, 'p')
 :call writefile(['header', 'broken line', 'footer'], g:kata_156_dir.'/app.txt')
@@ -176,8 +177,8 @@ The same command handles both cases: it does nothing visible for the empty list 
 ## Reset and Cleanup
 
 - Between drills: run `:cclose | call setqflist([], 'r') | execute 'edit '.fnameescape(g:kata_156_dir.'/app.txt') | normal! gg0`.
-- After the kata: run `:cclose | bwipeout! | call delete(g:kata_156_dir, 'rf') | unlet g:kata_156_dir`.
-- Preserve user data: every file lives in a temporary directory created by the setup.
+- After the kata: run `:cclose | call setqflist([], 'r', g:kata_156_qf) | bwipeout! | call delete(g:kata_156_dir, 'rf') | unlet g:kata_156_dir g:kata_156_qf`.
+- Preserve user data: every file lives in a temporary directory created by the setup, and the pre-kata quickfix list is restored.
 
 ## Notes and Portability
 
@@ -185,6 +186,7 @@ The same command handles both cases: it does nothing visible for the empty list 
 - Built-in behavior: `:cgetexpr` parses a Vim list of strings through the current `'errorformat'`.
 - Edge case: `:cwindow` depends on the current quickfix list, so if another command replaces that list, the window may open or close differently than expected.
 - Alternative: a real compiler or test runner can replace `readfile('fail.log')` later; the `:cwindow` behavior stays the same.
+- LazyVim/Trouble note: Trouble can be opened explicitly for richer review, but `:cwindow` remains the built-in conditional open/close command. Use Trouble only after verifying `:echo exists(':Trouble')` and the active mapping with `:verbose nmap <Space>xq`.
 
 ## Command Reference
 

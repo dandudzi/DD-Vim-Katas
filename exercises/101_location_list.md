@@ -40,6 +40,8 @@ Use `:lvimgrep` in the window that should own the list. `getloclist(winid)` make
 ## Cleanup and Reference
 Run `:silent! lclose` in each kata window, then wipe only the owned buffers: `:for g:kata_101_buf in getbufinfo() | if stridx(g:kata_101_buf.name,g:kata_101_dir)==0 | execute 'bwipeout! '.g:kata_101_buf.bufnr | endif | endfor | call setqflist([], 'r', g:kata_101_qf) | call delete(g:kata_101_dir, 'rf') | unlet g:kata_101_buf g:kata_101_qf g:kata_101_dir`. Do not use `:only`, because it can collapse unrelated user windows. See `:help location-list`, `:help :lvimgrep`.
 
+Optional LazyVim note: Trouble can show location-list entries when installed, but location lists remain window-local. Check `:echo exists(':Trouble')`, inspect any mapping with `:verbose nmap <Space>xl`, and use Trouble's `g?` help for local actions instead of assuming provider keys.
+
 | Command | Effect |
 |---|---|
 | `:lopen` / `:lclose` | Open / close current window's location list |

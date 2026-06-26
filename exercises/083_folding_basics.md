@@ -87,6 +87,11 @@ follow-ups now live elsewhere:
 - [166_navigate_between_folds.md](166_navigate_between_folds.md) for `zj` and `zk`
 - [167_adjust_fold_depth_incrementally.md](167_adjust_fold_depth_incrementally.md) for `zr` and `zm`
 
+LazyVim note: some setups use Treesitter, LSP, or plugin-provided folds in
+normal code buffers. This kata intentionally sets `foldmethod=manual` in a
+scratch buffer so the fold commands behave like stock Vim; check
+`:setlocal foldmethod? foldexpr?` before applying the same keys to a real file.
+
 ## Command Reference
 
 | Keys | Effect |

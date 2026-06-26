@@ -201,6 +201,10 @@ The `e` flag suppresses errors on lines that do not contain `end`, and the close
 - Selection detail: the command marks all lines not in a closed fold before execution, similar to `:global`.
 - Fold-state detail: open folds are treated as visible; only closed folds protect their interior lines.
 - Error-suppression detail: the `e` flag on `:s` avoids no-match errors on lines without `end`.
+- LazyVim compatibility: plugin fold providers can change `foldmethod`,
+  `foldexpr`, or `foldlevel` in normal file buffers. The setup overrides those
+  locally with manual folds; recheck `:setlocal foldmethod? foldenable?` before
+  using `:folddoopen` in a real project file.
 
 ## Command Reference
 

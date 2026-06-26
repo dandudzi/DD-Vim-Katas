@@ -41,6 +41,9 @@ Go to line end, stop immediately after the second colon when searching backward.
 ## Reset and Cleanup
 Use `0` between drills; close with `:bwipeout!`.
 
+## LazyVim Note
+Flash can make visible same-line targets quicker in a configured LazyVim setup, but it is mapping-dependent and label-driven. Run `:verbose nmap s` before practicing a Flash variant, and keep this kata's `f/F/t/T` motions as the portable answer.
+
 ## Command Reference
 | Keys | Effect |
 |---|---|

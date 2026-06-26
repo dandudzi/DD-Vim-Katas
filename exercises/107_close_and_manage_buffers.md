@@ -1,81 +1,141 @@
-## Kata: `:bd` — Close and manage buffers
+# Kata: Close and Manage Buffers
 
-### 1) What these commands do (short description)
+> **Environment:** Vim or Neovim; built-in commands only.
+> **Dependencies:** None.
+> **Portability:** `:bdelete` removes a buffer from the listed buffer set; `:bwipeout` is stronger and should be reserved for disposable buffers.
 
-Buffers are Vim's in-memory copies of files. When you open a file, it becomes a buffer. Closing a window doesn't close the buffer — it stays in memory. These commands manage buffer lifecycle:
+## Objective
 
-- `:bd` (`:bdelete`) — delete/close a buffer (removes it from the buffer list)
-- `:bd!` — force-close a buffer, discarding unsaved changes
-- `:bw` (`:bwipeout`) — completely wipe a buffer (stronger than `:bd`, also clears marks and options)
-- `:{n}bd` — close buffer number `{n}`
-- `:bd file.txt` — close the buffer for `file.txt`
-- `:%bd` — close all buffers
+By the end of this kata, you will be able to delete the current buffer, delete a specific buffer by number, and handle unsaved scratch changes safely with `:bdelete`.
 
----
+Success means: only the intended throwaway buffer disappears from `:ls`, and you can explain when `:bdelete!` discards changes.
 
-### 2) Setup
+## Prerequisites
 
-Open several files for these drills. From this repository:
+- Know: how to read `:ls`.
+- Required option/state: none.
+- Required external tool/plugin: none.
+- Readiness check: open a throwaway session and confirm `:echo mode()` prints `n`.
 
+## Setup
+
+Create three disposable scratch buffers:
+
+```vim
+:enew | setlocal buftype=nofile bufhidden=hide noswapfile | file kata-close-alpha
+:call setline(1, ['alpha']) | setlocal nomodified | let g:kata_107_alpha=bufnr()
+:enew | setlocal buftype=nofile bufhidden=hide noswapfile | file kata-close-beta
+:call setline(1, ['beta']) | setlocal nomodified | let g:kata_107_beta=bufnr()
+:enew | setlocal buftype=nofile bufhidden=hide noswapfile | file kata-close-gamma
+:call setline(1, ['gamma']) | setlocal nomodified | let g:kata_107_gamma=bufnr()
 ```
-nvim exercises/001_*.md exercises/002_*.md exercises/003_*.md exercises/004_*.md
-```
 
----
+Start in `kata-close-gamma`, Normal mode. Confirm `:echo bufname('%')` prints `kata-close-gamma`.
 
-### 3) Step-by-step drills
+## Tasks
 
-#### Drill A — List open buffers
+### Drill A - List and delete the current buffer
 
-1. Run `:ls<Enter>` — shows all open buffers with their numbers
-2. Note the buffer numbers and which one is active (marked with `%a`)
-3. Run `:buffers<Enter>` — same as `:ls`, just an alias
+**Goal:** remove the current listed buffer.
 
-#### Drill B — Close the current buffer with `:bd`
+1. Run `:ls` and note the buffer number for `kata-close-gamma`.
+2. Delete the current buffer.
 
-1. You're viewing one of the exercise files
-2. Type `:bd<Enter>` — the current buffer is closed
-3. Vim switches to the next buffer automatically
-4. Run `:ls<Enter>` — the closed buffer is gone from the list
+**Verify:** `:echo bufnr('kata-close-gamma')` prints `-1`, while `kata-close-alpha` and `kata-close-beta` still have positive buffer numbers.
 
-#### Drill C — Close a specific buffer by number
+### Drill B - Delete a specific buffer by number
 
-1. Run `:ls<Enter>` to see buffer numbers
-2. Note a buffer number you want to close (e.g., buffer 3)
-3. Type `:3bd<Enter>` — closes buffer 3 without switching to it first
-4. Run `:ls<Enter>` — buffer 3 is gone
+**Goal:** delete a buffer without first visiting it.
 
-#### Drill D — Close a buffer with unsaved changes
+1. Rebuild setup if needed.
+2. From `kata-close-gamma`, delete `kata-close-beta` using the saved buffer number.
 
-1. Open a buffer and make a change (e.g., type `itest<Esc>`)
-2. Type `:bd<Enter>` — Vim refuses: `E89: No write since last change`
-3. Type `:bd!<Enter>` — force-closes the buffer, discarding changes
+**Verify:** `:echo bufnr('kata-close-beta')` prints `-1`, and `:echo bufname('%')` still prints `kata-close-gamma`.
 
-#### Drill E — Close all buffers except current
+### Drill C - Handle unsaved changes deliberately
 
-1. Open several files
-2. Type `:%bd<Enter>` — closes all buffers (you'll end up in an empty buffer)
-3. To close all **except** the current one, use: `:%bd | e#<Enter>`
-   - `%bd` closes everything, `e#` reopens the alternate (last) file
+**Goal:** see the safety check before forcing a buffer delete.
 
-#### Drill F — Close buffers by name
+1. Rebuild setup if needed.
+2. In `kata-close-gamma`, append a new line `unsaved`.
+3. Try to delete the current buffer without force.
+4. Force-delete only this scratch buffer.
 
-1. Run `:ls<Enter>` to see buffer names
-2. Type `:bd 001<Tab>` — Tab-completes to the full filename
-3. Press `<Enter>` — closes that specific buffer
+**Verify:** the first delete refuses because the buffer is modified; after the force delete, `:echo bufnr('kata-close-gamma')` prints `-1`.
 
----
+### Challenge - Keep one buffer and remove the others
 
-### Command reference
+Reset setup. Starting anywhere, delete `kata-close-beta` and `kata-close-gamma` while keeping `kata-close-alpha` listed.
 
-| Command | Effect |
-|---|---|
-| `:ls` / `:buffers` | List all buffers |
-| `:bd` | Close current buffer |
-| `:bd!` | Force-close current buffer (discard changes) |
-| `:bd {name}` | Close buffer by filename |
-| `:{n}bd` | Close buffer by number |
-| `:bw` | Wipeout buffer (stronger than `:bd`) |
-| `:%bd` | Close all buffers |
-| `:%bd \| e#` | Close all buffers except the current one |
-| `:bn` / `:bp` | Next / previous buffer |
+**Verify:** `:echo bufnr('kata-close-alpha') > 0 bufnr('kata-close-beta') bufnr('kata-close-gamma')` prints `1 -1 -1`.
+
+## Hints
+
+<details>
+<summary>Hint 1</summary>
+
+`:bdelete` accepts a buffer number, and this setup saved the numbers in variables.
+
+</details>
+
+<details>
+<summary>Hint 2</summary>
+
+Use force only on the scratch buffer you intentionally modified.
+
+</details>
+
+## Solution
+
+<details>
+<summary>Show exact commands</summary>
+
+### Drill A
+
+1. `:ls<CR>`
+2. `:bdelete<CR>`
+
+### Drill B
+
+1. `:execute 'bdelete ' . g:kata_107_beta<CR>`
+
+### Drill C
+
+1. `Gounsaved<Esc>` - append a new modified line.
+2. `:bdelete<CR>` - observe the refusal.
+3. `:bdelete!<CR>` - discard the scratch change and delete the buffer.
+
+### Challenge
+
+`:execute 'bdelete ' . g:kata_107_beta<CR>`
+`:execute 'bdelete ' . g:kata_107_gamma<CR>`
+
+</details>
+
+## Reset and Cleanup
+
+- Between drills: wipe any remaining owned buffers, then rerun Setup.
+- After the kata: run `:silent! bwipeout! kata-close-alpha`, `:silent! bwipeout! kata-close-beta`, and `:silent! bwipeout! kata-close-gamma`.
+- Remove variables with `:silent! unlet g:kata_107_alpha g:kata_107_beta g:kata_107_gamma`.
+- Preserve user data: the kata uses only `nofile` scratch buffers.
+
+## Notes and Portability
+
+- Built-in behavior: `:bdelete` and `:buffers` work in both Vim and Neovim.
+- Safer pattern: avoid `:%bd` during practice because it can close unrelated user buffers. Prefer deleting explicit scratch buffer numbers.
+- LazyVim note: LazyVim may provide bufferline or picker mappings for buffer closing/switching. Verify any mapping with `:verbose nmap {keys}` before using it; this kata keeps the built-in `:bdelete` behavior primary.
+
+## Command Reference
+
+| Command | Mode | Effect |
+|---|---|---|
+| `:ls` / `:buffers` | Command-line | List buffers with numbers and flags. |
+| `:bdelete` | Command-line | Delete the current buffer from the buffer list. |
+| `:{n}bdelete` | Command-line | Delete buffer number `{n}`. |
+| `:bdelete!` | Command-line | Force-delete a modified buffer and discard changes. |
+| `:bwipeout` | Command-line | Wipe a buffer more completely; use cautiously. |
+
+## References
+
+- [`:help :bdelete`](https://vimhelp.org/windows.txt.html#%3Abdelete) - delete buffers from the buffer list.
+- [`:help :buffers`](https://vimhelp.org/windows.txt.html#%3Abuffers) - buffer list output and flags.

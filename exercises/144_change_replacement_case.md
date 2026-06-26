@@ -159,6 +159,7 @@ DEBUG: retry queued
 - Built-in behavior: `\u`, `\U`, `\l`, `\L`, and `\E` are standard replacement case controls in Vim and Neovim.
 - This kata uses `\U&` because it makes the case transform visible without adding extra capture groups.
 - Edge case: when you need only the first character capitalized, `\u` is usually a better fit than `\U`.
+- LazyVim/LSP bridge: use substitute case transforms for mechanical text casing; reserve LSP rename or code actions for semantic changes after `:LspInfo` and capability checks.
 
 ## Command Reference
 

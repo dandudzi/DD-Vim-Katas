@@ -196,6 +196,10 @@ The source can be a buffer number or a filename pattern such as `remote.txt`.
   eight diff buffers in one tabpage.
 - If your window order differs, `:buffer local.txt` returns you to the target
   buffer before running `:diffget`.
+- Git-adjacent note: this teaches the editor primitive behind choosing a source
+  in a multi-buffer diff. Git conflict tools may label sides differently
+  (`ours`, `theirs`, `base`, or file names), so inspect the actual buffer names
+  with `:ls` before running `:diffget {bufspec}`.
 
 ## Command Reference
 

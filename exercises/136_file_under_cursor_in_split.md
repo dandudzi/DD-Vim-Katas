@@ -182,6 +182,7 @@ After the first split, use `<C-w>p` to return to the source window before openin
 - This kata uses absolute paths so `'path'` does not affect resolution.
 - Edge case: on systems where full paths include characters outside `'isfname'`, the cursor must stay on the filename text that Vim recognizes as one file path.
 - Alternative: if full paths are awkward in your environment, `:lcd` into the temp directory and use relative paths instead.
+- LazyVim note: picker split actions can open files in splits, but action keys vary by provider. Use the picker's help instead of assuming a split key; `<C-w>f` remains the built-in file-under-cursor split.
 
 ## Command Reference
 

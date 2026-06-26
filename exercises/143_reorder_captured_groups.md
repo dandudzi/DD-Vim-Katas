@@ -159,6 +159,7 @@ Using `#` as the substitute delimiter avoids extra escaping in the replacement b
 - Built-in behavior: capture groups and backreferences in `:substitute` are built into Vim and Neovim.
 - Syntax detail: this kata uses the default escaped group syntax `\(` and `\)` for maximum portability.
 - Alternative: `\v` can make the pattern shorter, but the underlying capture-group concept is the same.
+- LazyVim/LSP bridge: code actions may offer language-specific rewrites, but capture groups are still the portable tool for deterministic text reshaping across arbitrary files.
 
 ## Command Reference
 

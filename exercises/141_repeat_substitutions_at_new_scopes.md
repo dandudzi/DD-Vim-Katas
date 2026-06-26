@@ -166,6 +166,7 @@ The first command defines the transform. `g&` repeats it across the whole buffer
 - Flag detail: `:&&` keeps the prior substitute flags, while `:&` does not.
 - Scope detail: `g&` repeats the last substitution on all lines with the same flags.
 - Edge case: `g&` uses the last search pattern. If you run `/something` after the original substitution, `g&` will use that newer search pattern instead.
+- LazyVim/LSP bridge: for semantic renames, check `:LspInfo` and `textDocument/rename` before using the rename mapping from `:verbose nmap <Space>cr`; substitute repeats remain text-level transforms.
 
 ## Command Reference
 

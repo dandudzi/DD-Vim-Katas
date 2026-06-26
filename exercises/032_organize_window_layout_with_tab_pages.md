@@ -41,6 +41,11 @@ Close the current tab without discarding its modified scratch buffer, return to 
 ## Reset and Cleanup
 Close only the kata-created tabs with ordinary `:tabclose` while visiting the tabs that show `layout-two` and `layout-three`; never use `:tabonly`, because it can close unrelated user tabs. Then run `:silent! bwipeout! layout-one`, `:silent! bwipeout! layout-two`, and `:silent! bwipeout! layout-three` separately. Restore `hidden` with `:let &hidden=g:kata_hidden | unlet g:kata_hidden`. The modified buffers remain hidden until this explicit cleanup; `:tabclose!` is unnecessary and could discard scratch changes.
 
+## Notes and Portability
+
+- LazyVim note: some configs map `<S-h>` and `<S-l>` for buffer navigation, not tab-page navigation. Use `:verbose nmap <S-h>` and `:verbose nmap <S-l>` to verify what they do locally.
+- Vim tab pages are window-layout containers, not project workspaces. Session plugins can restore tabs, but this kata keeps the built-in tab-page model primary.
+
 ## Command Reference
 | Command/keys | Effect |
 |---|---|

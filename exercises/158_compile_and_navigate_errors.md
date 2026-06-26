@@ -22,6 +22,7 @@ Success means: one `:make` jumps to the first reported problem, and you can fix 
 1. Run the commands below exactly once:
 
 ```vim
+:let g:kata_158_qf = getqflist({'items': 1, 'title': 1, 'context': 1, 'idx': 1, 'quickfixtextfunc': 1})
 :let g:kata_158_dir = tempname()
 :call mkdir(g:kata_158_dir, 'p')
 :call writefile([
@@ -186,8 +187,8 @@ The build creates a three-entry quickfix snapshot. Each `:cnext` takes you to th
 ## Reset and Cleanup
 
 - Between drills: run `:call writefile(['intro', 'BROKEN first', 'middle', 'BROKEN second', 'middle', 'BROKEN third'], g:kata_158_dir.'/app.txt') | edit! | cclose | call setqflist([], 'r')`.
-- After the kata: run `:cclose | bwipeout! app.txt | call delete(g:kata_158_dir, 'rf') | unlet g:kata_158_dir`.
-- Preserve user data: the build log and edited file live only in a temporary directory created for this kata.
+- After the kata: run `:cclose | call setqflist([], 'r', g:kata_158_qf) | bwipeout! app.txt | call delete(g:kata_158_dir, 'rf') | unlet g:kata_158_dir g:kata_158_qf`.
+- Preserve user data: the build log and edited file live only in a temporary directory created for this kata, and the pre-kata quickfix list is restored.
 
 ## Notes and Portability
 
@@ -195,6 +196,7 @@ The build creates a three-entry quickfix snapshot. Each `:cnext` takes you to th
 - Configuration-dependent behavior: this kata uses `cat build.log` as `'makeprg'` so the output is deterministic and local.
 - Verify external dependency with `:!command -v cat` before starting if you are unsure whether `cat` exists in your shell.
 - Edge case: quickfix keeps the parsed snapshot even after you fix the file, so rerun `:make` if you want a refreshed list.
+- LazyVim/Trouble note: a Trouble quickfix or diagnostics view can help inspect build output, but the build-to-navigation loop here is `:make` plus quickfix commands. Verify mappings with `:verbose nmap <Space>xq` before using them.
 
 ## Command Reference
 

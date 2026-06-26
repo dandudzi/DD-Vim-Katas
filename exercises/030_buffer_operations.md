@@ -63,6 +63,11 @@ From `kata-alpha`, use `:bufdo` with a buffer-number guard to append `!` only in
 ## Reset and Cleanup
 Run `:silent! bwipeout! kata-alpha`, `:silent! bwipeout! kata-beta`, and `:silent! bwipeout! kata-gamma` separately. Restore and remove kata state with `:let &hidden=g:kata_hidden | unlet g:kata_hidden g:kata_alpha_buf g:kata_beta_buf g:kata_gamma_buf`. All buffers are unnamed-on-disk and disposable.
 
+## Notes and Portability
+
+- LazyVim note: buffer pickers and bufferline mappings can supplement `:ls`, but they are configuration-dependent. Verify them with `:verbose nmap <leader>,`, `:verbose nmap <S-h>`, and `:verbose nmap <S-l>` before use.
+- Keep the built-in mental model: pickers select buffers, while `:buffer`, `:bnext`, and `:bdelete` define the portable behavior this kata teaches.
+
 ## Command Reference
 | Command | Effect |
 |---|---|

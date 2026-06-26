@@ -44,6 +44,10 @@ Confirm `:echo len(getqflist())` is `3`. Do not point any command at a real repo
 ## Cleanup and Reference
 `:cclose | for g:kata_100_buf in getbufinfo() | if stridx(g:kata_100_buf.name,g:kata_100_dir)==0 | execute 'bwipeout! '.g:kata_100_buf.bufnr | endif | endfor | call setqflist([], 'r', g:kata_100_qf) | call delete(g:kata_100_dir, 'rf') | unlet g:kata_100_buf g:kata_100_qf g:kata_100_dir`. Never use repository-wide checkout as cleanup. See `:help :cfdo`, `:help :cdo`.
 
+## Optional LazyVim/LSP Bridge
+
+Use `:cfdo` when you already trust a quickfix list and want a text transform across represented files. For semantic project renames, first run `:LspInfo`, check `textDocument/rename`, and inspect `:verbose nmap <Space>cr`. For code actions or organize-imports actions, check `textDocument/codeAction` and review the offered action text before applying it; not every server provides the same action kinds.
+
 | Command | Scope |
 |---|---|
 | `:cdo` | Every valid quickfix entry |

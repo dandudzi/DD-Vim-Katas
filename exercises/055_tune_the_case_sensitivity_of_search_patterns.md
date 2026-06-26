@@ -43,6 +43,9 @@ With both options enabled, write one pattern that still matches only the five lo
 ## Reset and Cleanup
 Restore settings with `:let &ignorecase=g:kata_ic | let &smartcase=g:kata_sc | unlet g:kata_ic g:kata_sc`; `:nohlsearch`; close scratch buffer.
 
+## Notes and Portability
+LazyVim may set `ignorecase` and `smartcase` for interactive search, but the pattern atoms `\c` and `\C` are still Vim regex features and travel with the pattern. Save and restore the options as shown so this kata does not depend on a distribution default.
+
 ## References
 - [`:help /ignorecase`](https://vimhelp.org/options.txt.html#%2Fignorecase)
 - [`:help /\c`](https://vimhelp.org/pattern.txt.html#%2F%5Cc)

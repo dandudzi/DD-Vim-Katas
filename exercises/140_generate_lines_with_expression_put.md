@@ -187,6 +187,7 @@ Use `range(start, end, step)` when you want spaced-out values, and prefix the co
 - Built-in behavior: `:put =...` works in both Vim and Neovim.
 - Expression detail: this uses Vimscript expression evaluation, not Lua.
 - Edge case: a scalar expression inserts one line, while a List inserts one line per list item.
+- LazyVim note: snippet or AI helpers may generate text, but this kata focuses on deterministic built-in expression output. Verify any generator mapping with `:verbose imap {keys}` or `:verbose nmap {keys}` before comparing workflows.
 
 ## Command Reference
 

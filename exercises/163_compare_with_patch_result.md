@@ -172,6 +172,9 @@ The preview buffer is typically named with a `.new` suffix.
   configured.
 - The patched buffer is for inspection. This kata intentionally avoids writing
   it back over the original file.
+- Git-adjacent note: `:diffpatch` is useful for reviewing a patch file without
+  applying it to your working tree. Keep it separate from Git hunk staging or
+  reset actions, which should be practiced only in a disposable repository.
 
 ## Command Reference
 

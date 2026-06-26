@@ -44,6 +44,10 @@ Built-in `gd` searches for a local declaration in the current file. LSP definiti
 ## Cleanup and Reference
 `:bwipe!`. The former companion-file/LSP assumption is removed. See `:help gd`, `:help CTRL-O`, `:help CTRL-I`.
 
+## Optional LazyVim/LSP Bridge
+
+LazyVim commonly maps `gd` to LSP definition when a server is attached. Before comparing it with this built-in kata, run `:verbose nmap gd`, `:LspInfo`, and a capability check such as `:lua for _, c in ipairs(vim.lsp.get_clients({bufnr=0})) do print(c.name, c:supports_method('textDocument/definition', 0)) end`. Use `:normal! gd` when you specifically want Vim's same-file local declaration jump.
+
 | Keys | Effect |
 |---|---|
 | `gd` | Find local declaration in current file |

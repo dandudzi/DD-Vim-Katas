@@ -50,6 +50,11 @@ Reset the files, rebuild the argument list, and combine the edit and write in on
 ## Reset and Cleanup
 Use `:argdo edit!` to discard unwritten edits, then `:argdelete *`. Wipe each owned buffer by number, for example `:execute 'silent! bwipeout! ' . bufnr(g:kata_alpha)`, and repeat for beta and gamma. Remove only the owned directory with `:call delete(g:kata_args_dir, 'rf')`, then `:unlet g:kata_alpha g:kata_beta g:kata_gamma g:kata_args_dir`.
 
+## Notes and Portability
+
+- LazyVim note: picker multi-select can help build file sets, but provider selection keys vary. Do not assume a fixed export or multi-select key; inspect the active picker's help and verify mappings with `:verbose nmap <leader><leader>` or `:verbose nmap <leader>/`.
+- The portable action in this kata is still the argument list plus `:argdo`, independent of how the file set was discovered.
+
 ## Command Reference
 | Command | Effect |
 |---|---|

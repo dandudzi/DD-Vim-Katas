@@ -156,6 +156,7 @@ The search sets the previous-context mark at line 2, column 12. The first `''` r
 - Built-in behavior: both Vim and Neovim treat ```` as an exact jump and `''` as a linewise jump to the same previous-context mark.
 - Scope boundary: these motions target only the latest previous-context location; full jumplist traversal with `<C-o>` and `<C-i>` is a different skill.
 - Edge case: `:keepjumps` suppresses updates to this mark, so do not use it during this kata.
+- LazyVim note: Flash jumps and search-like plugin motions may or may not update the previous-context mark in the same way as `/target<CR>`. If you try a Flash variant, verify the mapping with `:verbose nmap s`, then test ```` immediately and compare the landing position.
 
 ## Command Reference
 

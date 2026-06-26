@@ -40,6 +40,8 @@ After establishing the pattern, `gUgn` is one repeatable change. Dot advances to
 ## Cleanup and Reference
 Reset with `u` or restore the fixture; `:bwipe!` afterward. See `:help gn`, `:help gU`, `:help .`.
 
+LazyVim note: Flash can help you reach a visible match, but `gn` is still the built-in text object that makes `gUgn` repeatable with dot. If trying Flash as an operator target, first run `:verbose omap s` and follow the labels shown in your session rather than copying labels from a solution.
+
 | Keys | Effect |
 |---|---|
 | `gUgn` | Uppercase the next search match |

@@ -60,6 +60,11 @@ Repeat Drill C using a Visual-line selection rather than a numeric range.
 ## Reset and Cleanup
 Use `:enew!` and restore the fixture. Close the scratch buffer with `:bwipeout!`. Shell filters replace text, so never practise them on unsaved user data.
 
+## Notes and Portability
+
+- LazyVim note: terminal toggles and picker commands are optional conveniences. Verify any shell-related mapping with `:verbose nmap <leader>ft`, `:verbose nmap <leader>fT`, or the exact keys from your config before relying on it.
+- Safety: prefer deterministic commands such as `printf` and `sort` in katas; avoid time-, network-, or project-mutating commands unless the setup creates a disposable target.
+
 ## Command Reference
 
 | Command | Effect |

@@ -1,7 +1,7 @@
 # Kata: Toggle Spell Checking and Navigate Errors
 
 > **Environment:** Vim or Neovim. Built-in commands are `:setlocal spell!`, `]s`, `[s`, `z=`, and `zg`.
-> **Portability:** LazyVim may map `<Space>us`; verify with `:verbose nmap <Space>us`. The drills use the built-in command.
+> **Portability:** LazyVim may map `<Space>us` to toggle spelling; verify with `:verbose nmap <Space>us` and skip that mapping if it is absent or points elsewhere. The drills use the built-in command.
 
 ## Objective
 Enable local spell checking, navigate errors, correct them, and safely practice a temporary accepted word.

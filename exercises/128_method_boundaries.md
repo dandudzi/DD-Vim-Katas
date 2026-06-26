@@ -161,6 +161,7 @@ These motions land on braces, not on the method name. Counts apply to the motion
 - Structural assumption: the help text assumes a class surrounded by `{` and `}` and methods also surrounded by `{` and `}`.
 - Landing detail: `[m` and `]m` land on opening `{`; `[M` and `]M` land on closing `}`.
 - This fixture uses Java-like syntax so the brace structure matches the documented method model exactly.
+- LazyVim note: Treesitter and `mini.ai` can expose function or method text objects that select a whole method rather than jumping to its brace. Verify those objects with `:verbose omap`/`:verbose xmap` before use; they complement these built-in boundary motions rather than replacing them.
 
 ## Command Reference
 

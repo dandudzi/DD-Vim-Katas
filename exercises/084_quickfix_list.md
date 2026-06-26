@@ -92,6 +92,8 @@ Advanced follow-ups now live elsewhere:
 - [157_parse_current_buffer_as_errors.md](157_parse_current_buffer_as_errors.md)
 - [158_compile_and_navigate_errors.md](158_compile_and_navigate_errors.md)
 
+Optional LazyVim note: Trouble can display quickfix entries if it is installed, but this drill should still be completed with `:copen`, `:cnext`, and `:cprev` first. Check `:echo exists(':Trouble')` and `:verbose nmap <Space>xq`, then use Trouble's `g?` help inside the Trouble window instead of assuming a fixed action key.
+
 ## Command Reference
 
 | Command | Effect |

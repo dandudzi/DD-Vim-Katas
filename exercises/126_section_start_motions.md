@@ -195,6 +195,7 @@ The first `]]` lands on line 2, the second on line 12, and the third on line 22.
 - Built-in behavior: `[[` and `]]` are standard motions in Vim and Neovim.
 - Edge case: this kata relies on opening braces in the first column. If your codebase uses `int fn() {` on one line, `[[` and `]]` will not treat that brace as a section start.
 - Alternative: if these keys are remapped in your config, verify that with `:verbose nmap [[` and `:verbose nmap ]]`.
+- LazyVim compatibility: Flash Treesitter jumps can be useful after this kata, but they are plugin mappings rather than replacements for `[[` and `]]`; verify them with `:verbose nmap S` before use.
 
 ## Command Reference
 

@@ -103,3 +103,7 @@ Goal: only change function names in the second function (`deleteUser` block).
 | `a` | All remaining, no more prompts |
 | `q` | Quit substitution |
 | `l` | Replace this match and quit (last) |
+
+### LazyVim/LSP refactor bridge
+
+Use `:%s///gc` when you intentionally want text-level confirmation. In an attached LSP buffer, run `:LspInfo` and check `textDocument/rename` before using LazyVim's rename mapping reported by `:verbose nmap <Space>cr`; semantic rename is safer for identifiers that may appear in comments, strings, or unrelated symbols.

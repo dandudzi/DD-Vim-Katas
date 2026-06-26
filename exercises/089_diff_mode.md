@@ -98,6 +98,12 @@ now live elsewhere:
 - [162_refresh_diff_calculations.md](162_refresh_diff_calculations.md)
 - [163_compare_with_patch_result.md](163_compare_with_patch_result.md)
 
+Git-adjacent note: Vim diff mode compares buffers and files; it is not the same
+surface as Git hunk signs. In LazyVim, inspect any Git hunk mappings with
+`:verbose nmap ]h`, `:verbose nmap [h`, and the documented hunk action keys
+before using them. The standalone hunk workflow belongs in
+[179_gitsigns_hunk_workflow.md](179_gitsigns_hunk_workflow.md).
+
 ## Command Reference
 
 | Command | Effect |

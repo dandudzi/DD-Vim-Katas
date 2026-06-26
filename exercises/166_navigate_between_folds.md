@@ -151,6 +151,10 @@ A closed fold counts as one fold for both motions.
 - `zj` moves to the start of the next fold.
 - `zk` moves to the end of the previous fold, which is easy to misremember if
   you expect a symmetric start-to-start jump.
+- LazyVim compatibility: fold providers can create folds from Treesitter, LSP,
+  indentation, or custom expressions. The motion keys are built in, but the fold
+  boundaries they visit come from the active `foldmethod`; inspect it with
+  `:setlocal foldmethod? foldexpr?`.
 
 ## Command Reference
 

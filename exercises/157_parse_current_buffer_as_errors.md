@@ -22,6 +22,7 @@ Success means: from a pasted log buffer, you can build quickfix entries and jump
 1. Run the commands below exactly once:
 
 ```vim
+:let g:kata_157_qf = getqflist({'items': 1, 'title': 1, 'context': 1, 'idx': 1, 'quickfixtextfunc': 1})
 :let g:kata_157_dir = tempname()
 :call mkdir(g:kata_157_dir, 'p')
 :call writefile(['alpha ok', 'missing semicolon', 'middle', 'wrong flag'], g:kata_157_dir.'/app.txt')
@@ -185,8 +186,8 @@ The third parsed entry resolves to `config.txt:2:1`, so selecting it jumps direc
 
 - Between drills: run `:cclose | call setqflist([], 'r') | execute 'edit '.fnameescape(g:kata_157_dir.'/ci.log') | normal! gg0`.
 - After Drill C: restore the original log with `:call writefile(['app.txt:2:1: missing semicolon', 'app.txt:4:1: wrong flag', 'config.txt:2:1: unknown key'], g:kata_157_dir.'/ci.log') | edit!`.
-- After the kata: run `:cclose | bwipeout! app.txt | bwipeout! config.txt | bwipeout! ci.log | call delete(g:kata_157_dir, 'rf') | unlet g:kata_157_dir`.
-- Preserve user data: all files live under a temporary directory created for this kata.
+- After the kata: run `:cclose | call setqflist([], 'r', g:kata_157_qf) | bwipeout! app.txt | bwipeout! config.txt | bwipeout! ci.log | call delete(g:kata_157_dir, 'rf') | unlet g:kata_157_dir g:kata_157_qf`.
+- Preserve user data: all files live under a temporary directory created for this kata, and the pre-kata quickfix list is restored.
 
 ## Notes and Portability
 
@@ -194,6 +195,7 @@ The third parsed entry resolves to `config.txt:2:1`, so selecting it jumps direc
 - Edge case: relative filenames in the log resolve from the current working directory, so keep the `:cd` from setup.
 - Alternative: if your log already uses absolute paths, you can skip the temporary `:cd`.
 - Scope boundary: this kata parses an existing buffer; producing the log text itself is a separate workflow.
+- LazyVim/Trouble note: Trouble can display the parsed quickfix list after `:cgetbuffer`, but parsing the current buffer is still handled by Vim's quickfix machinery and `'errorformat'`.
 
 ## Command Reference
 

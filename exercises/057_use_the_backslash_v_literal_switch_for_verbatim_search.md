@@ -43,5 +43,8 @@ After `\V`, only backslash remains special. The `/` delimiter still must be esca
 ## Reset and Cleanup
 The `n` flag only counts. Run `:nohlsearch`; close scratch buffer.
 
+## Notes and Portability
+Very-nomagic `\V` is specific to Vim's regex engine. In LazyVim, external search tools and picker prompts may interpret punctuation with a different engine, so verify the provider before reusing the pattern outside `/`, `?`, or `:substitute`.
+
 ## References
 - [`:help /\V`](https://vimhelp.org/pattern.txt.html#%2F%5CV)

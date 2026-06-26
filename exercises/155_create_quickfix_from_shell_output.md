@@ -19,11 +19,12 @@ Success means: you can import `file:line:text` output into quickfix, confirm the
 
 ## Setup
 
-1. Start this kata in a fresh session or accept that it will replace the current quickfix list.
+1. The setup saves the current quickfix list before replacing it.
 2. Run `:let g:kata_155_dir = tempname() | call mkdir(g:kata_155_dir, 'p')`.
 3. Run the setup block exactly:
 
 ```vim
+:if !exists('g:kata_155_qf') | let g:kata_155_qf = getqflist({'items': 1, 'title': 1, 'context': 1, 'idx': 1, 'quickfixtextfunc': 1}) | endif
 :let g:kata_155_save_efm = &errorformat
 :let g:kata_155_alpha = g:kata_155_dir . '/alpha.txt'
 :let g:kata_155_beta = g:kata_155_dir . '/beta.txt'
@@ -163,8 +164,8 @@ The import lands on `alpha.txt` line 1. The first `:cnext` moves to `alpha.txt` 
 ## Reset and Cleanup
 
 - Between drills: rerun the documented setup to restore the files, command variables, and `'errorformat'`.
-- After the kata: run `:let &errorformat = g:kata_155_save_efm | silent! cclose | for g:kata_155_buf in getbufinfo() | if stridx(g:kata_155_buf.name, g:kata_155_dir) == 0 | execute 'bwipeout! ' . g:kata_155_buf.bufnr | endif | endfor | call setqflist([], 'f') | call delete(g:kata_155_dir, 'rf') | unlet g:kata_155_alpha g:kata_155_beta g:kata_155_buf g:kata_155_cmd_all g:kata_155_cmd_beta g:kata_155_dir g:kata_155_save_efm`.
-- Preserve user data: use a fresh session if you need to keep an existing quickfix list, because this kata replaces it.
+- After the kata: run `:let &errorformat = g:kata_155_save_efm | silent! cclose | for g:kata_155_buf in getbufinfo() | if stridx(g:kata_155_buf.name, g:kata_155_dir) == 0 | execute 'bwipeout! ' . g:kata_155_buf.bufnr | endif | endfor | call setqflist([], 'r', g:kata_155_qf) | call delete(g:kata_155_dir, 'rf') | unlet g:kata_155_alpha g:kata_155_beta g:kata_155_buf g:kata_155_cmd_all g:kata_155_cmd_beta g:kata_155_dir g:kata_155_qf g:kata_155_save_efm`.
+- Preserve user data: cleanup restores the quickfix list that was current before the first setup run.
 
 ## Notes and Portability
 
@@ -172,6 +173,7 @@ The import lands on `alpha.txt` line 1. The first `:cnext` moves to `alpha.txt` 
 - Parsing detail: this kata sets `'errorformat'` to `%f:%l:%m` so `grep -Hn` output parses deterministically as `file:line:text`.
 - Shell dependency: BSD and GNU `grep` both support `-Hn`, but if your system lacks `grep`, substitute another deterministic command that emits the same `file:line:text` format.
 - Alternative: `:cgetexpr` uses the same parsing but does not jump to the first entry.
+- LazyVim/Trouble note: after `:cexpr`, optional Trouble quickfix views should show the same parsed entries. Verify `:echo exists(':Trouble')` and use Trouble's `g?` help rather than assuming an export or close key.
 
 ## Command Reference
 

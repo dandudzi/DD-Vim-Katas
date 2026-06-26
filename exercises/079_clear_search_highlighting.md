@@ -11,7 +11,7 @@ This does **not** disable `hlsearch` permanently — it only clears the current 
 Common mappings to make this faster:
 
 - `<leader>h` or `<leader>nh` → `:nohlsearch<CR>`
-- In LazyVim: `<Esc><Esc>` or `<leader>ur` clears highlights by default
+- In LazyVim, highlight-clearing mappings can vary by version and config. Check yours with `:verbose nmap <Esc><Esc>` and `:verbose nmap <leader>ur` before practicing them.
 
 ---
 
@@ -81,4 +81,4 @@ If you find yourself typing `:noh` constantly, add a mapping to your config:
 vim.keymap.set("n", "<leader>h", "<cmd>nohlsearch<CR>", { desc = "Clear search highlights" })
 ```
 
-Or if you use LazyVim, `<Esc><Esc>` in normal mode already does this.
+In LazyVim, use the `:verbose nmap ...` checks above before relying on a mapping; `:nohlsearch` and `:noh` are the portable commands.

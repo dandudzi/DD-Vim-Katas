@@ -22,6 +22,7 @@ Success means: you can turn synthetic diagnostics into quickfix entries, filter 
 1. Run the commands below exactly once:
 
 ```vim
+:let g:kata_160_qf = getqflist({'items': 1, 'title': 1, 'context': 1, 'idx': 1, 'quickfixtextfunc': 1})
 :let g:kata_160_dir = tempname()
 :call mkdir(g:kata_160_dir, 'p')
 :call writefile(['ERROR alpha', 'WARN beta', 'ERROR gamma'], g:kata_160_dir.'/diag.txt')
@@ -161,7 +162,7 @@ The severity filter goes in the options table, and Neovim exposes the constants 
 ## Reset and Cleanup
 
 - Between drills: run `:call writefile(['ERROR alpha', 'WARN beta', 'ERROR gamma'], g:kata_160_dir.'/diag.txt') | edit! | call setqflist([], 'r') | lua local b = vim.api.nvim_get_current_buf(); vim.diagnostic.reset(_G.kata_160_ns, b); vim.diagnostic.set(_G.kata_160_ns, b, { {lnum = 0, col = 0, severity = vim.diagnostic.severity.ERROR, message = 'first error'}, {lnum = 1, col = 0, severity = vim.diagnostic.severity.WARN, message = 'one warning'}, {lnum = 2, col = 0, severity = vim.diagnostic.severity.ERROR, message = 'second error'} })`.
-- After the kata: run `:cclose | bwipeout! diag.txt | call delete(g:kata_160_dir, 'rf') | unlet g:kata_160_dir | lua _G.kata_160_ns = nil`.
+- After the kata: run `:cclose | call setqflist([], 'r', g:kata_160_qf) | bwipeout! diag.txt | call delete(g:kata_160_dir, 'rf') | unlet g:kata_160_qf g:kata_160_dir | lua _G.kata_160_ns = nil`.
 - Preserve user data: the file and diagnostics belong only to a temporary buffer created by this kata.
 
 ## Notes and Portability
@@ -170,6 +171,7 @@ The severity filter goes in the options table, and Neovim exposes the constants 
 - Built-in behavior: the quickfix list is a snapshot of diagnostics at the moment you call the function; it does not update automatically after edits.
 - Alternative: the same function accepts options such as `severity` and `open`, which you can explore later without changing the basic workflow.
 - Edge case: this kata creates diagnostics manually, so no LSP server is required and no server-specific ordering differences apply.
+- LazyVim/Trouble note: Trouble can show diagnostics directly, but this kata deliberately converts them into the standard quickfix list. Check `:echo exists(':Trouble')` and use `g?` inside Trouble before relying on any Trouble action.
 
 ## Command Reference
 

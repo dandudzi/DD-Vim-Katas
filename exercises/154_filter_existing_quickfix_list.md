@@ -19,11 +19,12 @@ Success means: you can create a smaller quickfix list from an existing one, use 
 
 ## Setup
 
-1. Start this kata in a fresh session, because it intentionally creates multiple quickfix history entries.
+1. Start this kata in a fresh session if you need to preserve the full quickfix history stack. The setup saves the current list, but not the entire history.
 2. Run `:let g:kata_154_dir = tempname() | call mkdir(g:kata_154_dir, 'p')`.
 3. Run the setup block exactly:
 
 ```vim
+:if !exists('g:kata_154_qf') | let g:kata_154_qf = getqflist({'items': 1, 'title': 1, 'context': 1, 'idx': 1, 'quickfixtextfunc': 1}) | endif
 :packadd cfilter
 :let g:kata_154_src = g:kata_154_dir . '/src_main.txt'
 :let g:kata_154_test = g:kata_154_dir . '/app_test.txt'
@@ -177,8 +178,8 @@ The filter command creates a new quickfix list with four entries. `:colder` then
 ## Reset and Cleanup
 
 - Between drills: rerun the documented setup to restore the original files and quickfix history state for the kata.
-- After the kata: run `:silent! cclose | for g:kata_154_buf in getbufinfo() | if stridx(g:kata_154_buf.name, g:kata_154_dir) == 0 | execute 'bwipeout! ' . g:kata_154_buf.bufnr | endif | endfor | call setqflist([], 'f') | call delete(g:kata_154_dir, 'rf') | unlet g:kata_154_buf g:kata_154_dir g:kata_154_docs g:kata_154_src g:kata_154_test g:kata_154_vendor`.
-- Preserve user data: use a fresh session, because this kata depends on quickfix history and clearing it will also remove any unrelated quickfix history from the same session.
+- After the kata: run `:silent! cclose | for g:kata_154_buf in getbufinfo() | if stridx(g:kata_154_buf.name, g:kata_154_dir) == 0 | execute 'bwipeout! ' . g:kata_154_buf.bufnr | endif | endfor | call setqflist([], 'f') | call setqflist([], 'r', g:kata_154_qf) | call delete(g:kata_154_dir, 'rf') | unlet g:kata_154_buf g:kata_154_dir g:kata_154_docs g:kata_154_qf g:kata_154_src g:kata_154_test g:kata_154_vendor`.
+- Preserve user data: cleanup restores the pre-kata current quickfix list, but not the full pre-kata quickfix history stack.
 
 ## Notes and Portability
 
@@ -186,6 +187,7 @@ The filter command creates a new quickfix list with four entries. `:colder` then
 - Match scope: the filter pattern is applied to both the entry text and the file name.
 - History detail: filtering creates a new quickfix list, so `:colder` can restore the previous one.
 - Verify the command source with `:verbose command Cfilter`.
+- LazyVim/Trouble note: Trouble filters are UI-local and provider-specific; `:Cfilter` creates a real quickfix history entry that works with `:colder`, `:cnewer`, `:cdo`, and `:cfdo`.
 
 ## Command Reference
 

@@ -151,6 +151,10 @@ fold. It returns `-1` when the line is visible.
   visible depth.
 - This makes them useful for overview/detail workflows when the fold structure
   is already meaningful.
+- LazyVim compatibility: if a plugin restores folds or sets a high default
+  `foldlevel`, the first `zr` / `zm` may appear to do little. Confirm the
+  current value with `:setlocal foldlevel? foldmethod?` before diagnosing the
+  keys themselves.
 
 ## Command Reference
 

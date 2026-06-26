@@ -159,6 +159,7 @@ When the replacement starts with `\=`, the rest is evaluated as an expression in
 - Built-in behavior: `\=` expressions in `:substitute` are standard in Vim and Neovim.
 - Function detail: `submatch(0)` returns the whole current match; `submatch(1)` and higher return captured groups.
 - Edge case: when the replacement starts with `\=`, normal replacement items such as `&` do not keep their special meaning inside the expression.
+- LazyVim/LSP bridge: expression replacements are editor-side computations and do not require LSP. If a project-wide computed change starts from picker or diagnostics results, export to quickfix first, review the list, then apply a scoped `:cdo` or `:cfdo`.
 
 ## Command Reference
 

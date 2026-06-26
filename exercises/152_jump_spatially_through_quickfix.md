@@ -19,11 +19,12 @@ Success means: after moving manually to a non-match line, you can land on the co
 
 ## Setup
 
-1. Start this kata in a fresh session or accept that it will replace the current quickfix list.
+1. The setup saves the current quickfix list before replacing it.
 2. Run `:let g:kata_152_dir = tempname() | call mkdir(g:kata_152_dir, 'p')`.
 3. Run the setup block exactly:
 
 ```vim
+:if !exists('g:kata_152_qf') | let g:kata_152_qf = getqflist({'items': 1, 'title': 1, 'context': 1, 'idx': 1, 'quickfixtextfunc': 1}) | endif
 :let g:kata_152_file = g:kata_152_dir . '/notes.txt'
 :call writefile([
 \ 'alpha intro',
@@ -173,14 +174,15 @@ From line 7, the quickfix entries above are at lines 5 and 2. A count of `2` lan
 ## Reset and Cleanup
 
 - Between drills: rerun the documented setup to restore the file, quickfix list, and starting cursor position.
-- After the kata: run `:silent! cclose | for g:kata_152_buf in getbufinfo() | if stridx(g:kata_152_buf.name, g:kata_152_dir) == 0 | execute 'bwipeout! ' . g:kata_152_buf.bufnr | endif | endfor | call setqflist([], 'f') | call delete(g:kata_152_dir, 'rf') | unlet g:kata_152_buf g:kata_152_dir g:kata_152_file`.
-- Preserve user data: use a fresh session if your existing quickfix list matters, because this kata replaces it.
+- After the kata: run `:silent! cclose | for g:kata_152_buf in getbufinfo() | if stridx(g:kata_152_buf.name, g:kata_152_dir) == 0 | execute 'bwipeout! ' . g:kata_152_buf.bufnr | endif | endfor | call setqflist([], 'r', g:kata_152_qf) | call delete(g:kata_152_dir, 'rf') | unlet g:kata_152_buf g:kata_152_dir g:kata_152_file g:kata_152_qf`.
+- Preserve user data: cleanup restores the quickfix list that was current before the first setup run.
 
 ## Notes and Portability
 
 - Built-in behavior: `:cabove` and `:cbelow` are built into Vim and Neovim.
 - Ordering requirement: these commands assume the quickfix entries are sorted by buffer number and line number.
 - Same-line detail: if multiple entries exist on the same line, only the first one on that line is considered by `:cabove` and `:cbelow`.
+- LazyVim/Trouble note: Trouble is useful for viewing the list, but it does not replace the spatial quickfix commands practiced here. Use `:cbelow` and `:cabove` for the drill, and verify Trouble mappings with `:verbose nmap <Space>xq` only as an optional view.
 
 ## Command Reference
 

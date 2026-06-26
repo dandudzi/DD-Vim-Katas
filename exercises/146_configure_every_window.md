@@ -171,6 +171,7 @@ You can put several local option changes after one `setlocal` inside `:windo`.
 - Scope detail: `:windo` only visits windows in the current tab page.
 - Command restriction: the help text explicitly forbids opening, closing, or reordering windows inside the `:windo` command.
 - Focus detail: after a successful run, the last visited window becomes current.
+- LazyVim note: UI toggles for line numbers or relative numbers can exist in local configs. Verify them with `:verbose nmap <leader>u` before use; `:windo setlocal ...` is still the portable way to apply window-local options across a layout.
 
 ## Command Reference
 
@@ -185,4 +186,3 @@ You can put several local option changes after one `setlocal` inside `:windo`.
 
 - [`:help :windo`](https://vimhelp.org/windows.txt.html#%3Awindo) - execute a command in each window, current-tab-only scope, and last-window behavior.
 - [`:help window-local`](https://vimhelp.org/options.txt.html#window-local) - window-local option model for settings like `number`, `relativenumber`, and `cursorline`.
-

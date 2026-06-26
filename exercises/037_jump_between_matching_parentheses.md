@@ -41,6 +41,9 @@ Reset and delete only `[one, {two: 2}]` using an operator with `%`. **Verify:** 
 ## Reset and Cleanup
 Use `u` after deletion drills or restore the fixture. Close with `:bwipeout!`.
 
+## LazyVim Note
+`mini.ai` or Treesitter-based text objects can provide alternate ways to target a balanced region, but `%` is the built-in motion this kata trains. If trying plugin text objects afterward, verify them with `:verbose omap i` and compare their range with `%` before editing.
+
 ## Command Reference
 | Keys | Effect |
 |---|---|

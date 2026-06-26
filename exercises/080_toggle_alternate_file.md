@@ -1,67 +1,145 @@
-## Kata: `Ctrl-^` — Toggle between alternate (previous) file
+# Kata: Toggle Between Alternate Files
 
-### 1) What `Ctrl-^` does (short description)
+> **Environment:** Vim or Neovim; built-in commands only.
+> **Dependencies:** None.
+> **Portability:** `<C-^>` is also commonly typed as `<C-6>`. Some terminals cannot send `<C-^>` reliably, so verify it in your terminal before relying on it.
 
-- `Ctrl-^` (also written `<C-^>` or `<C-6>`) — switch to the **alternate file** (the last file you were editing)
-- `:e#` — equivalent ex command to edit the alternate file
-- The alternate file is shown when you run `:ls` — it's marked with `#`
+## Objective
 
-This is the fastest way to bounce between two files — much quicker than using a file picker or `:bnext`/`:bprev`.
+By the end of this kata, you will be able to switch between the current file and the alternate file with `<C-^>` or `:edit #`.
 
----
+Success means: you can identify the `%` current marker and `#` alternate marker in `:ls`, toggle between two files, and predict which file becomes alternate after visiting a third file.
 
-### 2) Setup
+## Prerequisites
 
-You need two files open for this drill. Use any two files from this repository, for example:
+- Know: how to enter Ex commands and read `:ls`.
+- Required option/state: none.
+- Required external tool/plugin: none.
+- Readiness check: run `:echo mode()` and confirm it prints `n`.
 
+## Setup
+
+1. Create a disposable directory and three files:
+
+```vim
+:let g:kata_080_dir=tempname()
+:call mkdir(g:kata_080_dir, 'p')
+:call writefile(['alpha'], g:kata_080_dir.'/alpha.txt')
+:call writefile(['beta'], g:kata_080_dir.'/beta.txt')
+:call writefile(['gamma'], g:kata_080_dir.'/gamma.txt')
 ```
-nvim exercises/074_open_line_above_and_below.md exercises/075_substitute_character_and_line.md
+
+2. Open them in a deterministic order:
+
+```vim
+:execute 'edit '.fnameescape(g:kata_080_dir.'/alpha.txt')
+:execute 'edit '.fnameescape(g:kata_080_dir.'/beta.txt')
 ```
 
-Or open one file, then open a second:
+3. Start in Normal mode in `beta.txt`.
+4. Confirm `:echo expand('%:t') expand('#:t')` prints `beta.txt alpha.txt`.
 
-```
-:e exercises/074_open_line_above_and_below.md
-:e exercises/075_substitute_character_and_line.md
-```
+## Tasks
 
----
+### Drill A - Basic alternate-file toggle
 
-### 3) Step-by-step drills
+**Goal:** toggle between the current file and the alternate file.
 
-#### Drill A — Basic toggle between two files
+1. From `beta.txt`, switch to the alternate file.
+2. Switch back again.
 
-1. Open two files as described above
-2. You should be viewing the second file
-3. Press `Ctrl-^` — you jump to the first file
-4. Press `Ctrl-^` again — you jump back to the second file
-5. Repeat 10 times until it's instant
+**Verify:** `:echo expand('%:t') expand('#:t')` first prints `alpha.txt beta.txt`, then `beta.txt alpha.txt`.
 
-#### Drill B — Check which file is the alternate
+### Drill B - Inspect the buffer markers
 
-1. Run `:ls` to see the buffer list
-2. The current file has `%a` next to it
-3. The alternate file has `#` next to it
-4. Press `Ctrl-^` and run `:ls` again — notice the `%` and `#` markers swapped
+**Goal:** connect the command to the `%` and `#` markers in `:ls`.
 
-#### Drill C — Alternate file after multiple buffers
+1. Run `:ls` before toggling.
+2. Toggle once.
+3. Run `:ls` again.
 
-Goal: understand that the alternate file is always the *last* file you were in.
+**Verify:** the `%` marker follows the current file and the `#` marker follows the alternate file.
 
-1. Open a third file: `:e exercises/076_increment_and_decrement_numbers.md`
-2. Now `Ctrl-^` takes you back to the file you were just in (the second file), not the first
-3. Press `Ctrl-^` again — toggles between files 2 and 3
-4. If you want file 1, use `:b1` or `:e#1` — then `Ctrl-^` will toggle between file 1 and file 3
+### Drill C - Change the alternate file intentionally
 
-#### Drill D — Use `:e#` as an alternative
+**Goal:** prove the alternate file is the previous file, not a fixed partner.
 
-1. Type `:e#<Enter>` — same as `Ctrl-^`, switches to the alternate file
-2. Type `:e#<Enter>` again — switches back
-3. `Ctrl-^` is faster for muscle memory, but `:e#` is useful in scripts or when `Ctrl-^` is mapped to something else
+1. From `beta.txt`, open `gamma.txt` from the setup directory.
+2. Toggle once.
+3. Toggle once more.
 
----
+**Verify:** after opening `gamma.txt`, `:echo expand('%:t') expand('#:t')` prints `gamma.txt beta.txt`; toggling then alternates between `gamma.txt` and `beta.txt`.
 
-### Constraints (optional)
+### Challenge - Use the Ex form
 
-- When working on two related files (e.g., source + test, component + styles), use `Ctrl-^` exclusively to switch between them.
-- Avoid using file pickers or `:bnext` when you only need to toggle between two files.
+Reset to `alpha.txt`, then `beta.txt`. Switch to `alpha.txt` and back to `beta.txt` using only the Ex form.
+
+**Verify:** `:echo expand('%:t') expand('#:t')` prints `beta.txt alpha.txt`.
+
+## Hints
+
+<details>
+<summary>Hint 1</summary>
+
+The alternate file is shown by `#` in `:ls`.
+
+</details>
+
+<details>
+<summary>Hint 2</summary>
+
+`:edit #` is the Ex-command form of the same alternate-file jump.
+
+</details>
+
+## Solution
+
+<details>
+<summary>Show exact commands and keys</summary>
+
+### Drill A
+
+1. `<C-^>` or `<C-6>` - switch from `beta.txt` to `alpha.txt`.
+2. `<C-^>` or `<C-6>` - switch back to `beta.txt`.
+
+### Drill B
+
+1. `:ls<CR>`
+2. `<C-^>`
+3. `:ls<CR>`
+
+### Drill C
+
+1. `:execute 'edit '.fnameescape(g:kata_080_dir.'/gamma.txt')<CR>`
+2. `<C-^>`
+3. `<C-^>`
+
+### Challenge
+
+`:edit #<CR>:edit #<CR>`
+
+</details>
+
+## Reset and Cleanup
+
+- Between drills: reopen `alpha.txt`, then `beta.txt`, using the two setup `:execute 'edit '...` commands.
+- After the kata: wipe the three owned buffers with `:for g:kata_080_buf in getbufinfo() | if stridx(g:kata_080_buf.name, g:kata_080_dir) == 0 | execute 'bwipeout! ' . g:kata_080_buf.bufnr | endif | endfor`, then run `:call delete(g:kata_080_dir, 'rf') | unlet g:kata_080_buf g:kata_080_dir`.
+- Preserve user data: all files live under the generated temp directory.
+
+## Notes and Portability
+
+- Built-in behavior: `<C-^>`, `<C-6>`, and `:edit #` are Vim/Neovim alternate-file commands.
+- LazyVim note: file pickers are useful when choosing among many files, but this kata is about the built-in two-file toggle. If a custom config remaps related navigation, inspect it with `:verbose nmap <C-^>` and `:verbose nmap <C-6>`.
+
+## Command Reference
+
+| Keys/command | Mode | Effect |
+|---|---|---|
+| `<C-^>` / `<C-6>` | Normal | Edit the alternate file. |
+| `:edit #` | Command-line | Edit the alternate file. |
+| `:ls` | Command-line | Show buffers, including `%` current and `#` alternate markers. |
+
+## References
+
+- [`:help CTRL-^`](https://vimhelp.org/editing.txt.html#CTRL-%5E) - alternate-file Normal-mode command.
+- [`:help alternate-file`](https://vimhelp.org/editing.txt.html#alternate-file) - alternate-file concept and `#` marker.

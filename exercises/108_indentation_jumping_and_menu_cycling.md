@@ -1,6 +1,6 @@
 # Kata: Verify Scope Mappings, Cycle Completion, and Restore Spell Options
 
-> **Environment:** Neovim with LazyVim. Scope and `<Tab>` mappings depend on installed plugins; keyword completion and spell commands are built in.
+> **Environment:** Neovim with LazyVim. Scope, completion, and snippet mappings depend on installed plugins; keyword completion and spell commands are built in.
 
 ## Objective
 Distinguish plugin mappings from built-ins, cycle a deterministic completion list in both directions, and test buffer-local spelling without leaving files or options behind.
@@ -31,6 +31,7 @@ Run `:verbose nmap [i` and `:verbose nmap ]i`.
 1. Go to blank line 2, enter Insert mode, type `pro`, and invoke built-in keyword completion. **Verify:** the menu contains `process`, `product`, and `profile`.
 2. Use built-in next and previous completion keys. **Verify:** `<C-n>` and `<C-p>` move in opposite directions; cancel with `<C-e>` and leave line 2 unchanged.
 3. Inspect `:verbose imap <Tab>` and `:verbose imap <S-Tab>`. Only if descriptions say next/previous completion item, repeat using those mappings. **Verify:** the selection moves in opposite directions.
+4. If either mapping reports snippet expansion or snippet jumping instead of menu cycling, do not use it for this drill; follow the provider's visible menu controls or the built-in `<C-n>` / `<C-p>` keys instead.
 
 <details><summary>Exact completion solution</summary>
 

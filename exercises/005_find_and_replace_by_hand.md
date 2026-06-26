@@ -32,6 +32,8 @@ Start in Normal mode at line 1, column 1, with search wrapping enabled (`:set wr
 ## Reset and Reference
 Restore the fixture (search history may remain) and close with `:bd!`. See `:help /`, `:help n`, and `:help .`.
 
+LazyVim note: if Flash is enabled, you may use it as a faster jump to a visible match before applying the same `ciw` and `.` workflow. Check the active mappings first with `:verbose nmap s` and do not rely on any particular on-screen label; plain `/`, `n`, and `.` remain the portable skill here.
+
 | Keys | Effect |
 |---|---|
 | `/pattern` | Search forward |

@@ -19,11 +19,12 @@ Success means: you can switch to an older quickfix result set, confirm that it b
 
 ## Setup
 
-1. Start this kata in a fresh Vim or Neovim session, because it intentionally rewrites the global quickfix history stack.
+1. Start this kata in a fresh Vim or Neovim session if you need to preserve the full quickfix history stack. The setup saves the current list, but not the entire history.
 2. Run `:let g:kata_151_dir = tempname() | call mkdir(g:kata_151_dir, 'p')`.
 3. Run the setup block exactly:
 
 ```vim
+:if !exists('g:kata_151_qf') | let g:kata_151_qf = getqflist({'items': 1, 'title': 1, 'context': 1, 'idx': 1, 'quickfixtextfunc': 1}) | endif
 :let g:kata_151_alpha = g:kata_151_dir . '/alpha.txt'
 :let g:kata_151_beta = g:kata_151_dir . '/beta.txt'
 :call writefile(['TODO alpha', 'NOTE alpha', 'plain alpha', 'FIXME alpha'], g:kata_151_alpha)
@@ -171,14 +172,15 @@ The first command switches from `FIXME review` to `NOTE review`. The second comm
 ## Reset and Cleanup
 
 - Between drills: rerun the documented setup exactly to recreate the three-list quickfix history stack.
-- After the kata: run `:silent! cclose | for g:kata_151_buf in getbufinfo() | if stridx(g:kata_151_buf.name, g:kata_151_dir) == 0 | execute 'bwipeout! ' . g:kata_151_buf.bufnr | endif | endfor | call setqflist([], 'f') | call delete(g:kata_151_dir, 'rf') | unlet g:kata_151_alpha g:kata_151_beta g:kata_151_buf g:kata_151_dir`.
-- Preserve user data: do this kata in a fresh session, because freeing the kata's quickfix history also clears any pre-existing quickfix history from that session.
+- After the kata: run `:silent! cclose | for g:kata_151_buf in getbufinfo() | if stridx(g:kata_151_buf.name, g:kata_151_dir) == 0 | execute 'bwipeout! ' . g:kata_151_buf.bufnr | endif | endfor | call setqflist([], 'f') | call setqflist([], 'r', g:kata_151_qf) | call delete(g:kata_151_dir, 'rf') | unlet g:kata_151_alpha g:kata_151_beta g:kata_151_buf g:kata_151_dir g:kata_151_qf`.
+- Preserve user data: cleanup restores the pre-kata current quickfix list, but not the full pre-kata quickfix history stack.
 
 ## Notes and Portability
 
 - Built-in behavior: `:colder`, `:cnewer`, and `:chistory` are built into Vim and Neovim.
 - Session scope: quickfix history belongs to the whole editor session, not to one window.
 - Practical check: `:chistory` shows which list number is current and how many lists exist.
+- LazyVim/Trouble note: Trouble can display the current quickfix list, but quickfix history still changes through `:colder` and `:cnewer`. Check `:echo exists(':Trouble')`, inspect `:verbose nmap <Space>xq`, and use `g?` in Trouble for local actions.
 
 ## Command Reference
 

@@ -171,6 +171,7 @@ The first `:sbuffer` creates the bottom review window. Returning to the top wind
 - Determinism detail: if `'switchbuf'` contains `useopen`, `:sbuffer` may reuse an existing window instead of creating a new one, so setup clears it.
 - Layout detail: this kata sets `'splitbelow'` so plain `:sbuffer` creates lower windows in a predictable order.
 - Alternate form: `:sbuffer` also accepts a buffer name, but this kata focuses on the numbered form from `:ls`.
+- LazyVim note: picker providers usually offer split-open actions for selected buffers, but the action keys are provider-specific. Inspect picker help and verify the buffer picker mapping with `:verbose nmap <leader>,` before using it as an alternative.
 
 ## Command Reference
 

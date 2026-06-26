@@ -179,6 +179,7 @@ The first tag jump follows `build_report()`. After placing the cursor on the nex
 - Built-in behavior: `<C-]>` is standard in Vim and Neovim.
 - External dependency: the jump only works after `'tags'` points at a readable tags file.
 - This kata uses explicit file arguments instead of recursive `ctags -R` so the setup stays reproducible across machines and avoids project-specific assumptions.
+- LazyVim/LSP contrast: LSP definition uses the attached server, not the tags file. Check `:LspInfo`, `:verbose nmap gd`, and `textDocument/definition` support before comparing `gd` with `<C-]>`.
 
 ## Command Reference
 

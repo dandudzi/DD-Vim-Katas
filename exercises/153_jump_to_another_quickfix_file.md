@@ -19,11 +19,12 @@ Success means: you can review one representative match per file without stepping
 
 ## Setup
 
-1. Start this kata in a fresh session or accept that it will replace the current quickfix list.
+1. The setup saves the current quickfix list before replacing it.
 2. Run `:let g:kata_153_dir = tempname() | call mkdir(g:kata_153_dir, 'p')`.
 3. Run the setup block exactly:
 
 ```vim
+:if !exists('g:kata_153_qf') | let g:kata_153_qf = getqflist({'items': 1, 'title': 1, 'context': 1, 'idx': 1, 'quickfixtextfunc': 1}) | endif
 :let g:kata_153_alpha = g:kata_153_dir . '/alpha.txt'
 :let g:kata_153_beta = g:kata_153_dir . '/beta.txt'
 :let g:kata_153_gamma = g:kata_153_dir . '/gamma.txt'
@@ -183,14 +184,15 @@ The first command lands on `beta.txt` line 2. The second lands on `gamma.txt` li
 ## Reset and Cleanup
 
 - Between drills: rerun the documented setup to restore the files, quickfix list, and current entry.
-- After the kata: run `:silent! cclose | for g:kata_153_buf in getbufinfo() | if stridx(g:kata_153_buf.name, g:kata_153_dir) == 0 | execute 'bwipeout! ' . g:kata_153_buf.bufnr | endif | endfor | call setqflist([], 'f') | call delete(g:kata_153_dir, 'rf') | unlet g:kata_153_alpha g:kata_153_beta g:kata_153_buf g:kata_153_dir g:kata_153_gamma`.
-- Preserve user data: use a fresh session if you need to keep an existing quickfix list or quickfix history.
+- After the kata: run `:silent! cclose | for g:kata_153_buf in getbufinfo() | if stridx(g:kata_153_buf.name, g:kata_153_dir) == 0 | execute 'bwipeout! ' . g:kata_153_buf.bufnr | endif | endfor | call setqflist([], 'r', g:kata_153_qf) | call delete(g:kata_153_dir, 'rf') | unlet g:kata_153_alpha g:kata_153_beta g:kata_153_buf g:kata_153_dir g:kata_153_gamma g:kata_153_qf`.
+- Preserve user data: cleanup restores the quickfix list that was current before the first setup run.
 
 ## Notes and Portability
 
 - Built-in behavior: `:cnfile` and `:cpfile` are built into Vim and Neovim.
 - Landing detail: `:cnfile` lands on the first quickfix entry in the next file; `:cpfile` lands on the last quickfix entry in the previous file.
 - Edge case: if no next or previous file exists, these commands fall back to ordinary entry-wise quickfix movement.
+- LazyVim/Trouble note: Trouble can group entries by file in some views, but the review motion in this kata is the built-in `:cnfile`/`:cpfile` pair. Discover Trouble actions with `g?` instead of assuming grouping or jump keys.
 
 ## Command Reference
 

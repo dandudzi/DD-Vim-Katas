@@ -154,6 +154,8 @@ Commands like `k`, `gg`, and `G` each count as one Normal command after
   terminals.
 - This kata uses `cat` because it echoes whatever you type, making the return
   to Terminal mode obvious.
+- LazyVim note: terminal toggle mappings are optional and may open floating or split terminals. Verify them with `:verbose nmap <leader>ft` or the exact keys in your config before use.
+- Safety: stop the throwaway job with `exit` or `<C-d>` before force-closing the terminal buffer; avoid running long-lived project commands in this drill.
 
 ## Command Reference
 

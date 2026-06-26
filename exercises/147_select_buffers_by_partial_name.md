@@ -156,6 +156,7 @@ Each fragment is unique within the listed buffer names created by setup, so Vim 
 - Uniqueness rule: if the fragment matches more than one listed buffer, the command is ambiguous and will not select the intended target reliably.
 - Naming edge case: a buffer whose name is only digits must be referenced by buffer number, not by that name.
 - Escaping edge case: names with spaces require backslashes before the spaces.
+- LazyVim note: buffer pickers make fuzzy partial selection interactive. Verify the active mapping with `:verbose nmap <leader>,`; provider-internal selection keys vary, so do not assume a specific key for bulk actions.
 
 ## Command Reference
 
@@ -170,4 +171,3 @@ Each fragment is unique within the listed buffer names created by setup, so Vim 
 - [`:help :buffer`](https://vimhelp.org/windows.txt.html#%3Abuffer) - buffer switching command.
 - [`:help {bufname}`](https://vimhelp.org/windows.txt.html#%7Bbufname%7D) - unique partial-name matching rules and edge cases.
 - [`:help :ls`](https://vimhelp.org/windows.txt.html#%3Als) - inspecting the buffer list before choosing a fragment.
-

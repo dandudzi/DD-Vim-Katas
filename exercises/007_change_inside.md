@@ -32,6 +32,8 @@ Start in Normal mode on the `l` of `alpha`. Restore the fixture before each dril
 ## Reset and Reference
 Use `u` or restore the fixture; close with `:bd!`. See `:help text-objects`, `:help f`, and `:help t`.
 
+LazyVim note: LazyVim commonly enables `mini.ai`, which adds more text objects for function calls, arguments, and other syntax-shaped regions. Before using any extra object in this kata, confirm it with `:verbose omap i` or `:verbose xmap i`; the built-in `i(`/`i"` objects and `ct`/`cf` motions are the portable baseline.
+
 | Keys | Effect |
 |---|---|
 | `ci(`/`ci"` | Change inside delimiters |

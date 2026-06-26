@@ -159,6 +159,7 @@ The two tag jumps create two stack entries. The counted pop removes both and res
 - Built-in behavior: `<C-t>` is standard in Vim and Neovim.
 - Option detail: when `notagstack` is set, tag jumps are not pushed for later return.
 - Alternative: `:pop` is the Ex command form of the same older-entry jump, but this kata isolates the Normal-mode key.
+- LazyVim/LSP contrast: LSP jumps usually use the jump list, so return with `<C-o>` rather than `<C-t>` unless you deliberately used a tag command. Confirm the mapping source with `:verbose nmap gd`.
 
 ## Command Reference
 

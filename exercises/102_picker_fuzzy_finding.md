@@ -1,7 +1,7 @@
-# Kata: Fuzzy-Find Files, Text, and Buffers
+# Kata: Picker Fuzzy Finding
 
 > **Environment:** Neovim with LazyVim and its configured picker (Snacks, Telescope, or fzf-lua).
-> **Readiness:** Run `:verbose nmap <Space><Space>`, `:verbose nmap <Space>/`, and `:verbose nmap <Space>,`. Continue only when each mapping has a picker description. Provider keys inside the picker can vary.
+> **Readiness:** Run `:verbose nmap <leader><leader>`, `:verbose nmap <leader>/`, and `:verbose nmap <leader>,`. Continue only when each mapping has a picker description. Provider keys inside the picker can vary.
 
 ## Objective
 Use LazyVim's picker mappings to open a known file, grep a known token, switch buffers, and resume the previous picker.
@@ -25,16 +25,16 @@ Start in `beta-code.txt`, Normal mode.
 ## Hints
 <details><summary>Hints</summary>
 
-Current LazyVim defaults commonly use `<Space><Space>` for root files, `<Space>/` for root grep, `<Space>,` for buffers, and `<Space>sR` for resume. Trust `:verbose nmap` over this document when customized.
+Current LazyVim defaults commonly use `<leader><leader>` for root files, `<leader>/` for root grep, `<leader>,` for buffers, and `<leader>sR` for resume. Trust `:verbose nmap` over this document when customized.
 </details>
 
 ## Solution
 <details><summary>Default LazyVim keys</summary>
 
-1. `<Space><Space>`, type `alpha note`, select with the provider's documented next/previous keys, `<CR>`.
-2. `<Space>/`, type `BETA_TOKEN`, `<CR>`.
-3. `<Space>,`, type `alpha`, `<CR>`.
-4. Verify `:verbose nmap <Space>sR`, press `<Space>sR`, then `<Esc>`.
+1. `<leader><leader>`, type `alpha note`, select with the provider's documented next/previous keys, `<CR>`.
+2. `<leader>/`, type `BETA_TOKEN`, `<CR>`.
+3. `<leader>,`, type `alpha`, `<CR>`.
+4. Verify `:verbose nmap <leader>sR`, press `<leader>sR`, then close the picker with the provider's documented cancel key.
 </details>
 
 ## Cleanup and References
@@ -42,5 +42,5 @@ Current LazyVim defaults commonly use `<Space><Space>` for root files, `<Space>/
 
 | Mapping | LazyVim action |
 |---|---|
-| `<Space><Space>` / `<Space>/` | Find files / grep root |
-| `<Space>,` / `<Space>sR` | Buffers / resume picker |
+| `<leader><leader>` / `<leader>/` | Find files / grep root |
+| `<leader>,` / `<leader>sR` | Buffers / resume picker |

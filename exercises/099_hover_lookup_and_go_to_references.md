@@ -3,9 +3,9 @@
 ### 1) What these commands do (short description)
 
 - `K` — show documentation for the word under the cursor
-  - In vanilla Vim: runs `man` on the word (useful for C standard library, shell commands)
-  - With LSP configured: shows hover documentation (type info, docstrings, signatures)
-- `gr` — go to references (LSP): find all locations where the symbol under the cursor is used
+  - In vanilla Vim: runs the program in `'keywordprg'` for the word under the cursor
+  - In LazyVim/Neovim with an attached LSP client: usually calls LSP hover documentation
+- `gr` — go to references when a client supports LSP references
 
 Together, `K` tells you **what** a function does, and `gr` tells you **where** it's used. This is the "understand then trace" workflow.
 
@@ -23,7 +23,7 @@ grep -r "pattern" /var/log
 chmod 755 script.sh
 ```
 
-For `K` and `gr` with LSP (save as a `.ts` file with TypeScript LSP running):
+For `K` and `gr` with LSP, use any filetype in your own setup where `:LspInfo` shows an attached client. The example below is only a shape for a definition with two call sites; translate it to a language your configured LSP already supports.
 
 ```ts
 /** Calculate the total price including tax. */
@@ -52,34 +52,29 @@ console.log(`Total: ${total}, Discounted: ${discountedTotal}`);
 
 #### Drill B — `K` with LSP hover
 
-(Requires an LSP server running, e.g., TypeScript with `tsserver`)
+(Requires an attached LSP client with hover support.)
 
-1. Open the TypeScript file in a buffer
-2. Place cursor on `calculateTotal` on line 8
-3. Press `K` — a floating window shows the function signature and docstring:
-   ```
-   function calculateTotal(price: number, taxRate: number): number
-   Calculate the total price including tax.
-   ```
-4. Press `K` again (or move cursor) to dismiss
-5. Place cursor on `subtotal`, press `K` — shows `const subtotal: number`
+1. Open a file where `:LspInfo` shows an attached client.
+2. Run `:lua for _, c in ipairs(vim.lsp.get_clients({bufnr=0})) do print(c.name, c:supports_method('textDocument/hover', 0)) end` and continue only if at least one client prints `true`.
+3. Place the cursor on a call site for your chosen symbol.
+4. Press `K` and verify the hover describes that symbol.
+5. Move to another typed identifier and press `K` again. Verify the hover changes to that identifier.
 
 #### Drill C — `gr` to find all references
 
 (Requires LSP)
 
-1. Place cursor on `calculateTotal` on line 2 (the declaration)
-2. Press `gr` — a list appears showing all locations where `calculateTotal` is used:
-   - Line 8: `const total = calculateTotal(subtotal, tax);`
-   - Line 9: `const discountedTotal = calculateTotal(subtotal * 0.9, tax);`
-3. Select an entry to jump to that usage
+1. Run `:verbose nmap gr` and confirm the active mapping, then check `textDocument/references` with the same `client:supports_method(...)` pattern.
+2. Place the cursor on the declaration of your chosen symbol.
+3. Press `gr` and verify the references UI lists at least two uses of that same symbol.
+4. Select one entry to jump to that usage.
 
 #### Drill D — "Understand then trace" workflow
 
-1. You see `calculateTotal` being called on line 9 and want to understand it
-2. Press `K` on `calculateTotal` — read the docstring and signature
-3. Now press `gr` — see all call sites to understand how it's used across the codebase
-4. Press `gd` — jump to the function definition to read the implementation
+1. You see a symbol call and want to understand it.
+2. Press `K` on the symbol and read the hover.
+3. Now press `gr` to see all call sites.
+4. Press `gd` only after `:verbose nmap gd` and `textDocument/definition` confirm the active LSP definition mapping.
 
 This three-step pattern (`K` → `gr` → `gd`) is a complete code comprehension workflow.
 
@@ -89,7 +84,7 @@ By default, `K` runs the program set in `keywordprg` (default: `man`). You can c
 
 1. For Python files: `:setlocal keywordprg=pydoc`
 2. For Ruby files: `:setlocal keywordprg=ri`
-3. With LSP: the LSP handler overrides `K` automatically — no configuration needed
+3. With LazyVim/LSP: inspect `:verbose nmap K` to see whether `K` is mapped to hover in the current buffer
 
 ---
 

@@ -164,6 +164,8 @@ you want.
   something time-dependent like `date`.
 - `:read !{cmd}` is built in, but the shell command itself depends on your
   system shell.
+- LazyVim note: terminal and task integrations can capture command output in different ways. Verify mappings with `:verbose nmap <leader>ft` or your configured task keys; `:read !{cmd}` remains the portable buffer insertion command.
+- Safety: read output into scratch buffers first. Shell output can be large or surprising, and this command inserts it directly into the current buffer.
 
 ## Command Reference
 

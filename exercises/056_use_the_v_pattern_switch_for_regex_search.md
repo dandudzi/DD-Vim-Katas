@@ -43,6 +43,9 @@ Under `\v`, parentheses, braces, and `|` are special without backslashes. `\x` m
 ## Reset and Cleanup
 Counting with substitution flag `n` does not modify text. Run `:nohlsearch` and close with `:bwipeout!`.
 
+## Notes and Portability
+Very-magic `\v` is Vim regex syntax, not PCRE. LazyVim search UIs or picker prompts may use different engines depending on the provider, so use these exact patterns in Vim search, substitute, and `gn` workflows unless a tool documents Vim-regex compatibility.
+
 ## References
 - [`:help /\v`](https://vimhelp.org/pattern.txt.html#%2F%5Cv)
 - [`:help /\x`](https://vimhelp.org/pattern.txt.html#%2F%5Cx)

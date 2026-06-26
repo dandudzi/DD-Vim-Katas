@@ -195,6 +195,7 @@ The first `][` lands on line 9, the second on line 19, and the third on line 29.
 - Built-in behavior: `[]` and `][` are standard motions in Vim and Neovim.
 - Edge case: this kata relies on closing braces in the first column. If your codebase indents top-level `}` or keeps braces on other lines, these motions will not stop there.
 - Alternative: if these keys are remapped in your config, verify that with `:verbose nmap []` and `:verbose nmap ][`.
+- LazyVim compatibility: Flash Treesitter jumps can target syntax nodes when available, but they do not teach first-column section ends; verify any `S` mapping with `:verbose nmap S` before treating it as a plugin drill.
 
 ## Command Reference
 

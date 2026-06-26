@@ -79,6 +79,12 @@ This foundation kata stays on core buffer-local completion and popup control.
 It no longer tries to survey every completion source. Advanced or specialized
 follow-ups belong in separate drills.
 
+LazyVim note: completion and snippet engines are configuration-dependent. Before
+using `<Tab>`, `<S-Tab>`, or an accept key in a plugin menu, inspect the active
+Insert-mode mappings with `:verbose imap <Tab>`, `:verbose imap <S-Tab>`, and
+the key your config documents for confirmation. The built-in `<C-n>`, `<C-p>`,
+`<C-y>`, and `<C-e>` drills above remain valid without a plugin.
+
 ## Command Reference
 
 | Keys | Effect |

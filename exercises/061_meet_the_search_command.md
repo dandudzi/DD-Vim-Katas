@@ -37,6 +37,8 @@ Create this in a new buffer and run `gg0:nohlsearch<CR>`. Start every drill ther
 ## Cleanup and Reference
 `:bwipe!`. See `:help /`, `:help n`, `:help N`, `:help gn`, `:help star`.
 
+LazyVim note: Flash may offer a visible-target jump for search-like navigation. Verify the relevant mapping with `:verbose nmap s` and avoid memorizing labels; they are generated from the current screen. The portable search history, `n`/`N`, and `gn` behavior in this kata is unchanged.
+
 | Keys | Effect |
 |---|---|
 | `/` / `?` | Search forward/backward |

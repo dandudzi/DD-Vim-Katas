@@ -41,6 +41,9 @@ After an operator, `/pattern<CR>` supplies a characterwise motion ending just be
 ## Reset and Cleanup
 Use `u` immediately after a drill or restore the fixture. `:nohlsearch` clears highlighting; `:bwipeout!` closes the scratch buffer.
 
+## LazyVim Note
+If Flash is installed, operator-pending Flash can sometimes replace the `/pattern<CR>` motion for visible targets. Verify the operator-pending mapping with `:verbose omap s` or the mapping documented by your config; do not assume a fixed label or provider-specific key. The built-in solution remains `operator` plus search.
+
 ## Command Reference
 | Form | Effect |
 |---|---|

@@ -150,6 +150,7 @@ The split-tag jump opens the definition without replacing the caller. The window
 - Built-in behavior: `<C-w>]` is standard in Vim and Neovim.
 - Window-placement detail: help describes the new tag window as the upper window, but `splitbelow` changes placement. This kata sets `splitbelow` explicitly so the layout is deterministic.
 - Alternative: `:stag {name}` is the Ex form of the same split-and-tag workflow.
+- LazyVim note: LSP definition mappings such as `gd` may use a picker or split action depending on configuration. Verify with `:verbose nmap gd` before comparing them to the built-in tag command.
 
 ## Command Reference
 

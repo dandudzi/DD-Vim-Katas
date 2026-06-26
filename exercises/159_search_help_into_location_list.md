@@ -23,6 +23,8 @@ Success means: you can inspect help results for `quickfix` while leaving the glo
 
 ```vim
 :enew
+:let g:kata_159_qf = getqflist({'items': 1, 'title': 1, 'context': 1, 'idx': 1, 'quickfixtextfunc': 1})
+:let g:kata_159_ll = getloclist(0, {'items': 1, 'title': 1, 'context': 1, 'idx': 1, 'quickfixtextfunc': 1})
 :call setqflist([], 'r', {'title': 'kata-159 global', 'items': [{'filename': 'keep.txt', 'lnum': 1, 'col': 1, 'text': 'keep quickfix unchanged'}]})
 :cclose
 :lclose
@@ -146,8 +148,8 @@ If you can still read `kata-159 global` from `getqflist({'title': 1}).title`, th
 ## Reset and Cleanup
 
 - Between drills: run `:lclose | enew | call setqflist([], 'r', {'title': 'kata-159 global', 'items': [{'filename': 'keep.txt', 'lnum': 1, 'col': 1, 'text': 'keep quickfix unchanged'}]})`.
-- After the kata: run `:lclose | cclose | call setqflist([], 'r') | bwipeout!`.
-- Preserve user data: this kata uses only a scratch buffer and a disposable manual quickfix entry.
+- After the kata: run `:lclose | cclose | call setqflist([], 'r', g:kata_159_qf) | call setloclist(0, [], 'r', g:kata_159_ll) | bwipeout! | unlet g:kata_159_qf g:kata_159_ll`.
+- Preserve user data: this kata uses only a scratch buffer and restores the pre-kata quickfix and current-window location list.
 
 ## Notes and Portability
 
@@ -155,6 +157,7 @@ If you can still read `kata-159 global` from `getqflist({'title': 1}).title`, th
 - Version-sensitive detail: the exact number and order of `quickfix` help matches can vary slightly across help versions, so the verification checks for at least three matches instead of hard-coded line numbers.
 - Scope boundary: this kata isolates help search into a location list; broader per-window location-list management is covered elsewhere.
 - Alternative: use a narrower pattern such as `cwindow` later if you want fewer results, but `quickfix` gives enough matches for repetition practice.
+- LazyVim/Trouble note: if Trouble is installed, location-list views are optional review surfaces. Check `:echo exists(':Trouble')`, inspect `:verbose nmap <Space>xl`, and remember that the underlying list remains window-local.
 
 ## Command Reference
 

@@ -32,6 +32,8 @@ Run `:setfiletype html`; start in Normal mode anywhere inside `one`. Restore bef
 ## Reset and Notes
 Use `u` per change or restore the fixture; close with `:bd!`. Tag text objects depend on recognized markup syntax; confirm `:set filetype?`. See `:help gU` and `:help it`.
 
+LazyVim note: `mini.ai` may provide additional text objects beyond the built-in tag object, but this drill intentionally practices the repeatable operator form `gU{object}`. Verify any non-built-in object with `:verbose omap i` or `:verbose xmap i` before substituting it.
+
 | Keys | Effect |
 |---|---|
 | `gUit` | Uppercase inside current tag |

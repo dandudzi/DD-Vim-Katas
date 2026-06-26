@@ -25,7 +25,9 @@ Only this disposable directory may be searched or replaced.
 ## B. Export Results
 Reset the two files with `:call writefile(['old_token one','keep'],g:kata_109_dir.'/a.txt') | call writefile(['old_token two'],g:kata_109_dir.'/b.txt') | execute 'silent! checktime '.bufnr(g:kata_109_dir.'/a.txt')`, then refresh Grug-far. `:checktime` reloads the already-loaded owned buffer without editing the Grug-far UI buffer. Invoke the discovered `Qf List` action. **Verify:** `:echo len(getqflist())` is `2` and every entry path begins with `g:kata_109_dir`.
 
-For a LazyVim picker, open root grep with the mapping reported by `:verbose nmap <Space>/`, search `old_token`, open provider help, and use its documented quickfix export. `<C-q>` is common but not universal. **Verify the same two-entry quickfix list.** Trouble export is optional and must be discovered from provider help; `Alt-t` is not portable.
+For a LazyVim picker, open root grep with the mapping reported by `:verbose nmap <Space>/`, search `old_token`, open provider help, and use its documented quickfix export. Do not assume a fixed export key. **Verify the same two-entry quickfix list.** Trouble export is optional and must be discovered from provider help.
+
+If the exported quickfix list is later used for `:cdo` or `:cfdo`, save the pre-kata list first with `getqflist({'items': 1, 'title': 1, 'context': 1, 'idx': 1, 'quickfixtextfunc': 1})` and restore it with `setqflist([], 'r', saved)`. Treat picker and Trouble exports as list creation steps, not as replacements for reviewing the exact file set.
 
 ## Hints and Solution
 <details><summary>Exact default Grug-far workflow</summary>

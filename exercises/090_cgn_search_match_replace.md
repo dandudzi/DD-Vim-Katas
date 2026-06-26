@@ -85,3 +85,7 @@ return old_value
 | `.` | Repeat last `cgn`/`dgn` on next match |
 | `n` | Skip to next match without changing |
 | `:%s/old/new/gc` | Substitute with confirmation (alternative) |
+
+### LazyVim/LSP refactor bridge
+
+`cgn` is still useful for small, visible text changes. For semantic renames in a LazyVim/LSP buffer, first run `:LspInfo` and confirm a client supports `textDocument/rename` with `:lua for _, c in ipairs(vim.lsp.get_clients({bufnr=0})) do print(c.name, c:supports_method('textDocument/rename', 0)) end`. Then inspect the active rename mapping with `:verbose nmap <Space>cr`; use LSP rename when references must be resolved semantically instead of by matching text.

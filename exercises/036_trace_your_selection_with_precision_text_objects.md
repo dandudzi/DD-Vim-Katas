@@ -47,6 +47,9 @@ using two text-object changes.
 ## Reset and Cleanup
 Use `u` for selections that only yank and restore the fixture after changes. Close with `:bwipeout!`.
 
+## LazyVim Note
+LazyVim commonly includes `mini.ai`, which can add richer objects for arguments, functions, and paired delimiters. Confirm available objects with `:verbose xmap i` and `:verbose omap i` before using them; this kata's required objects are Vim's built-in delimiter, quote, and tag objects.
+
 ## Command Reference
 | Text object | Range |
 |---|---|

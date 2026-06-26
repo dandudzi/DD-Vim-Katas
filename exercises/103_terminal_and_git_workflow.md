@@ -1,7 +1,7 @@
 # Kata: Terminal Mode and Git-Hunk Review
 
 > **Environment:** Neovim; Git for the hunk section; Gitsigns/LazyVim mappings optional.
-> **Readiness:** `:echo executable('git')` must be `1`. Check `:verbose nmap ]h`, `[h`, and `<Space>ghp`; skip the hunk section if they do not resolve to Gitsigns.
+> **Readiness:** `:echo executable('git')` must be `1`. Check `:verbose nmap ]h`, `[h`, and `<leader>ghp`; skip the hunk section if they do not resolve to Gitsigns.
 
 ## Objective
 Leave Terminal mode safely, then review known Git hunks in a disposable repository without staging or resetting user work.
@@ -33,11 +33,13 @@ The built-in escape from Terminal mode is `<C-\><C-n>`. Plugin mappings are conf
 </details>
 <details><summary>Exact workflow</summary>
 
-Terminal: `:terminal<CR>printf 'terminal-ready\n'<CR><C-\><C-n>`, then `iexit<CR>`. Gitsigns defaults in LazyVim: `]h`, `[h`, and `<Space>ghp`, but only after readiness checks pass.
+Terminal: `:terminal<CR>printf 'terminal-ready\n'<CR><C-\><C-n>`, then `iexit<CR>`. Gitsigns defaults in LazyVim commonly include `]h`, `[h`, and `<leader>ghp`, but only after readiness checks pass.
 </details>
 
 ## Cleanup and References
 `:for g:kata_103_buf in getbufinfo() | if stridx(g:kata_103_buf.name,g:kata_103_dir)==0 | execute 'bwipeout! '.g:kata_103_buf.bufnr | endif | endfor | lcd - | call delete(g:kata_103_dir, 'rf') | unlet g:kata_103_buf g:kata_103_dir`. This removes only the generated repo. See `:help terminal`, https://github.com/lewis6991/gitsigns.nvim, and https://lazyvim.github.io/keymaps.
+
+Safety notes: exit terminal jobs before wiping terminal buffers, and keep Gitsigns practice read-only unless a kata explicitly creates a disposable repository. Do not stage, reset, restore, or checkout hunks in a real worktree from this drill.
 
 | Keys | Effect |
 |---|---|

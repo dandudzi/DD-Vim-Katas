@@ -155,6 +155,7 @@ Because `as` includes the separator space after the sentence, the remaining text
 - Built-in behavior: `is` and `as` are standard text objects in Vim and Neovim.
 - Sentence boundary detail: with `'cpoptions'` containing `J`, one space after `.`, `!`, or `?` is not enough for a sentence boundary.
 - Edge case: abbreviations and punctuation-heavy prose can create surprising sentence boundaries; this kata uses simple full-stop sentences only.
+- LazyVim note: `mini.ai` can add custom text objects, but sentence objects `is` and `as` are built in and option-sensitive. Use `:verbose omap is` or `:verbose xmap as` only to diagnose remaps; keep the `'cpoptions'` readiness check for this drill.
 
 ## Command Reference
 

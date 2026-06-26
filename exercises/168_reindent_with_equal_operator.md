@@ -162,6 +162,11 @@ usefully.
   makes it deterministic by enabling `cindent`.
 - `=` is built in and works with many motions and text objects, not only file
   ranges.
+- Formatting distinction: `=` reindents through Vim's indent settings such as
+  `cindent`, `indentexpr`, and `shiftwidth`; it is not a code formatter.
+  `gq` and `gw` reflow text. LazyVim/Conform formatting may call an LSP or
+  external formatter and can make broader code changes, so verify any format
+  mapping with `:verbose nmap {keys}` before using it.
 
 ## Command Reference
 

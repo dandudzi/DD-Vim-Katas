@@ -198,6 +198,7 @@ version-sensitive behavior, surprising edge cases, or external tools. -->
 10. Test every solution from the documented initial state in the declared environment. Verify counts, ranges, cursor placement, register side effects, and special cases.
 11. Link authoritative Vim/Neovim help for subtle built-in behavior and canonical plugin/tool documentation for external behavior. References support the kata; they do not substitute for instructions.
 12. Keep the command reference after the challenge so learners attempt recall before reviewing the answer vocabulary.
+13. For optional LazyVim extras or plugin-provider workflows, define an explicit skip path. A missing mapping, module, adapter, executable, or safe disposable project should be a documented readiness result, not an invitation to guess keys, install tools, or mutate the user's real project.
 
 ## Quality Rubric
 

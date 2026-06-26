@@ -159,6 +159,7 @@ The replacement can add punctuation around `&`, so you do not need separate repl
 - Built-in behavior: `&` in a replacement string is built into Vim and Neovim.
 - Contrast: `\0` can also reuse the whole match, but this kata focuses on `&`.
 - Edge case: a literal `&` in the replacement must be written as `\&`.
+- LazyVim/LSP bridge: LSP rename will not help with structural text decoration like wrapping each match; use substitute replacement items when the desired change is textual formatting rather than a symbol rename.
 
 ## Command Reference
 

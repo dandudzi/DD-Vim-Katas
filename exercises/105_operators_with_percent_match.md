@@ -12,7 +12,7 @@ You already know `%` jumps to the matching bracket (kata 037). But `%` also work
 
 This is like `di{` or `di(`, but `%` figures out which bracket type you're in automatically.
 
-> **Note**: `di%` requires the `matchit` plugin or Treesitter textobjects. In Neovim with LazyVim, this works out of the box.
+> **Readiness note**: `%` is built in as a motion. The `i%`/`a%` text objects are configuration-dependent; check `:verbose omap i%`, `:verbose xmap i%`, `:verbose omap a%`, and `:verbose xmap a%` before practicing `di%`, `ci%`, or `vi%`. LazyVim commonly supplies richer text objects through plugins such as `mini.ai`, but the provider can vary.
 
 ---
 

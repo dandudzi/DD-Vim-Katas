@@ -145,6 +145,11 @@ place.
 - `gw` is built in and intentionally ignores `formatexpr` and `formatprg`.
 - This makes it a reliable fallback when you want built-in formatting behavior
   and cursor preservation.
+- Formatting distinction: `gq` uses Vim's text-formatting path and may consult
+  `formatexpr` or `formatprg`; `gw` keeps to built-in text reflow while trying
+  to restore the cursor. LazyVim/Conform formatting is a separate code-format
+  workflow that depends on configured formatters and should be readiness-checked
+  before use.
 
 ## Command Reference
 

@@ -158,6 +158,7 @@ The cursor should be on the file path itself, not somewhere earlier in the sente
 - Built-in behavior: `gF` is standard in Vim and Neovim.
 - Separator detail: this kata demonstrates three documented forms that `gF` recognizes after a file name: `:3`, `(5)`, and `line 2`.
 - Path detail: the references are relative paths, so Vim resolves them from the directory of the current file in this setup.
+- LazyVim note: diagnostics, grep pickers, and quickfix entries often expose file-and-line references. Use `gF` when the reference is plain text under the cursor; verify picker mappings separately with `:verbose nmap <leader>/`.
 
 ## Command Reference
 
