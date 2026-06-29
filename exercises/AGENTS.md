@@ -6,8 +6,8 @@ directory.
 ## Goal
 
 Katas should be short practice prompts, not long reference documents. Each kata
-should teach one Vim action or one small workflow through a single command
-chain.
+should teach one Vim action or one small workflow through one focused command
+progression.
 
 ## Required Format
 
@@ -41,19 +41,25 @@ The buffer should become:
 
 ## Commands
 
-Run this command chain:
+Run these command steps:
 
 ```text
-{keys or commands}
+1. {keys or commands}
+2. {keys or commands}
 ```
 ````
 
 ## Rules
 
 - Keep the task description short and direct.
-- Use one command chain per kata.
+- Use one focused command progression per kata.
+- A command progression may have several numbered steps when they use the same
+  setup and practice the same concept.
 - If an older kata has multiple drills, alternate workflows, or challenges,
-  merge them into one focused task when rewriting it.
+  keep the related ones as next steps in the same `Commands` list.
+- Move a removed task into a separate new kata only when it practices a
+  different concept, needs a different setup, or would make the current kata
+  hard to read.
 - Put all practice text in the kata itself.
 - Prefer an unnamed scratch buffer for practice.
 - Do not require creating files unless the skill is specifically about file,
@@ -66,7 +72,7 @@ Run this command chain:
   sections.
 - State the exact cursor position and starting mode.
 - Show the expected final text or final observable state.
-- Put the complete command sequence only in the `Commands` section.
+- Put the complete command steps only in the `Commands` section.
 
 ## Defaults
 
