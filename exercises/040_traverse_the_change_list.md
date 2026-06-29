@@ -1,58 +1,50 @@
 # Kata: Traverse the Change List
 
-> **Environment:** Vim or Neovim; built-in commands
+## Task
 
-## Objective
-Create distinct changes and revisit them using `g;`, `g,`, `` `. ``, and `gi`. Success means reaching each changed location in known order.
+Practice moving through change-list entries with `g;` and `g,`, then resuming Insert mode at the last insertion point.
 
-## Initial Fixture
+## Start
+
+Open a scratch buffer and insert:
+
 ```text
 alpha
 beta
 gamma
 delta
 ```
-Start in Normal mode on line 1. Use a fresh scratch buffer so earlier changes do not affect the list.
 
-## Setup
-Make these changes in order: append `!` to line 1, line 3, then line 4. End on line 4.
+Start in Normal mode on the `a` in `alpha`.
 
-## Tasks
+## End
 
-### Drill A - Inspect
-Display the change list. **Verify:** `:changes` includes entries on lines 1, 3, and 4.
+The buffer should become:
 
-### Drill B - Traverse backward
-Visit older change positions twice. **Verify:** cursor visits line 3, then line 1.
+```text
+alpha!
+beta
+gamma!
+delta!?
+```
 
-### Drill C - Traverse forward
-Visit newer change positions twice. **Verify:** cursor visits line 3, then line 4.
+The cursor should finish after the `?` on line 4.
 
-### Challenge
-Move to line 2; jump to the last change, then return to the last insertion and enter Insert mode there. Type `?`, leave Insert mode. **Verify:** line 4 ends `!?`.
+## Commands
 
-## Hints
-<details><summary>Hints</summary>
-`g;` is older, `g,` newer. `` `. `` jumps to the latest change. `gi` resumes Insert mode at the last insertion point.
-</details>
+Run these command steps:
 
-## Solution
-<details><summary>Show exact keys</summary>
-- Setup: `A!<Esc>2jA!<Esc>jA!<Esc>`
-- B: `g;g;`
-- C: `g,g,`
-- Challenge: `2G` then `` `. `` then `gi?<Esc>`
-</details>
-
-## Reset and Cleanup
-Use a new scratch buffer for each rerun because undo does not erase all historical change-list entries. Close with `:bwipeout!`.
-
-## Command Reference
-| Keys | Effect |
-|---|---|
-| `g;` / `g,` | Older / newer change position |
-| `` `. `` | Latest change position |
-| `gi` | Insert at last insertion position |
-
-## References
-- [`:help change-list`](https://vimhelp.org/motion.txt.html#change-list)
+```text
+1. A!<Esc>
+2. 2j
+3. A!<Esc>
+4. j
+5. A!<Esc>
+6. g;
+7. g;
+8. g,
+9. g,
+10. 2G
+11. `.
+12. gi?<Esc>
+```

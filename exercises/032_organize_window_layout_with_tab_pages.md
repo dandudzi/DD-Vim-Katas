@@ -1,59 +1,43 @@
 # Kata: Organize Windows with Tab Pages
 
-> **Environment:** Vim or Neovim; built-in commands only
-> **Portability:** `<S-h>`/`<S-l>` are not built-in tab navigation and are intentionally excluded.
+## Task
 
-## Objective
-Create tab pages, move a window into a tab, navigate tabs, and close them using built-in commands. Success means ending with exactly two tab pages and known contents.
+Practice creating tab pages, navigating them, moving a window into a new tab, and closing a tab page.
 
-## Setup
-Save `hidden` and enable it before modifying scratch buffers: `:let g:kata_hidden=&hidden | set hidden`. Run `:enew | file layout-one`, insert `one`, and start in Normal mode in the only window and tab. Verify `:echo tabpagenr('$') winnr('$')` prints `1 1`.
+## Start
 
-## Tasks
+Open a scratch buffer and insert:
 
-### Drill A - New tab
-Open a new tab with a buffer named `layout-two`, then insert `two`. **Verify:** `:echo tabpagenr('$')` prints `2`.
+```text
+one
+```
 
-### Drill B - Navigate
-Go to the previous tab and then the next tab. **Verify:** names observed are `layout-one`, then `layout-two`.
+Start in Normal mode on the `o` in `one` in the only window and tab.
 
-### Drill C - Promote a window
-In tab 2, split horizontally, name the new buffer `layout-three`, and move that window to its own tab. **Verify:** there are 3 tabs and tab 3 contains `layout-three`.
+## End
 
-### Challenge
-Close the current tab without discarding its modified scratch buffer, return to tab 1, and verify exactly two tabs remain and the active buffer is `layout-one`. `:echo bufexists('layout-three')` must still print `1` after the tab closes.
+There should be exactly two tab pages. The active tab should show:
 
-## Hints
-<details><summary>Hints</summary>
-`<C-w>T` moves the current window to a new tab page. `gt` and `gT` navigate tabs.
-</details>
+```text
+one
+```
 
-## Solution
-<details><summary>Show exact commands and keys</summary>
+## Commands
 
-- A: `:tabnew<CR>:file layout-two<CR>itwo<Esc>`
-- B: `gT` then `gt`
-- C: `<C-w>s:enew<CR>:file layout-three<CR>ithree<Esc><C-w>T`
-- Challenge: `:tabclose<CR>1gt`
+Run these command steps:
 
-</details>
-
-## Reset and Cleanup
-Close only the kata-created tabs with ordinary `:tabclose` while visiting the tabs that show `layout-two` and `layout-three`; never use `:tabonly`, because it can close unrelated user tabs. Then run `:silent! bwipeout! layout-one`, `:silent! bwipeout! layout-two`, and `:silent! bwipeout! layout-three` separately. Restore `hidden` with `:let &hidden=g:kata_hidden | unlet g:kata_hidden`. The modified buffers remain hidden until this explicit cleanup; `:tabclose!` is unnecessary and could discard scratch changes.
-
-## Notes and Portability
-
-- LazyVim note: some configs map `<S-h>` and `<S-l>` for buffer navigation, not tab-page navigation. Use `:verbose nmap <S-h>` and `:verbose nmap <S-l>` to verify what they do locally.
-- Vim tab pages are window-layout containers, not project workspaces. Session plugins can restore tabs, but this kata keeps the built-in tab-page model primary.
-
-## Command Reference
-| Command/keys | Effect |
-|---|---|
-| `:tabnew` | Open new tab with a new buffer |
-| `gt` / `gT` | Next / previous tab |
-| `<C-w>T` | Move window to a new tab |
-| `:tabclose` | Close the current tab page |
-
-## References
-- [`:help tab-page`](https://vimhelp.org/tabpage.txt.html#tab-page)
-- [`:help CTRL-W_T`](https://vimhelp.org/windows.txt.html#CTRL-W_T)
+```text
+1. :file layout-one<CR>
+2. :tabnew<CR>
+3. :file layout-two<CR>
+4. itwo<Esc>
+5. gT
+6. gt
+7. <C-w>s
+8. :enew<CR>
+9. :file layout-three<CR>
+10. ithree<Esc>
+11. <C-w>T
+12. :tabclose!<CR>
+13. 1gt
+```

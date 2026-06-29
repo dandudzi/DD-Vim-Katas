@@ -1,43 +1,36 @@
-# Kata: Set Match Boundaries with `\zs` and `\ze`
+# Kata: Set Match Boundaries
 
-> **Environment:** Vim or Neovim. **Dependencies:** None.
+## Task
 
-## Objective
-Use `\zs` and `\ze` to keep context in a search pattern while making only a subsection the match. Success means each `gn` selection below contains the required text and excludes its delimiters.
+Practice using `\zs` and `\ze` to keep context in a search pattern while changing only the reported match.
 
-## Fixture and Start
-Create a new unsaved buffer containing exactly:
+## Start
+
+Open a scratch buffer and insert:
 
 ```text
 Practical Vim is a practical book.
 id="alpha-17" id="beta-204"
 ```
 
-Run `gg0`, stay in Normal mode, and reset with `u` or restore this fixture before each drill.
+Start in Normal mode on the `P` in line 1, column 1.
 
-## Drills
-1. Search for `Practical Vim` while making only `Vim` the match. Press `gn`. **Verify:** only `Vim` is selected.
-2. Match the value of the first `id`, excluding both quotes. Press `gn`, then `n`. **Verify:** selections are `alpha-17`, then `beta-204`.
-3. Reset, select each ID value with `gn`, and uppercase it with `gU`. **Verify:** the second line is `id="ALPHA-17" id="BETA-204"`; line 1 is unchanged.
+## End
 
-## Hints
-<details><summary>Hints</summary>
+The buffer should become:
 
-`\zs` sets the match start; `\ze` sets its end. Context before or after them must still match.
-</details>
+```text
+Practical Vim is a practical book.
+id="ALPHA-17" id="BETA-204"
+```
 
-## Solution
-<details><summary>Exact keys</summary>
+## Commands
 
-1. `/Practical \zsVim<CR>gn`
-2. `/id="\zs[^"]\+\ze"<CR>gn`, then `<Esc>ngn`
-3. `/id="\zs[^"]\+\ze"<CR>gUgn`, then `n.`
-</details>
+Run these command steps:
 
-## Cleanup and Reference
-Close the unsaved buffer with `:bwipe!`. Built-in help: `:help /\zs`, `:help /\ze`, `:help gn`.
-
-| Item | Effect |
-|---|---|
-| `\zs` / `\ze` | Set the start/end of the reported match |
-| `gn` | Select the next match |
+```text
+1. /Practical \zsVim<CR>gn<Esc>
+2. gg/id="\zs[^"]\+\ze"<CR>gn<Esc>ngn<Esc>
+3. gg/id="\zs[^"]\+\ze"<CR>gUgn
+4. n.
+```

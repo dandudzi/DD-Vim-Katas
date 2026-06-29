@@ -1,51 +1,37 @@
-# Kata: Repeat a Line Macro Across a Range
+# Kata: Repeat a Line Macro on Contiguous Lines
 
-> **Environment:** Vim or Neovim; built-in commands
+## Task
 
-## Objective
-Record a per-line macro, replay it with a count, and apply it only to selected lines with `:normal`. Success means formatting list items while preserving a barrier line.
+Practice recording a per-line macro and replaying it with a count across neighboring lines.
 
-## Initial Fixture
+## Start
+
+Open a scratch buffer and insert:
+
 ```text
 1. one
 2. two
 3. three
-// keep unchanged
-4. four
-5. five
 ```
-Start line 1, column 1; clear register `a`.
 
-## Tasks
+Start in Normal mode on the `1` on line 1.
 
-### Drill A - Record
-Record a macro that changes `.` to `)`, uppercases the first list word character, and moves down. **Verify:** line 1 is `1) One`, cursor is line 2.
+## End
 
-### Drill B - Count contiguous lines
-Replay twice. **Verify:** lines 1-3 are formatted and the cursor is on the comment.
+The buffer should become:
 
-### Drill C - Apply to a noncontiguous block
-Select only lines 5-6 and execute macro `a` once per selected line using `:normal`. **Verify:** the comment remains exact and lines 5-6 are `4) Four`, `5) Five`.
+```text
+1) One
+2) Two
+3) Three
+```
 
-### Challenge
-Reset and produce the final state using one recording, a counted replay for lines 2-3, and a ranged replay for lines 5-6.
+## Commands
 
-## Hints
-<details><summary>Hints</summary>
-`:'<,'>normal @a` runs the macro once from each selected line. A macro ending in `j` may move after its edit, but the range establishes each starting line.
-</details>
+Run these command steps:
 
-## Solution
-<details><summary>Show exact keys</summary>
-- A: `qa0f.r)w~jq`
-- B: `2@a`
-- C: `jVj:normal @a<CR>`
-- Challenge: same three sequences after reset
-</details>
-
-## Reset and Cleanup
-Restore fixture and clear `a`; close scratch buffer. `:normal` can make broad edits, so practise only on this fixture.
-
-## References
-- [`:help :normal`](https://vimhelp.org/various.txt.html#%3Anormal)
-- [`:help complex-repeat`](https://vimhelp.org/repeat.txt.html#complex-repeat)
+```text
+1. :let @a=''<CR>
+2. qa0f.r)w~jq
+3. 2@a
+```

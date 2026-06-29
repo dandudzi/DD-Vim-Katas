@@ -1,48 +1,120 @@
 # Kata: Traverse the Jump List
 
-> **Environment:** Vim or Neovim; built-in commands
+## Task
 
-## Objective
-Create a predictable jump history and traverse it with `<C-o>` and `<C-i>`. Success means visiting three distant lines in reverse and forward order.
+Practice moving backward and forward through jump-list entries with `<C-o>` and `<C-i>`.
 
-## Initial Fixture
-Create 40 numbered lines with `:put =range(1,40)`, then delete the initial blank line with `ggdd`. Start on line 1 in Normal mode.
+## Start
 
-## Tasks
+Open a scratch buffer and insert:
 
-### Drill A - Build history
-Jump to lines 10, 25, and 40 using linewise Ex jumps. **Verify:** `:jumps` shows entries for the earlier locations and the cursor is on line 40.
+```text
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+```
 
-### Drill B - Go backward
-Traverse backward three times. **Verify:** successive cursor lines are 25, 10, and 1.
+Start in Normal mode on line 1, column 1.
 
-### Drill C - Go forward
-Traverse forward twice. **Verify:** successive cursor lines are 10 and 25.
+## End
 
-### Challenge
-Return to line 40 with a count, then go back to line 10 with a count. **Verify:** final `:echo line('.')` is `10`.
+The buffer should become:
 
-## Hints
-<details><summary>Hints</summary>
-`<C-o>` visits older jump-list entries; `<C-i>` visits newer ones. A count traverses several entries.
-</details>
+```text
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+```
 
-## Solution
-<details><summary>Show exact commands and keys</summary>
-- A: `:10<CR>:25<CR>:40<CR>`
-- B: `<C-o><C-o><C-o>`
-- C: `<C-i><C-i>`
-- Challenge: `<C-i>` then `2<C-o>`
-</details>
+The cursor should finish on line 10.
 
-## Reset and Cleanup
-Jump-list contents are session state; use a fresh scratch buffer/session for a fully deterministic rerun. Close with `:bwipeout!`.
+## Commands
 
-## Command Reference
-| Keys/command | Effect |
-|---|---|
-| `<C-o>` / `<C-i>` | Older / newer jump |
-| `:jumps` | Inspect jump list |
+Run these command steps:
 
-## References
-- [`:help jump-list`](https://vimhelp.org/motion.txt.html#jump-list)
+```text
+1. :10<CR>
+2. :25<CR>
+3. :40<CR>
+4. <C-o>
+5. <C-o>
+6. <C-o>
+7. <C-i>
+8. <C-i>
+9. <C-i>
+10. 2<C-o>
+```

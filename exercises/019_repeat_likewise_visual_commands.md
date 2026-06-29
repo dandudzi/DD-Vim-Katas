@@ -1,14 +1,14 @@
 # Kata: Indent a Line Range Once
 
-> **Environment:** Vim or Neovim; built-in commands only.
+## Task
 
-## Objective
-Use a linewise selection and one shift command to indent an exact code block without over-indenting it.
+Practice indenting an exact line range once with line shifts and a motion.
 
-## Setup and Fixture
-Run `:setlocal shiftwidth=4 expandtab`, then insert:
+## Start
 
-```python
+Open a scratch buffer and insert:
+
+```text
 def fib(n):
     a, b = 0, 1
     while a < n:
@@ -17,29 +17,30 @@ a, b = b, a + b
 fib(42)
 ```
 
-Start in Normal mode on the `p` of line 4. Restore before each drill.
+Start in Normal mode on the `p` of `print(a)` on line 4.
 
-## Tasks
-1. Shift only line 4 right once. **Verify:** it has four leading spaces.
-2. Reset; select lines 4-5 linewise and shift once. **Verify:** both have four spaces; line 6 has none.
-3. Challenge: produce valid indentation for lines 4-5 with one operator command and no repeated dot. **Verify:** `:4,5s/^    //n` reports two matches before undoing.
+## End
 
-## Hints
-<details><summary>Hints</summary>`>` in Visual mode shifts the whole selection once; repeating it would add another four spaces.</details>
+The buffer should become:
 
-## Solution
-<details><summary>Show keys</summary>
+```text
+def fib(n):
+    a, b = 0, 1
+    while a < n:
+    print(a)
+    a, b = b, a + b
+fib(42)
+```
 
-1. `>>`
-2. `Vj>`
-3. `>j`
-</details>
+## Commands
 
-## Reset and Reference
-Use `u`; restore options with `:setlocal shiftwidth< expandtab<`, then `:bd!`. See `:help >`, `:help V`, and `:help shiftwidth`.
+Run these command steps:
 
-| Keys | Effect |
-|---|---|
-| `>>` | Shift current line once |
-| `Vj>` | Select two lines and shift once |
-| `>j` | Shift current and next line once |
+```text
+1. :setlocal shiftwidth=4 expandtab<CR>
+2. >>
+3. u
+4. Vj>
+5. u
+6. >j
+```

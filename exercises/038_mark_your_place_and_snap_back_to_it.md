@@ -1,11 +1,13 @@
-# Kata: Return to Local and Built-in Marks
+# Kata: Mark Your Place and Snap Back to It
 
-> **Environment:** Vim or Neovim; built-in marks
+## Task
 
-## Objective
-Set a local mark and return by line or exact position; use built-in change and visual-selection marks. Success means returning to exact documented coordinates.
+Practice setting a local mark, returning to it exactly, and using built-in marks for a Visual selection.
 
-## Initial Fixture
+## Start
+
+Open a scratch buffer and insert:
+
 ```text
 alpha one
 beta two
@@ -13,45 +15,33 @@ gamma three
 delta four
 epsilon five
 ```
-Start in Normal mode on the `t` in `two` (line 2, column 6).
 
-## Tasks
+Start in Normal mode on the `t` in `two`.
 
-### Drill A - Exact local mark
-Set mark `a`, move to the end of the file, then return to its exact position. **Verify:** line 2, column 6.
+## End
 
-### Drill B - Linewise return
-Repeat, but return to the first nonblank of the marked line. **Verify:** line 2, column 1.
+The buffer should become:
 
-### Drill C - Built-in change mark
-Change `two` to `TWO`, move elsewhere, then jump to the position of the last change. **Verify:** cursor is in the changed region on line 2; `:echo line('.')` prints `2`.
+```text
+alpha one
+beta two
+gamma three
+delta four
+epsilon five
+```
 
-### Challenge
-Visually select lines 3-4, leave Visual mode, move to line 1, then jump to the exact start and end of the previous selection. **Verify:** `` `< `` is line 3 column 1 and `` `> `` is line 4 column 10.
+The cursor should finish on the `r` in `four`.
 
-## Hints
-<details><summary>Hints</summary>
-A backtick returns to an exact position; an apostrophe returns to the first nonblank on the marked line. `.` identifies the latest change.
-</details>
+## Commands
 
-## Solution
-<details><summary>Show exact keys</summary>
-- A: `maG` then `` `a ``
-- B: `maG'a`
-- C: `ciwTWO<Esc>G` then `` `. ``
-- Challenge: `jVj<Esc>gg` then `` `< `` and `` `> ``
-</details>
+Run these command steps:
 
-## Reset and Cleanup
-Restore the fixture after Drill C. Remove mark `a` with `:delmarks a`; close with `:bwipeout!`.
-
-## Command Reference
-| Keys | Effect |
-|---|---|
-| `m{a-z}` | Set local mark |
-| `` `{mark} `` / `'{mark}` | Exact / linewise return |
-| `` `. `` | Position of last change |
-| `` `< `` / `` `> `` | Exact Visual selection endpoints |
-
-## References
-- [`:help mark-motions`](https://vimhelp.org/motion.txt.html#mark-motions)
+```text
+1. ma
+2. G
+3. `a
+4. j0
+5. vj9l<Esc>
+6. gg
+7. `>
+```

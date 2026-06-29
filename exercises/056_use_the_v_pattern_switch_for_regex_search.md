@@ -1,51 +1,42 @@
 # Kata: Write Very-Magic Search Patterns
 
-> **Environment:** Vim or Neovim; built-in regular expressions
+## Task
 
-## Objective
-Use `\v` to reduce escaping in a grouped regular expression. Success means matching exactly the three valid CSS hex colors with equivalent default-magic and very-magic patterns.
+Practice using `\v` to write a compact grouped search pattern for CSS hex colors.
 
-## Initial Fixture
-```css
+## Start
+
+Open a scratch buffer and insert:
+
+```text
 body { color: #3c3c3c; }
 a { color: #0000ee; }
 strong { color: #000; }
 bad { color: #12; }
 ```
-Start in Normal mode on line 1.
 
-## Tasks
-### Drill A - Default magic
-Count 3- or 6-digit hex values with default Vim regex escaping. **Verify:** 3 matches on 3 lines.
+Start in Normal mode on the `b` in line 1, column 1.
 
-### Drill B - Very magic
-Write the equivalent pattern starting with `\v`. **Verify:** the same 3 matches.
+## End
 
-### Drill C - Character class shorthand
-Replace the explicit hexadecimal class with Vim's `\x` class while retaining `\v`. **Verify:** still 3 matches.
+The buffer should remain:
 
-### Challenge
-Search through all matches with `n`; verify the cursor visits lines 1, 2, 3, then wraps to 1, never line 4.
+```text
+body { color: #3c3c3c; }
+a { color: #0000ee; }
+strong { color: #000; }
+bad { color: #12; }
+```
 
-## Hints
-<details><summary>Hints</summary>
-Under `\v`, parentheses, braces, and `|` are special without backslashes. `\x` means a hexadecimal digit. `\V` is the opposite mode: very nomagic.
-</details>
+The final search should visit lines 1, 2, and 3, then wrap to line 1.
 
-## Solution
-<details><summary>Show exact commands</summary>
-- A: `:%s/#\([0-9A-Fa-f]\{6}\|[0-9A-Fa-f]\{3\}\)//gn<CR>`
-- B: `:%s/\v#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})//gn<CR>`
-- C: `:%s/\v#(\x{6}|\x{3})//gn<CR>`
-- Challenge: `/\v#(\x{6}|\x{3})<CR>nnn`
-</details>
+## Commands
 
-## Reset and Cleanup
-Counting with substitution flag `n` does not modify text. Run `:nohlsearch` and close with `:bwipeout!`.
+Run these command steps:
 
-## Notes and Portability
-Very-magic `\v` is Vim regex syntax, not PCRE. LazyVim search UIs or picker prompts may use different engines depending on the provider, so use these exact patterns in Vim search, substitute, and `gn` workflows unless a tool documents Vim-regex compatibility.
-
-## References
-- [`:help /\v`](https://vimhelp.org/pattern.txt.html#%2F%5Cv)
-- [`:help /\x`](https://vimhelp.org/pattern.txt.html#%2F%5Cx)
+```text
+1. :%s/#\([0-9A-Fa-f]\{6}\|[0-9A-Fa-f]\{3}\)//gn<CR>
+2. :%s/\v#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})//gn<CR>
+3. :%s/\v#(\x{6}|\x{3})//gn<CR>
+4. gg/\v#(\x{6}|\x{3})<CR>nnn
+```

@@ -1,33 +1,12 @@
-# Kata: Fine-Scroll the Viewport by Line
+# Kata: Fine Viewport Scroll
 
-> **Environment:** Vim or Neovim; built-in motions only.
-> **Dependencies:** None.
-> **Portability:** Uses built-in Normal-mode scrolling commands `<C-e>` and `<C-y>`.
+## Task
 
-## Objective
+Practice scrolling the window one line at a time with `<C-e>` and `<C-y>` while the cursor stays on the same buffer line.
 
-By the end of this kata, you will be able to scroll the current window a line at a time with `<C-e>` and `<C-y>`.
+## Start
 
-Success means: you can reveal nearby context without switching to larger half-page or full-page scrolls.
-
-## Prerequisites
-
-- Know: how to enter Normal mode and read `line('w0')`.
-- Required option/state: `:set nowrap scrolloff=0`.
-- Required external tool/plugin: none.
-- Readiness check: run `:set wrap? scrolloff?` and confirm `nowrap` and `scrolloff=0`.
-
-## Setup
-
-1. Open a new scratch buffer.
-2. Run `:set nowrap scrolloff=0` and `:resize 7`.
-3. Insert the fixture exactly as shown below.
-4. Run `8Gzt` and then move to line 13 with `13G`.
-5. Confirm `:echo line('.') . ',' . line('w0') . ',' . line('w$')` prints `13,8,14`.
-
-## Initial Fixture
-
-Create a new buffer and insert exactly:
+Open a scratch buffer and insert:
 
 ```text
 Line 01
@@ -52,52 +31,11 @@ Line 19
 Line 20
 ```
 
-Start in Normal mode on the `L` in `Line 13`, with line 8 at the top of the window. Do not modify the fixture before beginning Drill A.
+Start in Normal mode on the `L` in `Line 01`.
 
-## Constraints
+## End
 
-- Use `<C-e>` and `<C-y>` for the final scroll in each drill.
-- Do not use `zt`, `zz`, `zb`, half-page scrolls, page scrolls, or the mouse after the drill begins.
-- Reset to the documented start state before each drill.
-
-## Tasks
-
-### Drill A - Isolate the skill
-
-**Goal:** scroll the window down by one line.
-
-1. From the documented start state, reveal one more line below the window with a single fine-scroll command.
-
-**Verify:** `:echo line('.') . ',' . line('w0') . ',' . line('w$')` prints `13,9,15`.
-
-### Drill B - Add precision or repetition
-
-**Goal:** scroll the window down by several lines with a count.
-
-1. Reset to the documented start state.
-2. Scroll the window down three lines with one counted fine-scroll command.
-
-**Verify:** `:echo line('.') . ',' . line('w0') . ',' . line('w$')` prints `13,11,17`.
-
-### Drill C - Apply the workflow
-
-**Goal:** scroll back upward to recover earlier context.
-
-1. Reset to the documented start state.
-2. Scroll down three lines.
-3. Scroll back up two lines.
-
-**Verify:** `:echo line('.') . ',' . line('w0') . ',' . line('w$')` prints `13,9,15`.
-
-### Challenge - Recall without prompts
-
-Reset the fixture and setup. Starting from the documented state, scroll down three lines and then back up three lines using only fine-scroll commands.
-
-**Verify:** `:echo line('.') . ',' . line('w0') . ',' . line('w$')` prints `13,8,14`, and the buffer text is unchanged.
-
-## Expected Final State
-
-After the challenge, the buffer content must still be:
+The buffer should remain:
 
 ```text
 Line 01
@@ -122,63 +60,19 @@ Line 19
 Line 20
 ```
 
-## Hints
+The final cursor position should still be on line 13, and the visible window should span lines 8 through 14.
 
-<details>
-<summary>Hint 1</summary>
+## Commands
 
-These commands scroll the window itself one line at a time.
+Run these command steps:
 
-</details>
-
-<details>
-<summary>Hint 2</summary>
-
-`<C-e>` reveals later lines in the buffer; `<C-y>` reveals earlier lines.
-
-</details>
-
-## Solution
-
-<details>
-<summary>Show exact commands and keys</summary>
-
-### Drill A
-
-1. `<C-e>` - scroll the window down one line.
-
-### Drill B
-
-1. `3<C-e>` - scroll the window down three lines.
-
-### Drill C
-
-1. `3<C-e>2<C-y>` - scroll down three lines, then back up two.
-
-### Challenge
-
-`3<C-e>3<C-y>`
-
-The cursor stays on line 13 throughout because it never leaves the visible window.
-
-</details>
-
-## Reset and Cleanup
-
-- Between drills: rerun `8Gzt` and then `13G`.
-- After the kata: close the scratch buffer with `:bd!`.
-- Preserve user data: perform the exercise only in a throwaway buffer.
-
-## Command Reference
-
-| Keys/command | Mode | Effect |
-|---|---|---|
-| `<C-e>` | Normal | Scroll the window down one line in the buffer. |
-| `{count}<C-e>` | Normal | Scroll the window down by `count` lines. |
-| `<C-y>` | Normal | Scroll the window up one line in the buffer. |
-| `{count}<C-y>` | Normal | Scroll the window up by `count` lines. |
-
-## References
-
-- `:help CTRL-E`
-- `:help CTRL-Y`
+```text
+1. :set nowrap scrolloff=0<CR>
+2. :resize 7<CR>
+3. 8Gzt
+4. 13G
+5. <C-e>
+6. 2<C-e>
+7. 2<C-y>
+8. <C-y>
+```

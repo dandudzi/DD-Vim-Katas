@@ -1,38 +1,30 @@
 # Kata: Repeat the Last Ex Command
 
-> **Environment:** Vim or Neovim; built-in commands only. Start from a clean session with no unsaved buffer.
+## Task
 
-## Objective
-Use `@:` to replay the latest Ex command and `@@` to repeat that replay.
+Practice replaying the latest Ex command with `@:` and repeating that replay
+with `@@`.
 
-## Setup
-Create three empty named buffers:
+## Start
 
-1. `:enew` then `:file kata-one`
-2. `:enew` then `:file kata-two`
-3. `:enew` then `:file kata-three`
-4. Run `:buffer kata-one` and confirm `%` marks `kata-one` in `:buffers`.
+Open an empty scratch buffer.
 
-## Tasks
-1. Run `:bnext`, then replay it without typing another Ex command. **Verify:** active buffer is `kata-three`.
-2. Reset to `kata-one`; run `:bnext`, replay with `@:`, then repeat the register execution with `@@`. **Verify:** buffer cycling wraps to `kata-one`.
-3. Challenge: from `kata-one`, visit `kata-two`, `kata-three`, and `kata-one` using one typed Ex command plus two Normal-mode repetitions. **Verify:** `:echo bufname()` prints `kata-one` (run this only after completing the replay sequence).
+Start in Normal mode on line 1, column 1.
 
-## Hints
-<details><summary>Hints</summary>The `:` register stores the most recently executed Ex command. After `@:`, `@@` repeats that register execution.</details>
+## End
 
-## Solution
-<details><summary>Show commands</summary>
+The current buffer should be `kata-one`.
 
-1. `:bnext<CR>@:`
-2. `:bnext<CR>@:@@`
-3. `:bnext<CR>@:@@`
-</details>
+## Commands
 
-## Reset and Cleanup
-Return with `:buffer kata-one`. Delete only the three throwaway buffers with `:bwipeout! kata-one`, `:bwipeout! kata-two`, and `:bwipeout! kata-three`. See `:help @:`, `:help @@`, and `:help :bnext`.
+Run these command steps:
 
-| Keys | Effect |
-|---|---|
-| `@:` | Execute last Ex command |
-| `@@` | Repeat last executed register |
+```text
+1. :enew<CR>:file kata-one<CR>
+2. :enew<CR>:file kata-two<CR>
+3. :enew<CR>:file kata-three<CR>
+4. :buffer kata-one<CR>
+5. :bnext<CR>
+6. @:
+7. @@
+```

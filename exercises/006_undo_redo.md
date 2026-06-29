@@ -1,38 +1,39 @@
 # Kata: Undo, Redo, and Branch
 
-> **Environment:** Vim or Neovim; built-in commands only.
+## Task
 
-## Objective
-Use `u` and `<C-r>` to traverse changes and recognize when a new edit creates an undo branch.
+Practice using `u` and `<C-r>` to undo, redo, and then make a new change after undoing.
 
-## Fixture and Start
+## Start
+
+Open a scratch buffer and insert:
+
 ```text
 alpha
 beta
 gamma
 ```
-Start in Normal mode on line 1. Restore the fixture before each drill.
 
-## Tasks
-1. Append `!` to line 1, then undo. **Verify:** the original fixture returns.
-2. Make the same edit, undo, then redo. **Verify:** line 1 is `alpha!`.
-3. Challenge: append `!` to line 1, append `?` to line 2, undo twice, redo once, then append `#` to line 3. **Verify:** lines are `alpha!`, `beta`, `gamma#`; `<C-r>` now reports that you are at the newest change.
+Start in Normal mode on the `a` in `alpha`.
 
-## Hints
-<details><summary>Hints</summary>A new edit made after undoing starts a different branch; redo no longer follows the abandoned branch.</details>
+## End
 
-## Solution
-<details><summary>Show keys</summary>
+The buffer should become:
 
-1. `A!<Esc>u`
-2. `A!<Esc>u<C-r>`
-3. `A!<Esc>jA?<Esc>uu<C-r>GA#<Esc>`
-</details>
+```text
+alpha!
+beta
+gamma#
+```
 
-## Reset and Reference
-Restore the fixture between drills and close with `:bd!`. See `:help undo`, `:help redo`, and `:help undo-branches`.
+## Commands
 
-| Keys | Effect |
-|---|---|
-| `u` | Undo one change |
-| `<C-r>` | Redo one undone change |
+Run these command steps:
+
+```text
+1. A!<Esc>
+2. jA?<Esc>
+3. uu
+4. <C-r>
+5. GA#<Esc>
+```

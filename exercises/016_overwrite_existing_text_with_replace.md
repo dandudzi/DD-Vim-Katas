@@ -1,38 +1,38 @@
 # Kata: Overwrite Existing Text
 
-> **Environment:** Vim or Neovim; built-in commands only.
+## Task
 
-## Objective
-Use `R` to overwrite a run of characters and leave surrounding text intact.
+Practice using Replace mode with `R` to overwrite existing characters while
+leaving surrounding text intact.
 
-## Fixture and Start
+## Start
+
+Open a scratch buffer and insert:
+
 ```text
 Typing extends the line. But replacing overwrites.
 Status: draft
 Code: 0000
 ```
-Start in Normal mode at line 1, column 1. Restore before each drill.
 
-## Tasks
-1. Overwrite `. But` with `, but`. **Verify:** line 1 reads `Typing extends the line, but replacing overwrites.`
-2. Reset; overwrite `draft` with `final`. **Verify:** line 2 is `Status: final` and has the same length.
-3. Reset; replace the four zeroes with `2048` in one Replace-mode session. **Verify:** line 3 is `Code: 2048` and you finish in Normal mode.
+Start in Normal mode on the `T` of line 1.
 
-## Hints
-<details><summary>Hints</summary>Find the first character to overwrite, press `R`, type equal-length text, then `<Esc>`.</details>
+## End
 
-## Solution
-<details><summary>Show keys</summary>
+The buffer should become:
 
-1. `f.R, but<Esc>`
-2. `j0fdRfinal<Esc>`
-3. `jj0f0R2048<Esc>`
-</details>
+```text
+Typing extends the line, but replacing overwrites.
+Status: final
+Code: 2048
+```
 
-## Reset and Notes
-Use `u` or restore the fixture; close with `:bd!`. `gR` is Virtual Replace mode and differs around tabs and other screen-width-sensitive characters. See `:help R` and `:help gR`.
+## Commands
 
-| Keys | Effect |
-|---|---|
-| `R` | Enter Replace mode |
-| `gR` | Enter Virtual Replace mode |
+Run these command steps:
+
+```text
+1. f.R, but<Esc>
+2. j0fdRfinal<Esc>
+3. j0f0R2048<Esc>
+```

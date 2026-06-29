@@ -1,73 +1,50 @@
-## Kata: `ZZ`, `ZQ`, and `:e!` — Quick save, quit, and revert
+# Kata: Quick Save, Quit, and Revert
 
-### 1) What these commands do (short description)
+## Task
 
-- `ZZ` — save the current file and close the window (same as `:wq`)
-- `ZQ` — close the window without saving (same as `:q!`)
-- `:e!` — revert the current file to its last saved state without closing
+Practice `ZZ`, `ZQ`, and `:e!` on a disposable file so you can save, discard,
+or reload changes quickly.
 
-These are essential "escape hatches" for quickly saving work, discarding mistakes, or reverting to a known good state.
+## Start
 
----
+Open a scratch buffer and insert:
 
-### 2) Practice text (paste into a buffer and save as a test file)
-
-```py
+```text
 def greet(name):
     return f"Hello, {name}!"
 
 def farewell(name):
     return f"Goodbye, {name}!"
-
-def introduce(name, age):
-    return f"I'm {name}, {age} years old."
 ```
 
----
+Start in Normal mode on line 1, column 1.
 
-### 3) Step-by-step drills
+## End
 
-#### Drill A — `ZZ` to save and quit
+The disposable file `kata-093.txt` should contain:
 
-1. Open the test file
-2. Make a change: go to line 2, `ciw` and change `Hello` to `Hi`
-3. Press `<Esc>` to return to normal mode
-4. Type `ZZ` — the file is saved with the change and the window closes
-5. Reopen the file — confirm `Hi` is saved
+```text
+def greet(name):
+    return f"Hi, {name}!"
 
-#### Drill B — `ZQ` to quit without saving
+def farewell(name):
+    return f"Goodbye, {name}!"
+```
 
-1. Open the test file
-2. Make a destructive change: `gg` `dG` (delete everything)
-3. Panic! Type `ZQ` — the window closes without saving
-4. Reopen the file — everything is intact, the deletion was discarded
+## Commands
 
-#### Drill C — `:e!` to revert without leaving
+Run these command steps:
 
-1. Open the test file
-2. Make several changes:
-   - Delete the `farewell` function (`jjVjjd`)
-   - Change `introduce` to `present` (`/introduce<Enter>` `ciwpresent<Esc>`)
-3. Decide you want to start over, but stay in Vim
-4. Type `:e!<Enter>` — the file reverts to its last saved state
-5. All your changes are gone, but you're still in the buffer
-
-#### Drill D — Workflow: experiment and revert
-
-1. Open the test file
-2. Try refactoring: rewrite the `greet` function to use a different style
-3. Realize the refactor isn't working — type `:e!<Enter>` to revert
-4. Try a different approach
-5. When satisfied, type `:w<Enter>` to save (or `ZZ` to save and quit)
-
----
-
-### Command reference
-
-| Command | Effect |
-|---|---|
-| `ZZ` | Save and close window (`:wq`) |
-| `ZQ` | Close window, discard changes (`:q!`) |
-| `:e!` | Revert file to last save, stay in buffer |
-| `:w` | Save without closing |
-| `:q` | Close window (fails if unsaved changes) |
+```text
+1. :file kata-093.txt<CR>:write<CR>
+2. jwwwci"Hi, {name}!<Esc>
+3. ZZ
+4. :edit kata-093.txt<CR>
+5. ggdG
+6. ZQ
+7. :edit kata-093.txt<CR>
+8. Gdd
+9. :edit!<CR>
+10. jwwci"Hi, {name}!<Esc>
+11. :write<CR>
+```

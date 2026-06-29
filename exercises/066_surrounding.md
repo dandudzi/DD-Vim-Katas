@@ -1,45 +1,37 @@
 # Kata: Add, Delete, and Replace Surroundings
 
-> **Environment:** Neovim with `nvim-mini/mini.surround` mappings `gsa`, `gsd`, and `gsr`.
-> **Portability:** These are not built-in Vim commands. Run `:verbose nmap gsa`, `:verbose nmap gsd`, and `:verbose nmap gsr`; continue only when they resolve to MiniSurround. Other surround plugins use different keys.
+## Task
 
-## Objective
-Add, delete, and replace delimiters with MiniSurround while leaving inner text unchanged.
+Use MiniSurround mappings to add, delete, and replace delimiters while leaving the inner text unchanged.
 
-## Fixture and Start
+## Start
+
+Open a scratch buffer and insert:
+
 ```text
 alpha beta
 (gamma)
 [delta value]
 ```
 
-Use a new buffer, `:set filetype=text`, and start on `alpha` in Normal mode. Restore the fixture before each drill.
+Start in Normal mode on the `a` in `alpha`. This kata assumes `gsa`, `gsd`, and `gsr` are mapped to MiniSurround.
 
-## Drills
-1. Surround `alpha` with parentheses. **Verify:** line 1 is `(alpha) beta`.
-2. Delete parentheses around `gamma`. **Verify:** line 2 is `gamma`.
-3. Replace brackets around `delta value` with braces. **Verify:** line 3 is `{delta value}`.
-4. Challenge: produce all three results in one pass. **Verify:** no inner words or spaces changed.
+## End
 
-## Hints
-<details><summary>Hints</summary>
+The buffer should become:
 
-Add takes a motion (`iw`) and a delimiter. Delete and replace ask which surrounding to find; replace then asks for the new delimiter. Prompts can differ slightly by plugin version.
-</details>
+```text
+(alpha) beta
+gamma
+{delta value}
+```
 
-## Solution
-<details><summary>Exact default MiniSurround keys</summary>
+## Commands
 
-1. On `alpha`: `gsaiw)`
-2. On `gamma`: `gsd)`
-3. On `delta`: `gsr]}`
-4. Apply the three sequences above after moving to each line.
-</details>
+Run these command steps:
 
-## Reset, Cleanup, and Reference
-Use `u` or restore the fixture; `:bwipe!` afterward. No files are written. Canonical docs: https://github.com/nvim-mini/mini.surround
-
-| Mapping | Effect |
-|---|---|
-| `gsa` | Add surrounding using a motion |
-| `gsd` / `gsr` | Delete / replace a surrounding |
+```text
+1. gsaiw)
+2. jgsd)
+3. jgsr]}
+```

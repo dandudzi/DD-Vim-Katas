@@ -1,91 +1,39 @@
-## Kata: `cgn` — Search, match, and replace with dot-repeat
+# Kata: Replace Search Matches with cgn
 
-### 1) What `gn` and `cgn` do (short description)
+## Task
 
-- `gn` — a text object that selects the next search match (visually)
-- `cgn` — change the next search match (delete it and enter insert mode)
-- `dgn` — delete the next search match
-- After `cgn`, press `n` to find the next match and `.` to repeat the change — or just `.` which implicitly finds and replaces the next match
+Practice changing search matches with `cgn` and repeating the change with `.`.
 
-This is the interactive alternative to `:%s`. You see each match before deciding to change it (`.`) or skip it (`n`).
+## Start
 
----
+Open a scratch buffer and insert:
 
-### 2) Practice text (paste into a buffer)
-
-```js
-const getUserName = (user) => user.name;
-const getUserAge = (user) => user.age;
-const getUserEmail = (user) => user.email;
-const getUserId = (user) => user.id;
-const getUserRole = (user) => user.role;
-```
-
----
-
-### 3) Step-by-step drills
-
-#### Drill A — Basic `cgn` rename
-
-Goal: rename `user` parameter to `person` in each function.
-
-1. Search for the target: `/user<Enter>`
-2. Press `n` until the cursor is on the first `user` you want to change (inside the parentheses)
-3. Type `cgn` — the match is deleted and you're in insert mode
-4. Type `person` and press `<Esc>`
-5. Press `.` — the next occurrence of `user` is automatically found, deleted, and replaced with `person`
-6. Keep pressing `.` to replace more, or press `n` to skip one and then `.` to replace the next
-
-#### Drill B — Contrast with `:%s`
-
-1. Undo all changes: `u` until you're back to the original
-2. Run `:%s/user/person/gc`
-3. Respond `y` or `n` for each match
-4. Notice: `cgn` + `.` gives you the same selective power but keeps you in the buffer, and you can undo each replacement individually
-
-#### Drill C — `dgn` to delete matches
-
-Use this text:
-
-```txt
-TODO: fix login
-TODO: update tests
-review the TODO list
-TODO: deploy
-check all TODO items
-```
-
-1. Search: `/TODO<Enter>`
-2. Type `dgn` — deletes the first `TODO`
-3. Press `.` to delete the next `TODO`
-4. Press `n` to skip one, `.` to delete the one after
-
-#### Drill D — Change a multi-word match
-
-```py
+```text
 old_value = get_old_value()
 print(old_value)
 return old_value
 ```
 
-1. Search for the full phrase: `/old_value<Enter>`
-2. `cgn` → type `new_result` → `<Esc>`
-3. `.` `.` — replaces the next two occurrences
+Start in Normal mode on the `o` in the first `old_value`.
 
----
+## End
 
-### Command reference
+The buffer should become:
 
-| Command | Effect |
-|---|---|
-| `/pattern<Enter>` | Search for pattern |
-| `gn` | Select next match (visual) |
-| `cgn` | Change next match |
-| `dgn` | Delete next match |
-| `.` | Repeat last `cgn`/`dgn` on next match |
-| `n` | Skip to next match without changing |
-| `:%s/old/new/gc` | Substitute with confirmation (alternative) |
+```text
+new_result = get_new_result()
+print(new_result)
+return new_result
+```
 
-### LazyVim/LSP refactor bridge
+## Commands
 
-`cgn` is still useful for small, visible text changes. For semantic renames in a LazyVim/LSP buffer, first run `:LspInfo` and confirm a client supports `textDocument/rename` with `:lua for _, c in ipairs(vim.lsp.get_clients({bufnr=0})) do print(c.name, c:supports_method('textDocument/rename', 0)) end`. Then inspect the active rename mapping with `:verbose nmap <Space>cr`; use LSP rename when references must be resolved semantically instead of by matching text.
+Run these command steps:
+
+```text
+1. /old_value<CR>
+2. cgnnew_result<Esc>
+3. .
+4. .
+5. .
+```

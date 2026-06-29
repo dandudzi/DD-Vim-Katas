@@ -1,11 +1,13 @@
 # Kata: Copy and Move Lines with Ex
 
-> **Environment:** Vim or Neovim; built-in Ex commands only.
+## Task
 
-## Objective
-Use `:copy`/`:t` and `:move` with explicit destinations to reorganize lines predictably.
+Practice using `:copy`, `:t`, and `:move` to reorganize lines by Ex address.
 
-## Fixture and Start
+## Start
+
+Open a scratch buffer and insert:
+
 ```text
 Shopping list
 Hardware store
@@ -14,28 +16,30 @@ Beauty parlor
 Buy remover
 Done
 ```
-Start in Normal mode on line 2. Restore before each drill.
 
-## Tasks
-1. Copy line 3 below the current line using the current-line destination. **Verify:** lines 3-4 are both `Buy nails`.
-2. Reset; duplicate the current line below itself with the short form. **Verify:** `Hardware store` appears on lines 2-3.
-3. Reset; move lines 4-5 to the end as one range. **Verify:** final order is `Shopping list`, `Hardware store`, `Buy nails`, `Done`, `Beauty parlor`, `Buy remover`.
+Start in Normal mode on the `H` of line 2.
 
-## Hints
-<details><summary>Hints</summary>`:t` abbreviates `:copy`; a destination names the line after which text is placed. `$` is the final line.</details>
+## End
 
-## Solution
-<details><summary>Show commands</summary>
+The buffer should become:
 
-1. `:3copy.`
-2. `:t.`
-3. `:4,5move$`
-</details>
+```text
+Shopping list
+Hardware store
+Hardware store
+Buy nails
+Buy nails
+Done
+Beauty parlor
+Buy remover
+```
 
-## Reset and Safety
-Use `u` once after each Ex edit or restore the fixture; close with `:bd!`. See `:help :copy` and `:help :move`.
+## Commands
 
-| Command | Effect |
-|---|---|
-| `:{range}t{address}` | Copy range after address |
-| `:{range}m{address}` | Move range after address |
+Run these command steps:
+
+```text
+1. :3copy2<CR>
+2. :2t2<CR>
+3. :6,7move$<CR>
+```

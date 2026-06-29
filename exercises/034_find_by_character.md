@@ -1,55 +1,42 @@
 # Kata: Find Characters on a Line
 
-> **Environment:** Vim or Neovim; built-in motions
+## Task
 
-## Objective
-Use `f`, `F`, `t`, `T`, `;`, and `,` for precise same-line movement. Success means reaching specified columns without search or arrows.
+Practice `f`, `t`, `T`, `;`, and `,` for precise same-line character movement.
 
-## Initial Fixture
+## Start
+
+Open a scratch buffer and insert:
+
 ```text
 alpha: beta: gamma: delta
 ```
-Start in Normal mode at column 1. Reset with `0` before each drill.
 
-## Tasks
+Start in Normal mode on the `a` in `alpha`.
 
-### Drill A - Find and repeat
-Find the first colon, then repeat twice. **Verify:** columns are `6`, `12`, then `19`.
+## End
 
-### Drill B - Reverse repeat
-From the third colon, reverse the last find once. **Verify:** column `12`.
+The buffer should become:
 
-### Drill C - Stop before
-From column 1, stop immediately before the second colon. **Verify:** cursor is on `a` in `beta`, column `11`.
+```text
+alpha: beta: gamma: delta
+```
 
-### Challenge
-Go to line end, stop immediately after the second colon when searching backward. **Verify:** cursor is on the space at column `13`.
+The cursor should finish on the space immediately after the second colon.
 
-## Hints
-<details><summary>Hints</summary>
-`f/F` land on the character; `t/T` stop one character before it in the direction of travel. `;` repeats and `,` reverses.
-</details>
+## Commands
 
-## Solution
-<details><summary>Show exact keys</summary>
-- A: `f:;;`
-- B: `,`
-- C: `0t:;`
-- Challenge: `$T:;`
-</details>
+Run these command steps:
 
-## Reset and Cleanup
-Use `0` between drills; close with `:bwipeout!`.
-
-## LazyVim Note
-Flash can make visible same-line targets quicker in a configured LazyVim setup, but it is mapping-dependent and label-driven. Run `:verbose nmap s` before practicing a Flash variant, and keep this kata's `f/F/t/T` motions as the portable answer.
-
-## Command Reference
-| Keys | Effect |
-|---|---|
-| `f{c}` / `F{c}` | Find character forward / backward |
-| `t{c}` / `T{c}` | Stop before character forward / backward |
-| `;` / `,` | Repeat / reverse latest character find |
-
-## References
-- [`:help f`](https://vimhelp.org/motion.txt.html#f)
+```text
+1. f:
+2. ;
+3. ;
+4. ,
+5. 0
+6. t:
+7. ;
+8. $
+9. T:
+10. ;
+```

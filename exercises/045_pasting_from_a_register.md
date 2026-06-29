@@ -1,56 +1,34 @@
-# Kata: Put Registers in Normal and Insert Modes
+# Kata: Put a Register in Insert Mode
 
-> **Environment:** Vim or Neovim; built-in commands
+## Task
 
-## Objective
-Insert register text with Normal-mode put and Insert-mode `<C-r>`. Success means preserving exact spacing and choosing the right register type.
+Practice inserting the latest yank from register `0` while staying in Insert mode.
 
-## Tasks
+## Start
 
-### Drill A - Insert a characterwise yank
-Fixture:
-```javascript
+Open a scratch buffer and insert:
+
+```text
 collection = getCollection();
 process(wrongName, target);
 ```
-Start on `collection`. Yank it, then replace `wrongName` in Insert mode using register `0`. **Verify:** second line is `process(collection, target);`.
 
-### Drill B - Put a linewise register
-Fixture:
+Start in Normal mode on the `c` in `collection` on line 1.
+
+## End
+
+The buffer should become:
+
 ```text
-red
-blue
+collection = getCollection();
+process(collection, target);
 ```
-Start on line 1. Yank the line and put it after line 2. **Verify:** lines are `red`, `blue`, `red`.
 
-### Drill C - Put before without cursor drift
-Reset Drill B, yank line 2 and put it above line 1 with `gP`. **Verify:** lines are `blue`, `red`, `blue`; the cursor is on line 2 (`red`), immediately after the inserted linewise text.
+## Commands
 
-### Challenge
-Reset Drill A and complete it without using Normal-mode `p`/`P`.
+Run these command steps:
 
-## Hints
-<details><summary>Hints</summary>
-In Insert mode, `<C-r>0` inserts the latest yank. `gP` behaves like `P` but leaves the cursor after inserted text.
-</details>
-
-## Solution
-<details><summary>Show exact keys</summary>
-- A/Challenge: `yiwj2wciw<C-r>0<Esc>`
-- B: `yyjp`
-- C: `jyygggP`
-</details>
-
-## Reset and Cleanup
-Restore fixtures between drills; close with `:bwipeout!`. Registers retain only fixture text.
-
-## Command Reference
-| Keys | Mode | Effect |
-|---|---|---|
-| `<C-r>0` | Insert | Insert latest yank |
-| `p` / `P` | Normal | Put after / before |
-| `gP` | Normal | Put before, leaving cursor after inserted text (on the following line for a linewise register) |
-
-## References
-- [`:help i_CTRL-R`](https://vimhelp.org/insert.txt.html#i_CTRL-R)
-- [`:help gP`](https://vimhelp.org/change.txt.html#gP)
+```text
+1. yiw
+2. j2wciw<C-r>0<Esc>
+```

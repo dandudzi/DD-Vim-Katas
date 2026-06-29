@@ -1,22 +1,14 @@
-## Kata: `#` — Search backward for word under cursor
+# Kata: Search Backward for the Word Under the Cursor
 
-### 1) What `#` does (short description)
+## Task
 
-- `*` — search **forward** for the exact word under the cursor (covered in earlier katas)
-- `#` — search **backward** for the exact word under the cursor
+Practice `#` to search backward for the word under the cursor, then use `n` and `N` to move with and against that search direction.
 
-Both use whole-word matching (like `\<word\>`). After searching:
+## Start
 
-- `n` — jump to the **next** match in the search direction
-- `N` — jump to the **opposite** direction
+Open a scratch buffer and insert:
 
-Key insight: after `*`, `n` goes forward and `N` goes backward. After `#`, `n` goes **backward** and `N` goes **forward** (because the search direction is reversed).
-
----
-
-### 2) Practice text (paste into a buffer)
-
-```js
+```text
 function validate(input) {
   if (!input) {
     return { valid: false, error: "missing input" };
@@ -34,49 +26,46 @@ function validate(input) {
 }
 
 function process(input) {
-  // transform input
   return { data: input.trim(), error: null };
 }
 ```
 
----
+Start in Normal mode on `input` in `input.trim()` near the end of the buffer.
 
-### 3) Step-by-step drills
+## End
 
-#### Drill A — Search backward with `#`
+The buffer should remain:
 
-Goal: find all occurrences of `input` going backward from the bottom.
+```text
+function validate(input) {
+  if (!input) {
+    return { valid: false, error: "missing input" };
+  }
 
-1. Put your cursor on the word `input` in the last line (`return { data: input.trim()`)
-2. Press `#` — cursor jumps backward to the previous `input`
-3. Press `#` again (or `n`) — jumps to the next one backward
-4. Keep pressing `n` to walk backward through every `input` occurrence
-5. Press `N` to reverse direction and walk forward
+  const result = process(input);
 
-#### Drill B — Compare `*` and `#` direction
+  if (result.error) {
+    log("validation failed for input:", input);
+    return { valid: false, error: result.error };
+  }
 
-Goal: understand how search direction affects `n`/`N`.
+  log("validation passed for input:", input);
+  return { valid: true, data: result.data };
+}
 
-1. Put cursor on the word `error` on line 3
-2. Press `*` — jumps **forward** to the next `error`
-3. Press `n` — continues forward
-4. Press `N` — reverses (goes backward)
-5. Now press `#` from the current position — jumps **backward**
-6. Press `n` — continues backward (because `#` set the direction)
-7. Press `N` — reverses (goes forward)
+function process(input) {
+  return { data: input.trim(), error: null };
+}
+```
 
-#### Drill C — Practical use: find where a variable was defined
+The cursor should finish on the `input` in `function process(input)`.
 
-Goal: use `#` to jump backward from a usage to a definition.
+## Commands
 
-1. Put cursor on `result` in the line `return { valid: true, data: result.data }`
-2. Press `#` — jumps backward through each `result` usage
-3. Keep pressing `n` until you reach `const result = process(input)` — the definition
-4. Press `N` to go back to where you started reading
+Run these command steps:
 
----
-
-### Constraints (optional)
-
-- Practice alternating between `*` and `#` on the same word to feel the directional difference.
-- Use `#` whenever you see a variable and want to find where it was defined (earlier in the file).
+```text
+1. #
+2. n
+3. N
+```

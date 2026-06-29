@@ -1,33 +1,12 @@
-# Kata: Scroll by Half a Page
+# Kata: Half Page Scroll
 
-> **Environment:** Vim or Neovim; built-in motions only.
-> **Dependencies:** None.
-> **Portability:** Uses built-in Normal-mode scrolling commands `<C-d>` and `<C-u>`.
+## Task
 
-## Objective
+Practice moving the cursor and viewport with half-page scrolls using `<C-d>` and `<C-u>`.
 
-By the end of this kata, you will be able to move through a buffer in half-page steps with `<C-d>` and `<C-u>`.
+## Start
 
-Success means: you can move the viewport and cursor together in larger chunks than line-by-line scrolling, with a deterministic `scroll` amount.
-
-## Prerequisites
-
-- Know: the difference between fine scrolling and larger viewport jumps.
-- Required option/state: `:set nowrap scrolloff=0 scroll=4`.
-- Required external tool/plugin: none.
-- Readiness check: run `:set wrap? scrolloff? scroll?` and confirm `nowrap`, `scrolloff=0`, and `scroll=4`.
-
-## Setup
-
-1. Open a new scratch buffer.
-2. Run `:set nowrap scrolloff=0 scroll=4` and `:resize 10`.
-3. Insert the fixture exactly as shown below.
-4. For Drill A, start with `9Gzt`.
-5. For Drill B, start with `13Gzt`.
-
-## Initial Fixture
-
-Create a new buffer and insert exactly:
+Open a scratch buffer and insert:
 
 ```text
 Line 01
@@ -52,53 +31,11 @@ Line 19
 Line 20
 ```
 
-Start in Normal mode on the `L` in the drill's documented start line. Do not modify the fixture before beginning the drills.
+Start in Normal mode on the `L` in `Line 01`.
 
-## Constraints
+## End
 
-- Use `<C-d>` and `<C-u>` for the final movement in each drill.
-- Do not use `j`, `k`, `zt`, `zz`, `zb`, page scrolls, or the mouse after the drill begins.
-- Reset to the documented start state before each drill.
-
-## Tasks
-
-### Drill A - Isolate the skill
-
-**Goal:** move forward by one half-page step.
-
-1. Start on line 9 with `9Gzt`.
-2. Scroll downward by one half-page step.
-
-**Verify:** `:echo line('.') . ',' . line('w0') . ',' . line('w$')` prints `14,11,20`.
-
-### Drill B - Add precision or repetition
-
-**Goal:** move backward by one half-page step.
-
-1. Reset and start on line 13 with `13Gzt`.
-2. Scroll upward by one half-page step.
-
-**Verify:** `:echo line('.') . ',' . line('w0') . ',' . line('w$')` prints `8,8,17`.
-
-### Drill C - Apply the workflow
-
-**Goal:** move down and then recover most of the earlier context.
-
-1. Reset and start on line 9 with `9Gzt`.
-2. Scroll downward by one half-page step.
-3. Scroll upward by one half-page step.
-
-**Verify:** `:echo line('.') . ',' . line('w0') . ',' . line('w$')` prints `9,6,15`.
-
-### Challenge - Recall without prompts
-
-Reset the fixture and start on line 9 with `9Gzt`. Scroll down one half-page and then back up one half-page without using any other motion.
-
-**Verify:** the cursor returns to line 9, the top visible line becomes line 6, and the buffer text is unchanged.
-
-## Expected Final State
-
-After the challenge, the buffer content must still be:
+The buffer should remain:
 
 ```text
 Line 01
@@ -123,67 +60,16 @@ Line 19
 Line 20
 ```
 
-## Hints
+The final cursor position should be on line 9, and the visible window should span lines 6 through 15.
 
-<details>
-<summary>Hint 1</summary>
+## Commands
 
-These commands use the `'scroll'` option, which this kata fixes at `4`.
+Run these command steps:
 
-</details>
-
-<details>
-<summary>Hint 2</summary>
-
-`<C-d>` moves deeper into the file; `<C-u>` moves back toward the top.
-
-</details>
-
-## Solution
-
-<details>
-<summary>Show exact commands and keys</summary>
-
-### Drill A
-
-1. `<C-d>` - scroll down by the configured half-page amount.
-
-### Drill B
-
-1. `<C-u>` - scroll up by the configured half-page amount.
-
-### Drill C
-
-1. `<C-d><C-u>` - scroll down once, then back up once.
-
-### Challenge
-
-`<C-d><C-u>`
-
-With `scroll=4`, these are larger jumps than `<C-e>` and `<C-y>`, and they move the cursor with the viewport.
-
-</details>
-
-## Reset and Cleanup
-
-- Between drills: rerun the documented start command for that drill.
-- After the kata: close the scratch buffer with `:bd!`.
-- Preserve user data: perform the exercise only in a throwaway buffer.
-
-## Notes and Portability
-
-- This kata fixes `'scroll'` at `4` so the verification stays deterministic.
-- Without that setup, `<C-d>` and `<C-u>` usually use half the current window height.
-
-## Command Reference
-
-| Keys/command | Mode | Effect |
-|---|---|---|
-| `<C-d>` | Normal | Scroll down by the `'scroll'` amount and move the cursor accordingly. |
-| `<C-u>` | Normal | Scroll up by the `'scroll'` amount and move the cursor accordingly. |
-
-## References
-
-- `:help CTRL-D`
-- `:help CTRL-U`
-- `:help 'scroll'`
+```text
+1. :set nowrap scrolloff=0 scroll=4<CR>
+2. :resize 10<CR>
+3. 9Gzt
+4. <C-d>
+5. <C-u>
+```

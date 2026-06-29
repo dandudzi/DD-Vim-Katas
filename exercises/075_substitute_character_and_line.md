@@ -1,18 +1,14 @@
-## Kata: `s` / `S` — Substitute character or entire line
+# Kata: Substitute Characters and Lines
 
-### 1) What `s` and `S` do (short description)
+## Task
 
-- `s` — delete the character under the cursor and enter insert mode (equivalent to `cl`)
-- `S` — delete the contents of the current line (preserving indent) and enter insert mode (equivalent to `cc`)
-- `3s` — delete 3 characters and enter insert mode
+Practice `s` with and without a count, then use `S` to replace one whole line while keeping indentation.
 
-These are quick "replace in place" commands — faster than `xi` or `ddi` when you want to immediately type a replacement.
+## Start
 
----
+Open a scratch buffer and insert:
 
-### 2) Practice text (paste into a buffer)
-
-```py
+```text
 def calculate(x, y):
     result = x + y
     print("Sum:", result)
@@ -22,83 +18,29 @@ names = ["alice", "bob", "charlie"]
 status = "pending"
 ```
 
----
+Start in Normal mode on the `x` in `def calculate(x, y):`.
 
-### 3) Step-by-step drills
+## End
 
-#### Drill A — Replace a single character with `s`
+The buffer should become:
 
-Goal: change `x` to `a` in the function signature.
-
-1. Put your cursor on the `x` in `def calculate(x, y):`
-2. Press `s`
-3. Type `a`
-4. Press `<Esc>`
-
-**Before:**
-```py
-def calculate(x, y):
-```
-
-**After:**
-```py
+```text
 def calculate(a, y):
-```
-
-#### Drill B — Replace multiple characters with a count
-
-Goal: change `"alice"` to `"Ada"`.
-
-1. Put your cursor on the `a` in `"alice"`
-2. Press `5s` (deletes 5 characters: `alice`)
-3. Type `Ada`
-4. Press `<Esc>`
-
-**Before:**
-```py
-names = ["alice", "bob", "charlie"]
-```
-
-**After:**
-```py
-names = ["Ada", "bob", "charlie"]
-```
-
-#### Drill C — Replace an entire line with `S`
-
-Goal: replace the `print` line with a different statement.
-
-1. Put your cursor anywhere on the line `print("Sum:", result)`
-2. Press `S` — the line contents are deleted but indentation is preserved
-3. Type `logger.info(f"Result: {result}")`
-4. Press `<Esc>`
-
-**Before:**
-```py
-def calculate(x, y):
-    result = x + y
-    print("Sum:", result)
-    return result
-```
-
-**After:**
-```py
-def calculate(x, y):
     result = x + y
     logger.info(f"Result: {result}")
     return result
+
+names = ["Ada", "bob", "charlie"]
+status = "complete"
 ```
 
-#### Drill D — Use `s` in visual mode
+## Commands
 
-1. Visually select `"pending"` (without the quotes) using `vi"`
-2. Press `s`
-3. Type `complete`
-4. Press `<Esc>`
+Run these command steps:
 
----
-
-### Constraints (optional)
-
-- Avoid using `cl` or `cc` — use `s` and `S` exclusively.
-- Practice noticing when `s` is faster than `r` (when you want to type more than one replacement character).
+```text
+1. sa<Esc>
+2. /alice<CR>5sAda<Esc>
+3. /print<CR>Slogger.info(f"Result: {result}")<Esc>
+4. /pending<CR>7scomplete<Esc>
+```

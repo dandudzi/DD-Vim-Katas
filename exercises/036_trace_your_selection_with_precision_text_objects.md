@@ -1,62 +1,33 @@
-# Kata: Select Nested Text Objects Precisely
+# Kata: Trace Your Selection With Precision Text Objects
 
-> **Environment:** Vim or Neovim; built-in text objects
+## Task
 
-## Objective
-Select and change nested quote, tag, and bracket text objects. Success means editing only the intended nested content.
+Practice changing nested delimiter text objects without disturbing the surrounding text.
 
-## Initial Fixture
-```html
-<section><a href="{url}">{title}</a></section>
+## Start
+
+Open a scratch buffer and insert:
+
+```text
+config = call("{url}", {title})
 ```
-Start in Normal mode on the `u` in `{url}`. Reset before each drill.
 
-## Tasks
+Start in Normal mode on the `u` in `{url}`.
 
-### Drill A - Inside delimiters
-Visually select inside the braces. **Verify:** `y:echo @0<CR>` prints `url`.
+## End
 
-### Drill B - Around quotes
-Select the quoted attribute including quotes. **Verify:** yanking it makes `@0` equal `"{url}"`.
+The buffer should become:
 
-### Drill C - Inside tag
-Move into `{title}` and change the contents of the anchor element to `click here`. **Verify:** tags and attribute are unchanged.
-
-### Challenge
-Reset and produce:
-```html
-<section><a href="#">click here</a></section>
+```text
+config = call("#", click here)
 ```
-using two text-object changes.
 
-## Hints
-<details><summary>Hints</summary>
-`i` excludes delimiters; `a` includes them. The `t` text object targets an HTML/XML tag pair when the cursor is inside it.
-</details>
+## Commands
 
-## Solution
-<details><summary>Show exact keys</summary>
-- A: `vi}y`
-- B: `va"y`
-- C: `f{citclick here<Esc>`
-- Challenge: `ca}#<Esc>f{citclick here<Esc>`
+Run these command steps:
 
-`ca}` replaces the braces together with their contents; `ci}` would preserve `{}` and produce `href="{#}"`.
-</details>
-
-## Reset and Cleanup
-Use `u` for selections that only yank and restore the fixture after changes. Close with `:bwipeout!`.
-
-## LazyVim Note
-LazyVim commonly includes `mini.ai`, which can add richer objects for arguments, functions, and paired delimiters. Confirm available objects with `:verbose xmap i` and `:verbose omap i` before using them; this kata's required objects are Vim's built-in delimiter, quote, and tag objects.
-
-## Command Reference
-| Text object | Range |
-|---|---|
-| `i}` / `a}` | Inside / around braces |
-| `i"` / `a"` | Inside / around quotes |
-| `it` / `at` | Inside / around tag pair |
-
-## References
-- [`:help text-objects`](https://vimhelp.org/motion.txt.html#text-objects)
-- [`:help tag-blocks`](https://vimhelp.org/motion.txt.html#tag-blocks)
+```text
+1. ca}#<Esc>
+2. f{
+3. ca}click here<Esc>
+```

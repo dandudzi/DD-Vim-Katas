@@ -1,40 +1,38 @@
 # Kata: Prefer Operator and Text Object
 
-> **Environment:** Vim or Neovim with HTML filetype; built-in `it` tag text object.
+## Task
 
-## Objective
-Use `gUit` as a repeatable Normal-mode change instead of manually selecting tag contents.
+Practice using `gUit` as a repeatable Normal-mode operator command for tag
+contents.
 
-## Fixture and Start
-```html
+## Start
+
+Open a scratch buffer and insert:
+
+```text
 <a href="#">one</a>
 <a href="#">two</a>
 <a href="#">three</a>
 ```
-Run `:setfiletype html`; start in Normal mode anywhere inside `one`. Restore before each drill.
 
-## Tasks
-1. Uppercase only the text inside the first tag. **Verify:** tags and attributes remain unchanged.
-2. Reset; uppercase line 1, move inside line 2's tag, and repeat with dot. **Verify:** `ONE` and `TWO` are uppercase; `three` is not.
-3. Challenge: uppercase all three contents using one authored operator change. **Verify:** the inner texts are `ONE`, `TWO`, `THREE` and no markup changed.
+Start in Normal mode on the `o` inside `one`.
 
-## Hints
-<details><summary>Hints</summary>`gU` is an operator and `it` supplies the inside-tag text object. Dot repeats both together.</details>
+## End
 
-## Solution
-<details><summary>Show keys</summary>
+The buffer should become:
 
-1. `gUit`
-2. `gUitj.`
-3. `gUitj.j.`
-</details>
+```text
+<a href="#">ONE</a>
+<a href="#">TWO</a>
+<a href="#">THREE</a>
+```
 
-## Reset and Notes
-Use `u` per change or restore the fixture; close with `:bd!`. Tag text objects depend on recognized markup syntax; confirm `:set filetype?`. See `:help gU` and `:help it`.
+## Commands
 
-LazyVim note: `mini.ai` may provide additional text objects beyond the built-in tag object, but this drill intentionally practices the repeatable operator form `gU{object}`. Verify any non-built-in object with `:verbose omap i` or `:verbose xmap i` before substituting it.
+Run these command steps:
 
-| Keys | Effect |
-|---|---|
-| `gUit` | Uppercase inside current tag |
-| `.` | Repeat operator and text object |
+```text
+1. gUit
+2. j.
+3. j.
+```

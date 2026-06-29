@@ -1,23 +1,24 @@
 # Kata: Land at the End of a Search Match
 
-> **Environment:** Vim or Neovim. **Dependencies:** None.
+## Task
 
-## Objective
-Use the `/e` search offset to land on the final character of a match and extend repeated matches with dot.
+Use the `/e` search offset to land on the final character of each match, then repeat an append with dot.
 
-## Fixture and Start
+## Start
+
+Open a scratch buffer and insert:
+
 ```text
 Aim to learn a new programming lang each year.
 Which lang did you pick up last year?
 Which langs would you like to learn?
 ```
 
-Use a new buffer and start at `gg0` in Normal mode.
+Start in Normal mode on the `A` in `Aim`.
 
-## Drills
-1. Search for `lang` with an end offset. **Verify:** `:echo getline('.')[col('.')-1]` prints `g` on line 1.
-2. Append `uage` to that match. **Verify:** line 1 contains `language`.
-3. Repeat the search and change on the remaining matches. **Verify:** the final text is:
+## End
+
+The buffer should become:
 
 ```text
 Aim to learn a new programming language each year.
@@ -25,24 +26,13 @@ Which language did you pick up last year?
 Which languages would you like to learn?
 ```
 
-## Hints
-<details><summary>Hints</summary>
+## Commands
 
-The offset remains part of the last search, so `n` lands on each match's `g`. Make one append change and use `.`.
-</details>
+Run these command steps:
 
-## Solution
-<details><summary>Exact keys</summary>
-
-1. `/lang/e<CR>`
-2. `auage<Esc>`
-3. `n.n.`
-</details>
-
-## Reset, Cleanup, and Reference
-Use `u` three times or restore the fixture; finish with `:bwipe!`. See `:help search-offset`, `:help .`.
-
-| Command | Effect |
-|---|---|
-| `/pattern/e` | Place cursor at match end |
-| `.` | Repeat the last change |
+```text
+1. /lang/e<CR>
+2. auage<Esc>
+3. n.
+4. n.
+```

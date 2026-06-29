@@ -1,48 +1,37 @@
-# Kata: Apply an Operator to Search Matches
+# Kata: Operate on Complete Search Matches
 
-> **Environment:** Vim or Neovim. **Dependencies:** None.
+## Task
 
-## Objective
-Use `gn` as an operator target and `.` to transform every complete search match without skipping one.
+Use `gn` as an operator target so one uppercase change can be repeated across each complete search match.
 
-## Fixture and Start
-```ruby
+## Start
+
+Open a scratch buffer and insert:
+
+```text
 class XhtmlDocument < XmlDocument; end
 class XhtmlTag < XmlTag; end
 ```
 
-Create a new buffer, run `gg0`, and start in Normal mode.
+Start in Normal mode on the `c` in `class` on line 1.
 
-## Drills
-1. Search case-sensitively for `Xml` and its optional `ht` segment. **Verify:** `gn` selects `Xhtml`, then `n` reaches `Xml` on line 1.
-2. Reset and uppercase the first complete match with an operator plus `gn`. **Verify:** only `Xhtml` on line 1 becomes `XHTML`.
-3. Repeat across the remaining three matches. **Verify:**
+## End
 
-```ruby
+The buffer should become:
+
+```text
 class XHTMLDocument < XMLDocument; end
 class XHTMLTag < XMLTag; end
 ```
 
-## Hints
-<details><summary>Hints</summary>
+## Commands
 
-After establishing the pattern, `gUgn` is one repeatable change. Dot advances to and changes the next match; an extra `n` would skip it.
-</details>
+Run these command steps:
 
-## Solution
-<details><summary>Exact keys</summary>
-
-1. `/\vX(ht)?ml\C<CR>gn<Esc>n`
-2. `gg0/\vX(ht)?ml\C<CR>gUgn`
-3. `...`
-</details>
-
-## Cleanup and Reference
-Reset with `u` or restore the fixture; `:bwipe!` afterward. See `:help gn`, `:help gU`, `:help .`.
-
-LazyVim note: Flash can help you reach a visible match, but `gn` is still the built-in text object that makes `gUgn` repeatable with dot. If trying Flash as an operator target, first run `:verbose omap s` and follow the labels shown in your session rather than copying labels from a solution.
-
-| Keys | Effect |
-|---|---|
-| `gUgn` | Uppercase the next search match |
-| `.` | Repeat that change on the following match |
+```text
+1. /\vX(ht)?ml\C<CR>
+2. gUgn
+3. .
+4. .
+5. .
+```

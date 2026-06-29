@@ -1,67 +1,50 @@
-# Kata: Apply One Change Across an Argument List
+# Kata: Act Upon a Collection of Files
 
-> **Environment:** Vim or Neovim
-> **Dependencies:** None; uses three files in a unique disposable directory.
+## Task
 
-## Objective
-Build and traverse an argument list, then apply one Ex transformation with `:argdo`. Success means changing all three files and only those files.
+Practice building an argument list and applying one Ex change across every argument with `:argdo`.
 
-## Setup
-Create fixtures from inside Vim:
-```vim
-:let g:kata_args_dir = tempname()
-:call mkdir(g:kata_args_dir, 'p')
-:let g:kata_alpha = g:kata_args_dir . '/alpha.rb'
-:let g:kata_beta = g:kata_args_dir . '/beta.rb'
-:let g:kata_gamma = g:kata_args_dir . '/gamma.rb'
-:call writefile(['class Alpha', 'end'], g:kata_alpha)
-:call writefile(['class Beta', 'end'], g:kata_beta)
-:call writefile(['class Gamma', 'end'], g:kata_gamma)
-:execute 'args ' . fnameescape(g:kata_alpha) . ' ' . fnameescape(g:kata_beta) . ' ' . fnameescape(g:kata_gamma)
+## Start
+
+Open a scratch buffer and insert:
+
+```text
+alpha.rb
+beta.rb
+gamma.rb
 ```
-Start in the first argument, Normal mode. Verify `:args` shows three names and brackets the first.
 
-## Tasks
-### Drill A - Traverse
-Visit the last argument, then the first. **Verify:** `:echo expand('%:t')` reports `gamma.rb`, then `alpha.rb`.
+Start in Normal mode on the `a` in `alpha.rb` on line 1.
 
-### Drill B - Apply without writing
-Append ` # kata` to line 1 in every argument. **Verify:** visiting each argument shows the suffix, but `:echo &modified` is `1`.
+## End
 
-### Drill C - Persist all arguments
-Write every argument buffer. **Verify:** `:echo readfile(g:kata_beta)[0]` prints `class Beta # kata`.
+The first line of each argument file should become:
 
-### Challenge
-Reset the files, rebuild the argument list, and combine the edit and write in one `:argdo` command. Verify all three first lines with argument traversal.
+```text
+class Alpha # kata
+class Beta # kata
+class Gamma # kata
+```
 
-## Hints
-<details><summary>Hints</summary>
-`:argdo` executes an Ex command in every argument. A separate `:argdo update` writes only modified buffers.
-</details>
+## Commands
 
-## Solution
-<details><summary>Show exact commands</summary>
-- A: `:last<CR>:first<CR>`
-- B: `:argdo 1s/$/ # kata/<CR>`
-- C: `:argdo update<CR>`
-- Challenge: run the Drill B command followed by `:argdo update<CR>`.
-</details>
+Run these command steps:
 
-## Reset and Cleanup
-Use `:argdo edit!` to discard unwritten edits, then `:argdelete *`. Wipe each owned buffer by number, for example `:execute 'silent! bwipeout! ' . bufnr(g:kata_alpha)`, and repeat for beta and gamma. Remove only the owned directory with `:call delete(g:kata_args_dir, 'rf')`, then `:unlet g:kata_alpha g:kata_beta g:kata_gamma g:kata_args_dir`.
-
-## Notes and Portability
-
-- LazyVim note: picker multi-select can help build file sets, but provider selection keys vary. Do not assume a fixed export or multi-select key; inspect the active picker's help and verify mappings with `:verbose nmap <leader><leader>` or `:verbose nmap <leader>/`.
-- The portable action in this kata is still the argument list plus `:argdo`, independent of how the file set was discovered.
-
-## Command Reference
-| Command | Effect |
-|---|---|
-| `:args {files}` | Define argument list |
-| `:first` / `:last` | Visit endpoints |
-| `:argdo {cmd}` | Execute in every argument |
-
-## References
-- [`:help argument-list`](https://vimhelp.org/editing.txt.html#argument-list)
-- [`:help :argdo`](https://vimhelp.org/editing.txt.html#%3Aargdo)
+```text
+1. :let g:kata_args_dir = tempname()<CR>
+2. :call mkdir(g:kata_args_dir, 'p')<CR>
+3. :let g:kata_alpha = g:kata_args_dir . '/alpha.rb'<CR>
+4. :let g:kata_beta = g:kata_args_dir . '/beta.rb'<CR>
+5. :let g:kata_gamma = g:kata_args_dir . '/gamma.rb'<CR>
+6. :call writefile(['class Alpha', 'end'], g:kata_alpha)<CR>
+7. :call writefile(['class Beta', 'end'], g:kata_beta)<CR>
+8. :call writefile(['class Gamma', 'end'], g:kata_gamma)<CR>
+9. :execute 'args ' . fnameescape(g:kata_alpha) . ' ' . fnameescape(g:kata_beta) . ' ' . fnameescape(g:kata_gamma)<CR>
+10. :argdo 1s/$/ # kata/ | update<CR>
+11. :first<CR>
+12. :echo getline(1)<CR>
+13. :next<CR>
+14. :echo getline(1)<CR>
+15. :next<CR>
+16. :echo getline(1)<CR>
+```

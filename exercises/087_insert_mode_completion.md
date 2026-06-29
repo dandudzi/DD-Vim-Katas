@@ -1,21 +1,12 @@
 # Kata: Insert-Mode Completion Basics
 
-> **Environment:** Vim or Neovim; built-in completion only.
-> **Dependencies:** None.
-> **Portability:** Uses built-in insert-mode completion with `<C-n>`, `<C-p>`,
-> `<C-y>`, `<C-e>`, and `<C-x><C-l>`.
+## Task
 
-## Objective
+Practice using built-in Insert-mode completion to complete a word from text already in the buffer.
 
-Complete repeated text from the current buffer without plugins or LSP.
+## Start
 
-Success means: you can use `<C-n>` and `<C-p>` to cycle keyword matches,
-accept one candidate with `<C-y>`, cancel another with `<C-e>`, and reuse a
-whole line with `<C-x><C-l>`.
-
-## Setup
-
-Open a scratch buffer and insert exactly:
+Open a scratch buffer and insert:
 
 ```text
 customerId
@@ -24,73 +15,30 @@ customerEmail
 discountCode
 
 cus
-disc
-
 ```
 
-Start in Insert mode at the end of `cus` on line 6.
+Start in Insert mode after the `s` in `cus`.
 
-## Drills
+## End
 
-1. On line 6, use `<C-n>` and `<C-p>` to cycle through the `customer...`
-   matches. Verify you can land on `customerName`.
-2. Accept the selected candidate with `<C-y>`. Verify line 6 becomes exactly
-   `customerName`.
-3. Move to line 7 after `disc`, trigger completion, and cancel it with
-   `<C-e>`. Verify line 7 stays exactly `disc`.
-4. Open a new line below, type `cust`, and use `<C-x><C-l>` only after first
-   creating a full line elsewhere that begins with `customerEmail`. Verify you
-   can reuse that entire line as one completion unit.
+The buffer should become:
 
-## Challenge
+```text
+customerId
+customerName
+customerEmail
+discountCode
 
-Reset the fixture. Turn line 6 into `customerEmail`, leave line 7 unchanged as
-`disc`, and insert one reused whole line below them.
+customerName
+```
 
-## Hints
+## Commands
 
-<details>
-<summary>Hints</summary>
+Run these command steps:
 
-`<C-n>` and `<C-p>` move through candidates. `<C-y>` accepts the current one.
-`<C-e>` closes the popup and keeps only what you typed. `<C-x><C-l>` completes
-a whole line instead of one word.
-
-</details>
-
-## Solution
-
-<details>
-<summary>Exact keys</summary>
-
-1. On `cus`: `<C-n>` or `<C-p>` until the right `customer...` entry is
-   selected
-2. `<C-y>`
-3. On `disc`: `<C-n><C-e>`
-4. `o cust<C-x><C-l><C-y><Esc>` after a matching full line exists
-
-</details>
-
-## Cleanup and Scope
-
-Close the scratch buffer with `:bd!`.
-
-This foundation kata stays on core buffer-local completion and popup control.
-It no longer tries to survey every completion source. Advanced or specialized
-follow-ups belong in separate drills.
-
-LazyVim note: completion and snippet engines are configuration-dependent. Before
-using `<Tab>`, `<S-Tab>`, or an accept key in a plugin menu, inspect the active
-Insert-mode mappings with `:verbose imap <Tab>`, `:verbose imap <S-Tab>`, and
-the key your config documents for confirmation. The built-in `<C-n>`, `<C-p>`,
-`<C-y>`, and `<C-e>` drills above remain valid without a plugin.
-
-## Command Reference
-
-| Keys | Effect |
-|---|---|
-| `<C-n>` | Select the next completion match |
-| `<C-p>` | Select the previous completion match |
-| `<C-y>` | Accept the current completion |
-| `<C-e>` | Cancel completion and keep typed text |
-| `<C-x><C-l>` | Complete a whole line |
+```text
+1. <C-n>
+2. <C-n>
+3. <C-y>
+4. <Esc>
+```

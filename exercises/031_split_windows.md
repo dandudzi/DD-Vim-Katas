@@ -1,59 +1,40 @@
 # Kata: Build and Navigate a Split Layout
 
-> **Environment:** Vim or Neovim; built-in commands only
+## Task
 
-## Objective
-Create, navigate, resize, and close split windows with `<C-w>` commands. Success means producing a three-window layout and returning safely to one window.
+Practice creating, navigating, resizing, and closing split windows with
+`<C-w>` commands.
 
-## Setup
-Open an unnamed scratch buffer, insert `split practice`, and start in Normal mode. Save the layout options with `:let g:kata_sr=&splitright | let g:kata_sb=&splitbelow`, then run `:set splitright nosplitbelow`. Confirm `:echo winnr('$')` prints `1`.
+## Start
 
-## Tasks
+Open a scratch buffer and insert:
 
-### Drill A - Split by orientation
-Create one vertical split. **Verify:** `:echo winnr('$')` prints `2`; the windows are side by side.
+```text
+split practice
+```
 
-### Drill B - Add and navigate
-In the right window, create a horizontal split. Move left, then right, then down. **Verify:** `:echo winnr('$')` prints `3` and the cursor ends in the lower-right window.
+Start in Normal mode on the `s` of line 1 with one window open.
 
-### Drill C - Resize
-Equalize all windows, then make the active window 8 rows high. **Verify:** `:echo winheight(0)` prints `8` (unless the terminal is too short, in which case Vim uses the closest possible height).
+## End
 
-### Challenge
-From the three-window layout, keep only the active window. **Verify:** `:echo winnr('$')` prints `1` and the text remains.
+Only one window should remain, and the buffer should still contain:
 
-## Hints
-<details><summary>Hints</summary>
-Window commands begin with `<C-w>`; `v` and `s` choose the split orientation, and `o` means “only.”
-</details>
+```text
+split practice
+```
 
-## Solution
-<details><summary>Show exact keys</summary>
+## Commands
 
-- A: `<C-w>v`
-- B: `<C-w>s<C-w>h<C-w>l<C-w>j`
-- C: `<C-w>=8<C-w>_`
-- Challenge: `<C-w>o`
+Run these command steps:
 
-</details>
-
-## Reset and Cleanup
-`<C-w>o` closes extra windows without deleting the shared buffer. Restore options with `:let &splitright=g:kata_sr | let &splitbelow=g:kata_sb | unlet g:kata_sr g:kata_sb`, then use `:bwipeout!`.
-
-## Command Reference
-| Keys | Effect |
-|---|---|
-| `<C-w>v` / `<C-w>s` | Vertical / horizontal split |
-| `<C-w>h/j/k/l` | Move between windows |
-| `<C-w>=` | Equalize dimensions |
-| `{N}<C-w>_` | Set active height to N |
-| `<C-w>o` | Keep only active window |
-
-The documented sequence assumes the exact `splitright`/`splitbelow` state established in Setup; restoring it prevents configuration leakage.
-
-## Notes and Portability
-
-- LazyVim note: window picker or resize mappings may exist in a local config, but `<C-w>` commands are the portable base. Verify any alternative with `:verbose nmap <leader>wm` or the exact keys from your config before using it in a drill.
-
-## References
-- [`:help CTRL-W`](https://vimhelp.org/windows.txt.html#CTRL-W)
+```text
+1. :set splitright nosplitbelow<CR>
+2. <C-w>v
+3. <C-w>s
+4. <C-w>h
+5. <C-w>l
+6. <C-w>j
+7. <C-w>=
+8. 8<C-w>_
+9. <C-w>o
+```

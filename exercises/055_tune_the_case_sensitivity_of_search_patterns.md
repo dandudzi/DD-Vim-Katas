@@ -1,51 +1,49 @@
 # Kata: Control Search Case Sensitivity
 
-> **Environment:** Vim or Neovim; built-in search atoms/options
+## Task
 
-## Objective
-Predict and control case-sensitive match sets using `ignorecase`, `smartcase`, `\c`, and `\C`. Success means obtaining exact match counts and restoring prior options.
+Practice controlling search case sensitivity with `ignorecase`, `smartcase`, `\c`, and `\C`.
 
-## Initial Fixture
+## Start
+
+Open a scratch buffer and insert:
+
 ```text
 foo
 foo & foo
 foo & Foo
 FOO & foo
 ```
-Start in Normal mode on line 1. Save settings with `:let g:kata_ic=&ignorecase | let g:kata_sc=&smartcase`, then run `:set noignorecase nosmartcase`.
 
-## Tasks
-### Drill A - Explicit atoms
-Count `/foo\C` and `/foo\c` without changing text. **Verify:** `:%s/foo\C//gn` reports exactly 5 lowercase matches (1 + 2 + 1 + 1 by line); `:%s/foo\c//gn` reports 7.
+Start in Normal mode on the `f` in line 1, column 1.
 
-### Drill B - Ignorecase
-Enable `ignorecase`, search for lowercase `foo`, and count. **Verify:** 7 matches.
+## End
 
-### Drill C - Smartcase
-Enable both options. Count lowercase `foo`, then mixed-case `Foo`. **Verify:** counts are 7 and 1.
+The buffer should remain:
 
-### Challenge
-With both options enabled, write one pattern that still matches only the five lowercase occurrences. Verify without modifying text.
+```text
+foo
+foo & foo
+foo & Foo
+FOO & foo
+```
 
-## Hints
-<details><summary>Hints</summary>
-`\c` and `\C` override options for that pattern. `smartcase` matters only when `ignorecase` is on.
-</details>
+The final count should report 5 matches.
 
-## Solution
-<details><summary>Show exact commands</summary>
-- A: `:%s/foo\C//gn<CR>` then `:%s/foo\c//gn<CR>`
-- B: `:set ignorecase<CR>:%s/foo//gn<CR>`
-- C: `:set ignorecase smartcase<CR>:%s/foo//gn<CR>:%s/Foo//gn<CR>`
-- Challenge: `:%s/foo\C//gn<CR>`
-</details>
+## Commands
 
-## Reset and Cleanup
-Restore settings with `:let &ignorecase=g:kata_ic | let &smartcase=g:kata_sc | unlet g:kata_ic g:kata_sc`; `:nohlsearch`; close scratch buffer.
+Run these command steps:
 
-## Notes and Portability
-LazyVim may set `ignorecase` and `smartcase` for interactive search, but the pattern atoms `\c` and `\C` are still Vim regex features and travel with the pattern. Save and restore the options as shown so this kata does not depend on a distribution default.
-
-## References
-- [`:help /ignorecase`](https://vimhelp.org/options.txt.html#%2Fignorecase)
-- [`:help /\c`](https://vimhelp.org/pattern.txt.html#%2F%5Cc)
+```text
+1. :let g:kata_ic=&ignorecase | let g:kata_sc=&smartcase<CR>
+2. :set noignorecase nosmartcase<CR>
+3. :%s/foo\C//gn<CR>
+4. :%s/foo\c//gn<CR>
+5. :set ignorecase<CR>
+6. :%s/foo//gn<CR>
+7. :set ignorecase smartcase<CR>
+8. :%s/foo//gn<CR>
+9. :%s/Foo//gn<CR>
+10. :let &ignorecase=g:kata_ic | let &smartcase=g:kata_sc | unlet g:kata_ic g:kata_sc<CR>
+11. :%s/foo\C//gn<CR>
+```
