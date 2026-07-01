@@ -6,14 +6,16 @@ Practice one LazyVim LSP loop: verify the attached client, navigate from a symbo
 
 ## Start
 
-Open a disposable file in a project with an attached LSP client and choose one symbol use with at least one definition and two references:
+From any buffer with a TypeScript LSP client available, open the shared JS/TS
+practice file in a vertical split and jump to this kata:
 
 ```text
-symbol use selected in a disposable LSP buffer
-original symbol name recorded before editing
+:vsplit practice_js_ts_filetypes.ts<CR>
+:/kata176ComputeTotal(kata176Subtotal, kata176Tax)<CR>
 ```
 
-Start in Normal mode on the first character of the chosen symbol use, and record that line and column before running the commands.
+Start in Normal mode on the `k` in `kata176ComputeTotal`, and record that
+line and column before running the commands.
 
 ## End
 
@@ -23,7 +25,7 @@ The observable final state should be:
 cursor returned to the original symbol use
 original symbol name restored
 hover or references inspected
-no unrelated file changed
+only the Kata 176 section was temporarily changed
 ```
 
 ## Commands
@@ -31,19 +33,20 @@ no unrelated file changed
 Run these command steps:
 
 ```text
-1. :LspInfo<CR>
-2. :lua for _, c in ipairs(vim.lsp.get_clients({bufnr=0})) do print(c.name, 'def', c:supports_method('textDocument/definition', 0), 'refs', c:supports_method('textDocument/references', 0), 'hover', c:supports_method('textDocument/hover', 0), 'rename', c:supports_method('textDocument/rename', 0), 'codeAction', c:supports_method('textDocument/codeAction', 0)) end<CR>
-3. :verbose nmap gd<CR>
-4. :verbose nmap gr<CR>
-5. :verbose nmap K<CR>
-6. :verbose nmap <Space>cr<CR>
-7. :verbose nmap <Space>ca<CR>
-8. gd
-9. <C-o>
-10. K
-11. gr{select one reference, then return with <C-o>}
-12. <Space>cr{temporary name}<CR>
-13. gr{confirm semantic references changed, then return}
-14. <Space>cr{original symbol name}<CR>
-15. <Space>ca{inspect actions and cancel unless one safe disposable-buffer action is intended}
+1. :setlocal filetype=typescript<CR>
+2. :LspInfo<CR>
+3. :lua for _, c in ipairs(vim.lsp.get_clients({bufnr=0})) do print(c.name, 'def', c:supports_method('textDocument/definition', 0), 'refs', c:supports_method('textDocument/references', 0), 'hover', c:supports_method('textDocument/hover', 0), 'rename', c:supports_method('textDocument/rename', 0), 'codeAction', c:supports_method('textDocument/codeAction', 0)) end<CR>
+4. :verbose nmap gd<CR>
+5. :verbose nmap gr<CR>
+6. :verbose nmap K<CR>
+7. :verbose nmap <Space>cr<CR>
+8. :verbose nmap <Space>ca<CR>
+9. gd
+10. <C-o>
+11. K
+12. gr{select one reference, then return with <C-o>}
+13. <Space>cr{temporary name}<CR>
+14. gr{confirm semantic references changed, then return}
+15. <Space>crkata176ComputeTotal<CR>
+16. <Space>ca{inspect actions and cancel unless one safe Kata 176 action is intended}
 ```

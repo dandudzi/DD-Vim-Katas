@@ -22,9 +22,9 @@ Start in Normal mode on the `f` in the first `function`. This kata assumes `S` i
 The Kata 070 section of `practice_js_ts_filetypes.ts` should have:
 
 ```text
-first total function commented
-original formatTotal function reindented
-copied formatTotal function pasted at the end of the file and reindented
+kata070Total function commented
+original kata070FormatTotal function reindented
+copied kata070FormatTotal function pasted at the end of the file and reindented
 ```
 
 ## Commands
@@ -33,9 +33,9 @@ Run these command steps:
 
 ```text
 1. :set filetype=typescript<CR>
-2. gcS{label for the complete total function}
-3. yS{label for the complete formatTotal function}
+2. gcS{label for the complete kata070Total function}
+3. yS{label for the complete kata070FormatTotal function}
 4. Gp
-5. =S{label for the original complete formatTotal function}
-6. =S{label for the pasted complete formatTotal function}
+5. =S{label for the original complete kata070FormatTotal function}
+6. =S{label for the pasted complete kata070FormatTotal function}
 ```

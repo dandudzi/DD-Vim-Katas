@@ -11,7 +11,8 @@ jump to this kata:
 
 ```text
 :vsplit practice_js_ts_filetypes.ts<CR>
-:/return items.reduce<CR>
+:/KATA 178 START<CR>
+j
 ```
 
 Start in Normal mode on the `r` in `return`.

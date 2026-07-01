@@ -6,29 +6,26 @@ Practice built-in keyword completion first, then use LazyVim completion and snip
 
 ## Start
 
-Open a scratch buffer and insert:
+From any buffer, open the shared JS/TS practice file in a vertical split and
+jump to this kata:
 
 ```text
-const customerName = "Ada";
-const customerEmail = "ada@example.test";
-const customerStatus = "active";
-
-cus
-
-function renderCard() {
-}
+:vsplit practice_js_ts_filetypes.ts<CR>
+:setlocal filetype=typescript<CR>
+:/^cus$<CR>
+A
 ```
 
-Start in Insert mode after `cus` on line 5.
+Start in Insert mode after `cus`.
 
 ## End
 
 The observable final state should be:
 
 ```text
-line 5 completed to a visible customer identifier
+cus line completed to a visible customer identifier
 snippet expansion either performed with verified mappings or deliberately skipped
-no unrelated buffer text changed
+only the Kata 180 section was changed
 ```
 
 ## Commands
@@ -42,11 +39,11 @@ Run these command steps:
 4. :verbose imap <Tab><CR>
 5. :verbose imap <S-Tab><CR>
 6. :verbose imap <C-y><CR>
-7. 5Gccus<Esc>A
+7. ccus<Esc>A
 8. <C-Space>
 9. <C-n>{repeat until a customerName, customerEmail, or customerStatus candidate is selected}
 10. <C-y>
-11. <Esc>Gko
+11. <Esc>/function kata180RenderCard<CR>o
 12. for<C-Space>
 13. If a snippet candidate is visible: <C-n>{repeat until the snippet candidate is selected}<C-y><Tab>; otherwise: <Esc>u
 ```
