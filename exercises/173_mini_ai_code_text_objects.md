@@ -6,22 +6,24 @@ Practice `mini.ai` function-call and argument text objects as operator targets.
 
 ## Start
 
-Open a scratch buffer and insert:
+From any buffer, open the shared JS/TS practice file in a vertical split and
+jump to this kata:
 
 ```text
-const total = formatPrice(sumPrices(cart.items, discount), currency);
-notify(user.email, total, { urgent: false });
+:vsplit practice_js_ts_filetypes.ts<CR>
+:/sumPrices(cart.items, discount)<CR>
+fd
 ```
 
 Start in Normal mode on the `d` in `discount`.
 
 ## End
 
-The buffer should become:
+The Kata 173 section of `practice_js_ts_filetypes.ts` should have:
 
 ```text
-const total = formatPrice(sumPrices(cart.items, 0), currency);
-notify("ops@example.com", total, { urgent: false });
+discount replaced with 0
+user.email replaced with "ops@example.com"
 ```
 
 ## Commands
