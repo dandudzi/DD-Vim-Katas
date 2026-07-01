@@ -8,11 +8,9 @@ Practice enabling spell checking, jumping between misspelled words, correcting t
 
 Open a scratch buffer and insert:
 
-```text
-Teh deploymant is schedueld for Wednesday.
+The deploymant is schedueld for Wednesday.
 Please reivew the release notes.
 Codexium is the internal project name.
-```
 
 Start in Normal mode at the end of line 3.
 
@@ -34,7 +32,7 @@ Run these command steps:
 
 ```text
 1. :setlocal spell spelllang=en<CR>
-2. ]sciwThe<Esc>
+2. ]sz=
 3. ]sciwdeployment<Esc>
 4. ]sciwscheduled<Esc>
 5. ]sciwreview<Esc>
