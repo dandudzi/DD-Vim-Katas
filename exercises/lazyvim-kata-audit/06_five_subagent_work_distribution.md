@@ -17,15 +17,15 @@ Purpose: implementation plan only. This distributes the LazyVim kata update/addi
 ## Numbering for New Katas
 
 - `171_lazyvim_discovery_readiness.md`
-- `172_flash_search_to_edit.md`
+- `094_flash_search_to_edit.md`
 - `173_mini_ai_code_text_objects.md`
 - `174_lazyvim_comment_workflow.md`
-- `175_lazyvim_picker_project_workflow.md`
-- `176_lazyvim_lsp_navigation_edit_loop.md`
-- `177_lazyvim_diagnostics_trouble_loop.md`
-- `178_lazyvim_formatting_linting.md`
-- `179_gitsigns_hunk_workflow.md`
-- `180_lazyvim_completion_snippets.md`
+- `095_lazyvim_picker_project_workflow.md`
+- `096_lazyvim_lsp_navigation_edit_loop.md`
+- `097_lazyvim_diagnostics_trouble_loop.md`
+- `098_lazyvim_formatting_linting.md`
+- `099_gitsigns_hunk_workflow.md`
+- `100_lazyvim_completion_snippets.md`
 - `181_neotest_workflow.md`
 - `182_lazyvim_dap_debugging.md`
 - `183_snacks_workspace_workflows.md`
@@ -36,30 +36,30 @@ Owned existing files:
 
 - `005_find_and_replace_by_hand.md`
 - `007_change_inside.md`
-- `020_prefer_operators_to_visual_commands.md`
-- `034_find_by_character.md`
-- `035_operate_with_a_search_motion.md`
-- `036_trace_your_selection_with_precision_text_objects.md`
-- `037_jump_between_matching_parentheses.md`
+- `018_prefer_operators_to_visual_commands.md`
+- `024_find_by_character.md`
+- `025_operate_with_a_search_motion.md`
+- `026_trace_your_selection_with_precision_text_objects.md`
+- `027_jump_between_matching_parentheses.md`
 - `055_tune_the_case_sensitivity_of_search_patterns.md`
 - `056_use_the_v_pattern_switch_for_regex_search.md`
 - `057_use_the_backslash_v_literal_switch_for_verbatim_search.md`
 - `058_stake_the_boundaries_of_a_word.md`
 - `061_meet_the_search_command.md`
 - `064_operate_on_complete_search_match.md`
-- `069_toggle_comments_with_gc_ranges.md`
-- `070_flash_treesitter_motion_S.md`
+- `040_toggle_comments_with_gc_ranges.md`
+- `041_flash_treesitter_motion_S.md`
 - `079_clear_search_highlighting.md`
 - `105_operators_with_percent_match.md`
-- `126_section_start_motions.md`
+- `069_section_start_motions.md`
 - `127_section_end_motions.md`
-- `128_method_boundaries.md`
-- `130_previous_jump_origin.md`
-- `137_sentence_text_objects.md`
+- `070_method_boundaries.md`
+- `071_previous_jump_origin.md`
+- `074_sentence_text_objects.md`
 
 Owned new files:
 
-- `172_flash_search_to_edit.md`
+- `094_flash_search_to_edit.md`
 - `173_mini_ai_code_text_objects.md`
 - `174_lazyvim_comment_workflow.md`
 
@@ -75,7 +75,7 @@ Risks/checks:
 
 - Check `s`, `S`, operator-pending `r`/`R`, `gc`, `gcc`, `gco`, `gcO`, and `mini.ai` text objects with `:verbose`.
 - Do not use fixed Flash labels in required solutions; labels are dynamic.
-- Keep `090_cgn_search_match_replace.md` read-only; Subagent 3 owns LSP rename contrast there.
+- Keep `050_cgn_search_match_replace.md` read-only; Subagent 3 owns LSP rename contrast there.
 
 ## Subagent 2: Pickers, Buffers, Windows, Terminal, Sessions
 
@@ -83,7 +83,7 @@ Owned existing files:
 
 - `029_running_commands_in_shell.md`
 - `030_buffer_operations.md`
-- `031_split_windows.md`
+- `022_split_windows.md`
 - `032_organize_window_layout_with_tab_pages.md`
 - `050_act_upon_a_collection_of_files.md`
 - `080_toggle_alternate_file.md`
@@ -92,8 +92,8 @@ Owned existing files:
 - `104_lazyvim_bracket_nav_yanky_sessions.md`
 - `107_close_and_manage_buffers.md`
 - `134_tag_in_a_split.md`
-- `135_open_file_at_line_number.md`
-- `136_file_under_cursor_in_split.md`
+- `072_open_file_at_line_number.md`
+- `073_file_under_cursor_in_split.md`
 - `140_generate_lines_with_expression_put.md`
 - `146_configure_every_window.md`
 - `147_select_buffers_by_partial_name.md`
@@ -103,7 +103,7 @@ Owned existing files:
 
 Owned new files:
 
-- `175_lazyvim_picker_project_workflow.md`
+- `095_lazyvim_picker_project_workflow.md`
 - `183_snacks_workspace_workflows.md`
 
 Work groups:
@@ -125,10 +125,10 @@ Risks/checks:
 
 Owned existing files:
 
-- `073_gd_go_to_definition_and_back.md`
-- `084_quickfix_list.md`
-- `090_cgn_search_match_replace.md`
-- `091_substitute_with_confirmation.md`
+- `043_gd_go_to_definition_and_back.md`
+- `046_quickfix_list.md`
+- `050_cgn_search_match_replace.md`
+- `051_substitute_with_confirmation.md`
 - `099_hover_lookup_and_go_to_references.md`
 - `100_cfdo_project_wide_refactor.md`
 - `101_location_list.md`
@@ -136,26 +136,26 @@ Owned existing files:
 - `131_tag_definition_jump.md`
 - `132_tag_stack_return.md`
 - `133_choose_among_matching_tags.md`
-- `141_repeat_substitutions_at_new_scopes.md`
-- `142_reuse_full_match_in_replacement.md`
+- `077_repeat_substitutions_at_new_scopes.md`
+- `078_reuse_full_match_in_replacement.md`
 - `143_reorder_captured_groups.md`
-- `144_change_replacement_case.md`
+- `079_change_replacement_case.md`
 - `145_compute_replacement_text.md`
-- `151_traverse_quickfix_history.md`
-- `152_jump_spatially_through_quickfix.md`
-- `153_jump_to_another_quickfix_file.md`
-- `154_filter_existing_quickfix_list.md`
-- `155_create_quickfix_from_shell_output.md`
-- `156_open_quickfix_only_when_useful.md`
-- `157_parse_current_buffer_as_errors.md`
-- `158_compile_and_navigate_errors.md`
-- `159_search_help_into_location_list.md`
-- `160_move_diagnostics_into_quickfix.md`
+- `080_traverse_quickfix_history.md`
+- `081_jump_spatially_through_quickfix.md`
+- `082_jump_to_another_quickfix_file.md`
+- `083_filter_existing_quickfix_list.md`
+- `084_create_quickfix_from_shell_output.md`
+- `085_open_quickfix_only_when_useful.md`
+- `086_parse_current_buffer_as_errors.md`
+- `087_compile_and_navigate_errors.md`
+- `088_search_help_into_location_list.md`
+- `089_move_diagnostics_into_quickfix.md`
 
 Owned new files:
 
-- `176_lazyvim_lsp_navigation_edit_loop.md`
-- `177_lazyvim_diagnostics_trouble_loop.md`
+- `096_lazyvim_lsp_navigation_edit_loop.md`
+- `097_lazyvim_diagnostics_trouble_loop.md`
 
 Work groups:
 
@@ -177,25 +177,25 @@ Risks/checks:
 
 Owned existing files:
 
-- `072_spellcheck_toggle_and_jump.md`
-- `083_folding_basics.md`
+- `042_spellcheck_toggle_and_jump.md`
+- `045_folding_basics.md`
 - `087_insert_mode_completion.md`
-- `089_diff_mode.md`
+- `049_diff_mode.md`
 - `108_indentation_jumping_and_menu_cycling.md`
 - `150_run_command_on_visible_fold_lines.md`
 - `161_choose_source_in_three_way_diff.md`
 - `162_refresh_diff_calculations.md`
 - `163_compare_with_patch_result.md`
-- `166_navigate_between_folds.md`
-- `167_adjust_fold_depth_incrementally.md`
-- `168_reindent_with_equal_operator.md`
+- `090_navigate_between_folds.md`
+- `091_adjust_fold_depth_incrementally.md`
+- `092_reindent_with_equal_operator.md`
 - `169_format_without_moving_cursor.md`
 
 Owned new files:
 
-- `178_lazyvim_formatting_linting.md`
-- `179_gitsigns_hunk_workflow.md`
-- `180_lazyvim_completion_snippets.md`
+- `098_lazyvim_formatting_linting.md`
+- `099_gitsigns_hunk_workflow.md`
+- `100_lazyvim_completion_snippets.md`
 
 Work groups:
 
