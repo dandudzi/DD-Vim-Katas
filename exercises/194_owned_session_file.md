@@ -2,35 +2,29 @@
 
 ## Task
 
-Practice writing a Vim session file only inside an owned temporary directory.
+Practice writing a Vim session file into an owned temporary directory.
 
 ## Start
 
-In Vim or Neovim, run:
+Open a scratch buffer and insert:
 
 ```text
-:let g:kata_194_dir=tempname() | call mkdir(g:kata_194_dir, 'p')
-:enew | file kata-session-owned
-:call setline(1, ['owned session buffer'])
+owned session buffer
 ```
 
 Start in Normal mode on the `o` in `owned`.
 
 ## End
 
-The observable state should be:
-
-```text
-owned-session.vim exists inside g:kata_194_dir.
-kata-session-owned still contains owned session buffer.
-```
+The buffer should stay unchanged, and `owned-session.vim` should exist inside `g:kata_194_dir`.
 
 ## Commands
 
 Run these command steps:
 
 ```text
-1. :execute 'mksession! '.fnameescape(g:kata_194_dir.'/owned-session.vim')<CR>
-2. :echo filereadable(g:kata_194_dir.'/owned-session.vim')<CR>
-3. :echo getline(1)<CR>
+1. :let g:kata_194_dir=tempname()<CR>
+2. :call mkdir(g:kata_194_dir, 'p')<CR>
+3. :execute 'mksession! '.fnameescape(g:kata_194_dir.'/owned-session.vim')<CR>
+4. :echo filereadable(g:kata_194_dir.'/owned-session.vim')<CR>
 ```

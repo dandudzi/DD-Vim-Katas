@@ -1,9 +1,8 @@
-# Kata: Run Commands Across Buffers
+# Kata: Run One Command Across Buffers
 
 ## Task
 
-Practice using `:bufdo` to run one guarded Ex command across a small set of
-listed buffers.
+Practice using `:bufdo` to run one Ex command across listed buffers.
 
 ## Start
 
@@ -13,18 +12,11 @@ Start in Normal mode on line 1, column 1.
 
 ## End
 
-The `kata-alpha` buffer should contain:
+Both named buffers should have `!` appended:
 
 ```text
-alpha
-!
-```
-
-The `kata-gamma` buffer should contain:
-
-```text
-gamma
-!
+kata-alpha: alpha!
+kata-beta: beta!
 ```
 
 ## Commands
@@ -32,9 +24,9 @@ gamma
 Run these command steps:
 
 ```text
-1. :enew<CR>:file kata-alpha<CR>ialpha<Esc>:setlocal nomodified<CR>
-2. :enew<CR>:file kata-gamma<CR>igamma<Esc>:setlocal nomodified<CR>
-3. :buffer kata-alpha<CR>
-4. :set hidden<CR>
-5. :bufdo call append('$', bufname() =~# '^kata-' ? '!' : [])<CR>
+1. :enew<CR>:file kata-alpha<CR>ialpha<Esc>
+2. :enew<CR>:file kata-beta<CR>ibeta<Esc>
+3. :set hidden<CR>
+4. :bufdo %s/$/!/<CR>
+5. :buffer kata-alpha<CR>
 ```

@@ -2,7 +2,7 @@
 
 ## Task
 
-Practice starting built-in keyword completion and cycling the menu forward and backward.
+Practice cycling built-in keyword completion and accepting a candidate.
 
 ## Start
 
@@ -10,10 +10,10 @@ Open a scratch buffer and insert:
 
 ```text
 process product profile
-
+pro
 ```
 
-Start in Normal mode on the blank line 2.
+Start in Insert mode after `pro` on line 2.
 
 ## End
 
@@ -21,7 +21,7 @@ The buffer should become:
 
 ```text
 process product profile
-
+process
 ```
 
 ## Commands
@@ -29,11 +29,9 @@ process product profile
 Run these command steps:
 
 ```text
-1. ipro<C-x><C-n>
+1. <C-x><C-n>
 2. <C-n>
 3. <C-p>
-4. <C-e>
-5. <C-u><Esc>
-6. :verbose imap <Tab><CR>
-7. :verbose imap <S-Tab><CR>
+4. <C-y>
+5. <Esc>
 ```

@@ -2,42 +2,34 @@
 
 ## Task
 
-Practice exporting LazyVim picker grep results to the quickfix list.
+Practice exporting one LazyVim picker grep result set to the quickfix list.
 
 ## Start
 
-In Neovim with LazyVim and a configured picker, run:
+In Neovim with LazyVim, create two files:
 
 ```text
-:let g:kata_198_qf=getqflist({'items':1,'title':1,'context':1,'idx':1,'quickfixtextfunc':1})
-:let g:kata_198_dir=tempname() | call mkdir(g:kata_198_dir, 'p')
-:call writefile(['match_token one', 'keep'], g:kata_198_dir.'/a.txt')
-:call writefile(['match_token two'], g:kata_198_dir.'/b.txt')
-:execute 'lcd '.fnameescape(g:kata_198_dir) | edit a.txt
+a.txt: match_token one
+b.txt: match_token two
 ```
 
-Start in Normal mode on the `m` in `match_token` in `a.txt`.
+Start in Normal mode in `a.txt` on the `m` in `match_token`.
 
 ## End
 
-The observable state should be:
-
-```text
-The quickfix list has exactly two entries.
-Both entries point inside g:kata_198_dir.
-a.txt and b.txt are unchanged.
-```
+The quickfix list should show two `match_token` entries.
 
 ## Commands
 
 Run these command steps:
 
 ```text
-1. :verbose nmap <Space>/<CR>
-2. <Space>/match_token<CR>
-3. g?
-4. <C-q>
-5. :echo len(getqflist())<CR>
-6. :echo readfile(g:kata_198_dir.'/a.txt')<CR>
-7. :echo readfile(g:kata_198_dir.'/b.txt')<CR>
+1. :let g:kata_198_dir=tempname()<CR>
+2. :call mkdir(g:kata_198_dir, 'p')<CR>
+3. :call writefile(['match_token one'], g:kata_198_dir.'/a.txt')<CR>
+4. :call writefile(['match_token two'], g:kata_198_dir.'/b.txt')<CR>
+5. :execute 'lcd '.fnameescape(g:kata_198_dir).' | edit a.txt'<CR>
+6. <leader>/match_token<CR>
+7. <C-q>
+8. :copen<CR>
 ```

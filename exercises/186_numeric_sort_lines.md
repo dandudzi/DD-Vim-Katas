@@ -2,7 +2,7 @@
 
 ## Task
 
-Practice using `:sort n` to sort lines by their first number instead of alphabetically.
+Practice using `:sort n` to sort lines by their first number.
 
 ## Start
 
@@ -37,7 +37,5 @@ item_100_contraption
 Run these command steps:
 
 ```text
-1. gg
-2. V5j
-3. :sort n<CR>
+1. :%sort n<CR>
 ```

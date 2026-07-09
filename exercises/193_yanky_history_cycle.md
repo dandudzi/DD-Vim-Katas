@@ -2,7 +2,7 @@
 
 ## Task
 
-Practice cycling a pasted value through Yanky history after verifying the mappings.
+Practice cycling the just-pasted text through Yanky history.
 
 ## Start
 
@@ -24,7 +24,7 @@ The buffer should become:
 first yank
 second yank
 paste below
-second yank
+first yank
 ```
 
 ## Commands
@@ -32,15 +32,8 @@ second yank
 Run these command steps:
 
 ```text
-1. :verbose nmap [y<CR>
-2. :verbose nmap ]y<CR>
-3. :verbose nmap <leader>p<CR>
-4. yy
-5. jyy
-6. Gp
-7. [y
-8. :echo getline('.')<CR>
-9. ]y
-10. :echo getline('.')<CR>
-11. <leader>p<Esc>
+1. yy
+2. jyy
+3. Gp
+4. [y
 ```

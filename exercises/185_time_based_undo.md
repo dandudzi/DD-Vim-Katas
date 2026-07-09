@@ -2,7 +2,7 @@
 
 ## Task
 
-Practice using `:earlier` and `:later` to move through undo history by elapsed time.
+Practice moving back through undo history with `:earlier`.
 
 ## Start
 
@@ -31,6 +31,4 @@ Run these command steps:
 2. :sleep 2<CR>
 3. A approved<Esc>
 4. :earlier 1s<CR>
-5. :later 1s<CR>
-6. u
 ```

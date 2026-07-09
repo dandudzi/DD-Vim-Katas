@@ -116,32 +116,32 @@
 
 ## To Analyze
 
-- [ ] 175_lazyvim_picker_project_workflow.md - Too complex; command count is bloated.
-- [ ] 176_lazyvim_lsp_navigation_edit_loop.md - Too complex; command count is bloated.
-- [ ] 177_lazyvim_diagnostics_trouble_loop.md - Too complex; command count is bloated.
-- [ ] 178_lazyvim_formatting_linting.md - Too complex; command count is bloated.
-- [ ] 179_gitsigns_hunk_workflow.md - Too complex; command count is bloated.
-- [ ] 180_lazyvim_completion_snippets.md - Too complex; command count is bloated.
-- [ ] 181_neotest_workflow.md - Too complex; command count is bloated.
-- [ ] 182_lazyvim_dap_debugging.md - Too complex; command count is bloated.
-- [ ] 183_snacks_workspace_workflows.md - Too complex; command count is bloated.
-- [ ] 184_run_commands_across_buffers.md - Too complex; command count is bloated.
-- [ ] 185_time_based_undo.md - Too complex; command count is bloated.
-- [ ] 186_numeric_sort_lines.md - Too complex; command count is bloated.
-- [ ] 187_format_comment_with_gq.md - Too complex; command count is bloated.
-- [ ] 188_delete_search_matches_with_dgn.md - Too complex; command count is bloated.
-- [ ] 189_resume_last_insert.md - Too complex; command count is bloated.
-- [ ] 190_global_declaration_jump.md - Too complex; command count is bloated.
-- [ ] 191_lsp_hover_and_references.md - Too complex; command count is bloated.
-- [ ] 192_git_hunk_review.md - Too complex; command count is bloated.
-- [ ] 193_yanky_history_cycle.md - Too complex; command count is bloated.
-- [ ] 194_owned_session_file.md - Too complex; command count is bloated.
-- [ ] 195_keyword_completion_cycling.md - Too complex; command count is bloated.
-- [ ] 196_buffer_local_spell_restore.md - Too complex; command count is bloated.
-- [ ] 197_grugfar_quickfix_export.md - Too complex; command count is bloated.
-- [ ] 198_picker_quickfix_export.md - Too complex; command count is bloated.
-- [ ] 199_noice_message_history.md - Too complex; command count is bloated.
-- [ ] 200_mason_read_only_inspection.md - Too complex; command count is bloated.
-- [ ] 201_neotree_owned_directory.md - Too complex; command count is bloated.
-- [ ] 202_snacks_scratch_buffer.md - Too complex; command count is bloated.
-- [ ] 203_snacks_terminal.md - Too complex; command count is bloated.
+- [x] 175_lazyvim_picker_project_workflow.md - Implemented as a focused LazyVim file picker kata.
+- [x] 176_lazyvim_lsp_navigation_edit_loop.md - Implemented as a focused LSP definition-and-return kata.
+- [x] 177_lazyvim_diagnostics_trouble_loop.md - Implemented as a diagnostic float and next-diagnostic kata.
+- [x] 178_lazyvim_formatting_linting.md - Implemented as a deterministic built-in `=` formatting kata.
+- [x] 179_gitsigns_hunk_workflow.md - Implemented as a focused Gitsigns preview hunk kata.
+- [x] 180_lazyvim_completion_snippets.md - Implemented as a built-in keyword completion kata.
+- [x] 181_neotest_workflow.md - Implemented by deleting the non-deterministic Neotest workflow kata.
+- [x] 182_lazyvim_dap_debugging.md - Implemented by deleting the environment-dependent DAP kata.
+- [x] 183_snacks_workspace_workflows.md - Implemented by deleting the filesystem-heavy Snacks workspace kata.
+- [x] 184_run_commands_across_buffers.md - Implemented as a two-buffer `:bufdo` kata.
+- [x] 185_time_based_undo.md - Implemented with one timed checkpoint and `:earlier 1s`.
+- [x] 186_numeric_sort_lines.md - Implemented with a single `:%sort n` command.
+- [x] 187_format_comment_with_gq.md - Implemented with local options for deterministic `gqq` formatting.
+- [x] 188_delete_search_matches_with_dgn.md - Implemented with one search pattern and repeated `dgn`.
+- [x] 189_resume_last_insert.md - Implemented as a short `gi` resume kata.
+- [x] 190_global_declaration_jump.md - Implemented with inline scratch-buffer code for `gD`.
+- [x] 191_lsp_hover_and_references.md - Implemented by deleting the LSP hover/references kata.
+- [x] 192_git_hunk_review.md - Implemented by deleting the duplicate Git hunk review kata.
+- [x] 193_yanky_history_cycle.md - Implemented as a minimal Yanky paste history cycle kata.
+- [x] 194_owned_session_file.md - Implemented as a focused `:mksession!` kata.
+- [x] 195_keyword_completion_cycling.md - Implemented by accepting a cycled keyword completion.
+- [x] 196_buffer_local_spell_restore.md - Implemented with `spell`, `]s`, and `nospell`.
+- [x] 197_grugfar_quickfix_export.md - Implemented as a reduced Grug-Far quickfix export kata.
+- [x] 198_picker_quickfix_export.md - Implemented as a reduced picker grep quickfix export kata.
+- [x] 199_noice_message_history.md - Implemented as a Noice message history kata.
+- [x] 200_mason_read_only_inspection.md - Implemented by deleting the weak Mason inspection kata.
+- [x] 201_neotree_owned_directory.md - Implemented as a Neo-tree owned-file selection kata.
+- [x] 202_snacks_scratch_buffer.md - Implemented by deleting the unstable Snacks scratch kata.
+- [x] 203_snacks_terminal.md - Implemented as a Snacks terminal normal-mode kata.

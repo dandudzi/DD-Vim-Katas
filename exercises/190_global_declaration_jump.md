@@ -2,40 +2,34 @@
 
 ## Task
 
-Practice `gD` to jump from a TypeScript symbol use to its file-level declaration.
+Practice `gD` to jump from a symbol use to its global declaration in the same buffer.
 
 ## Start
 
-From any buffer, open the shared JS/TS practice file in a vertical split and
-jump to this kata:
+Open a scratch buffer and insert:
 
 ```text
-:vsplit practice_js_ts_filetypes.ts<CR>
-:/return kata190Output;<CR>
+let output = "";
+
+function render() {
+  const output = "local";
+  return output;
+}
+
+print(output);
 ```
 
-Start in Normal mode on the `k` in `kata190Output`.
+Start in Normal mode on the `o` in `output` in `print(output);`.
 
 ## End
 
-The Kata 190 section of `practice_js_ts_filetypes.ts` should remain unchanged:
-
-```text
-let kata190Output = "";
-
-function kata190Render() {
-  const kata190Local = String(42);
-  return kata190Output;
-}
-```
-
-The cursor should be on the global `kata190Output` declaration.
+The cursor should be on the `o` in the global `output` declaration on line 1.
 
 ## Commands
 
 Run these command steps:
 
 ```text
-1. :setlocal filetype=typescript<CR>
+1. :setlocal filetype=javascript<CR>
 2. gD
 ```

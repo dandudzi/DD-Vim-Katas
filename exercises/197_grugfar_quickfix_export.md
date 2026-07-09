@@ -2,43 +2,35 @@
 
 ## Task
 
-Practice exporting Grug-Far search results to the quickfix list without applying replacements.
+Practice exporting Grug-Far search results to the quickfix list without replacing text.
 
 ## Start
 
-In Neovim with LazyVim and Grug-Far, run:
+In Neovim with LazyVim and Grug-Far, create two files:
 
 ```text
-:let g:kata_197_qf=getqflist({'items':1,'title':1,'context':1,'idx':1,'quickfixtextfunc':1})
-:let g:kata_197_dir=tempname() | call mkdir(g:kata_197_dir, 'p')
-:call writefile(['old_token one', 'keep'], g:kata_197_dir.'/a.txt')
-:call writefile(['old_token two'], g:kata_197_dir.'/b.txt')
-:execute 'lcd '.fnameescape(g:kata_197_dir) | edit a.txt
+a.txt: old_token one
+b.txt: old_token two
 ```
 
-Start in Normal mode on the `o` in `old_token` in `a.txt`.
+Start in Normal mode in `a.txt` on the `o` in `old_token`.
 
 ## End
 
-The observable state should be:
-
-```text
-The quickfix list has exactly two entries.
-Both entries point inside g:kata_197_dir.
-No file text was changed.
-```
+The quickfix list should contain two `old_token` matches, and both files should stay unchanged.
 
 ## Commands
 
 Run these command steps:
 
 ```text
-1. :verbose nmap <Space>sr<CR>
-2. <Space>sr
-3. old_token<Tab><Tab>*.txt<Tab><C-r>=g:kata_197_dir<CR><CR>
-4. g?
-5. <localleader>q
-6. :echo len(getqflist())<CR>
-7. :echo readfile(g:kata_197_dir.'/a.txt')<CR>
-8. :echo readfile(g:kata_197_dir.'/b.txt')<CR>
+1. :let g:kata_197_dir=tempname()<CR>
+2. :call mkdir(g:kata_197_dir, 'p')<CR>
+3. :call writefile(['old_token one'], g:kata_197_dir.'/a.txt')<CR>
+4. :call writefile(['old_token two'], g:kata_197_dir.'/b.txt')<CR>
+5. :execute 'lcd '.fnameescape(g:kata_197_dir).' | edit a.txt'<CR>
+6. <leader>sr
+7. old_token<Tab><Tab>*.txt<CR>
+8. <localleader>q
+9. :copen<CR>
 ```

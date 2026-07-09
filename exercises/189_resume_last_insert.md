@@ -2,7 +2,7 @@
 
 ## Task
 
-Practice `gi` to return to the last insert position and continue typing there.
+Practice `gi` to return to the previous insert position after moving away.
 
 ## Start
 

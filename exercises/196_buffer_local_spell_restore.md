@@ -2,7 +2,7 @@
 
 ## Task
 
-Practice enabling buffer-local spelling, jumping to a misspelling, and restoring the previous local spell options.
+Practice enabling spell checking, jumping to a misspelling, and restoring the local option.
 
 ## Start
 
@@ -17,23 +17,15 @@ Start in Normal mode on the `T` in `The` on line 1.
 
 ## End
 
-The buffer should become:
-
-```text
-The final line is fine.
-Teh final line is misspelled.
-```
+The buffer should stay unchanged, with the cursor on `Teh` and local spell checking off.
 
 ## Commands
 
 Run these command steps:
 
 ```text
-1. :let b:kata_196_spell=&l:spell | let b:kata_196_spelllang=&l:spelllang<CR>
-2. :setlocal spell spelllang=en<CR>
-3. gg
-4. ]s
-5. :echo expand('<cword>')<CR>
-6. :let &l:spell=b:kata_196_spell | let &l:spelllang=b:kata_196_spelllang<CR>
-7. :echo &l:spell == b:kata_196_spell && &l:spelllang ==# b:kata_196_spelllang<CR>
+1. :setlocal spell spelllang=en_us<CR>
+2. gg
+3. ]s
+4. :setlocal nospell<CR>
 ```

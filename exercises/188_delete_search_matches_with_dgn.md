@@ -9,11 +9,10 @@ Practice deleting search matches with `dgn` and repeating the deletion with `.`.
 Open a scratch buffer and insert:
 
 ```text
-TODO: fix login
-TODO: update tests
-review the TODO list
-TODO: deploy
-check all TODO items
+TODO one
+TODO two
+DONE three
+TODO four
 ```
 
 Start in Normal mode on the first `T` in `TODO`.
@@ -23,11 +22,10 @@ Start in Normal mode on the first `T` in `TODO`.
 The buffer should become:
 
 ```text
-: fix login
-: update tests
-review the TODO list
-: deploy
-check all TODO items
+ one
+ two
+DONE three
+ four
 ```
 
 ## Commands
@@ -35,10 +33,9 @@ check all TODO items
 Run these command steps:
 
 ```text
-1. :let @/ = 'TODO'<CR>
+1. /TODO<CR>
 2. dgn
 3. .
 4. n
-5. n
-6. .
+5. .
 ```
