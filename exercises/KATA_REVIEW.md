@@ -1,0 +1,147 @@
+# Kata Review Tracker
+
+## Agent Rule
+
+- After deleting the files listed in `To Delete`, rename the remaining kata files so their numeric prefixes stay continuous with no gaps.
+- If a kata uses an external file to perform the action, that file should already be created. The command list should include how to open that file in a split window, and the final command should show how to close the split.
+
+## To Delete
+
+- [ ] 016_overwrite_existing_text_with_replace.md
+- [ ] 019_repeat_likewise_visual_commands.md
+- [ ] 023_exec_commands_on_one_or_more_consecutive_lines.md
+- [ ] 024_duplicate_or_move_lines.md
+- [ ] 025_run_normal_mode_commands_across_range.md
+- [ ] 026_repeat_last_ex_command.md
+- [ ] 027_tab_complete_your_ex_command.md
+- [ ] 029_running_commands_in_shell.md
+- [ ] 030_buffer_operations.md
+- [ ] 032_organize_window_layout_with_tab_pages.md
+- [ ] 043_grok_vim_registers.md
+- [ ] 044_replace_visual_selection_with_a_register.md
+- [ ] 048_repeat_a_change_on_contiguous_lines.md
+- [ ] 050_act_upon_a_collection_of_files.md
+- [ ] 051_evaluate_an_iterator_to_number_items_in_a_list.md
+- [ ] 052_edit_the_contents_of_a_macro.md
+- [ ] 053_editing_tabular_data_with_visual_block_mode.md
+- [ ] 054_changing_column_of_text.md
+- [ ] 055_tune_the_case_sensitivity_of_search_patterns.md
+- [ ] 056_use_the_v_pattern_switch_for_regex_search.md
+- [ ] 057_use_the_backslash_v_literal_switch_for_verbatim_search.md
+- [ ] 058_stake_the_boundaries_of_a_word.md
+- [ ] 059_stake_the_boundaries_of_a_match.md
+- [ ] 060_escape_problem_characters.md
+- [ ] 061_meet_the_search_command.md
+- [ ] 062_count_the_matches_for_current_pattern.md
+- [ ] 064_operate_on_complete_search_match.md
+- [ ] 065_create_complex_patterns_by_iterating_upon_search_history.md
+- [ ] 067_xp_swap_adjacent_characters.md
+- [ ] 071_filter_selection_through_shell.md
+- [ ] 074_open_line_above_and_below.md
+- [ ] 075_substitute_character_and_line.md
+- [ ] 076_increment_and_decrement_numbers.md
+- [ ] 078_search_backward_with_hash.md
+- [ ] 079_clear_search_highlighting.md
+- [ ] 080_toggle_alternate_file.md
+- [ ] 081_global_command.md
+- [ ] 082_format_text_with_gq.md
+- [ ] 085_undo_tree_and_time_travel.md
+- [ ] 087_insert_mode_completion.md
+- [ ] 096_go_to_file_and_last_insert.md
+- [ ] 099_hover_lookup_and_go_to_references.md
+- [ ] 100_cfdo_project_wide_refactor.md
+- [ ] 101_location_list.md
+- [ ] 102_picker_fuzzy_finding.md
+- [ ] 103_terminal_and_git_workflow.md
+- [ ] 104_lazyvim_bracket_nav_yanky_sessions.md
+- [ ] 105_operators_with_percent_match.md
+- [ ] 106_filter_current_line_through_shell.md
+- [ ] 107_close_and_manage_buffers.md
+- [ ] 108_indentation_jumping_and_menu_cycling.md
+- [ ] 109_grugfar_and_picker_exports.md
+- [ ] 110_lazyvim_ui_trouble_noice_mason.md
+- [ ] 111_physical_line_start.md
+- [ ] 112_first_non_blank.md
+- [ ] 120_byte_offset_jump.md
+- [ ] 121_viewport_relative_landing.md
+- [ ] 127_section_end_motions.md
+- [ ] 129_reverse_match_cycle.md
+- [ ] 131_tag_definition_jump.md
+- [ ] 132_tag_stack_return.md
+- [ ] 133_choose_among_matching_tags.md
+- [ ] 134_tag_in_a_split.md
+- [ ] 140_generate_lines_with_expression_put.md
+- [ ] 143_reorder_captured_groups.md
+- [ ] 145_compute_replacement_text.md
+- [ ] 146_configure_every_window.md
+- [ ] 147_select_buffers_by_partial_name.md
+- [ ] 148_open_existing_buffer_in_split.md
+- [ ] 149_restore_entire_changed_line.md
+- [ ] 150_run_command_on_visible_fold_lines.md
+- [ ] 161_choose_source_in_three_way_diff.md
+- [ ] 162_refresh_diff_calculations.md
+- [ ] 163_compare_with_patch_result.md
+- [ ] 164_execute_one_normal_command_from_terminal_mode.md
+- [ ] 165_read_shell_output_into_buffer.md
+- [ ] 169_format_without_moving_cursor.md
+- [ ] 171_lazyvim_discovery_readiness.md
+- [ ] 173_mini_ai_code_text_objects.md
+- [ ] 174_lazyvim_comment_workflow.md
+
+## To Fix
+
+- [x] 069_toggle_comments_with_gc_ranges.md - Use an external code file for the code operation, include shortcuts for opening a split window with that file, and add LazyVim-context info for closing the window.
+- [x] 070_flash_treesitter_motion_S.md - Include how to close the window or buffer the LazyVim way.
+- [x] 083_folding_basics.md - Make it shorter, with a maximum of 45 lines.
+- [x] 084_quickfix_list.md - Make it LazyVim-agnostic.
+- [x] 089_diff_mode.md - Make it shorter; the operations are too long.
+- [x] 095_count_with_insert.md - Completely broken.
+- [x] 126_section_start_motions.md - Use an external file for moving within the file.
+- [x] 128_method_boundaries.md - Use an external file for navigation practice, and include how to open that file in the command steps.
+- [x] 135_open_file_at_line_number.md - Make the file to open already created, and make the kata as simple as possible.
+- [x] 136_file_under_cursor_in_split.md - Make the file to open already created, and make the kata as simple as possible.
+- [x] 151_traverse_quickfix_history.md - Make it simpler and LazyVim-native, using simple LazyVim keymaps.
+- [x] 152_jump_spatially_through_quickfix.md - Make it simpler and LazyVim-native, using simple LazyVim keymaps.
+- [x] 153_jump_to_another_quickfix_file.md - Make it simpler and LazyVim-native, using simple LazyVim keymaps.
+- [x] 154_filter_existing_quickfix_list.md - Make it simpler and LazyVim-native, using simple LazyVim keymaps.
+- [x] 155_create_quickfix_from_shell_output.md - Make it simpler and LazyVim-native, using simple LazyVim keymaps.
+- [x] 156_open_quickfix_only_when_useful.md - Make it simpler and LazyVim-native, using simple LazyVim keymaps.
+- [x] 157_parse_current_buffer_as_errors.md - Make it simpler and LazyVim-native, using simple LazyVim keymaps.
+- [x] 158_compile_and_navigate_errors.md - Make it simpler and LazyVim-native, using simple LazyVim keymaps.
+- [x] 159_search_help_into_location_list.md - Make it simpler and LazyVim-native, using simple LazyVim keymaps.
+- [x] 160_move_diagnostics_into_quickfix.md - Make it simpler and LazyVim-native, using simple LazyVim keymaps.
+- [x] 166_navigate_between_folds.md - Use an external file to perform the kata, and include a command to open it in a split window.
+- [x] 167_adjust_fold_depth_incrementally.md - Use an external file to perform the kata, and include a command to open it in a split window.
+- [x] 168_reindent_with_equal_operator.md - Use an external file to perform the kata, and include a command to open it in a split window.
+
+## To Analyze
+
+- [ ] 175_lazyvim_picker_project_workflow.md - Too complex; command count is bloated.
+- [ ] 176_lazyvim_lsp_navigation_edit_loop.md - Too complex; command count is bloated.
+- [ ] 177_lazyvim_diagnostics_trouble_loop.md - Too complex; command count is bloated.
+- [ ] 178_lazyvim_formatting_linting.md - Too complex; command count is bloated.
+- [ ] 179_gitsigns_hunk_workflow.md - Too complex; command count is bloated.
+- [ ] 180_lazyvim_completion_snippets.md - Too complex; command count is bloated.
+- [ ] 181_neotest_workflow.md - Too complex; command count is bloated.
+- [ ] 182_lazyvim_dap_debugging.md - Too complex; command count is bloated.
+- [ ] 183_snacks_workspace_workflows.md - Too complex; command count is bloated.
+- [ ] 184_run_commands_across_buffers.md - Too complex; command count is bloated.
+- [ ] 185_time_based_undo.md - Too complex; command count is bloated.
+- [ ] 186_numeric_sort_lines.md - Too complex; command count is bloated.
+- [ ] 187_format_comment_with_gq.md - Too complex; command count is bloated.
+- [ ] 188_delete_search_matches_with_dgn.md - Too complex; command count is bloated.
+- [ ] 189_resume_last_insert.md - Too complex; command count is bloated.
+- [ ] 190_global_declaration_jump.md - Too complex; command count is bloated.
+- [ ] 191_lsp_hover_and_references.md - Too complex; command count is bloated.
+- [ ] 192_git_hunk_review.md - Too complex; command count is bloated.
+- [ ] 193_yanky_history_cycle.md - Too complex; command count is bloated.
+- [ ] 194_owned_session_file.md - Too complex; command count is bloated.
+- [ ] 195_keyword_completion_cycling.md - Too complex; command count is bloated.
+- [ ] 196_buffer_local_spell_restore.md - Too complex; command count is bloated.
+- [ ] 197_grugfar_quickfix_export.md - Too complex; command count is bloated.
+- [ ] 198_picker_quickfix_export.md - Too complex; command count is bloated.
+- [ ] 199_noice_message_history.md - Too complex; command count is bloated.
+- [ ] 200_mason_read_only_inspection.md - Too complex; command count is bloated.
+- [ ] 201_neotree_owned_directory.md - Too complex; command count is bloated.
+- [ ] 202_snacks_scratch_buffer.md - Too complex; command count is bloated.
+- [ ] 203_snacks_terminal.md - Too complex; command count is bloated.

@@ -1,18 +1,16 @@
-# Kata: Count with Insert
+# Kata: Count with Insert and Open
 
 ## Task
 
-Practice prefixing insert commands with counts to repeat text and blank lines.
+Practice using counts before insert and open commands to repeat inserted text or blank lines.
 
 ## Start
 
 Open a scratch buffer and insert:
 
 ```text
-# Section One
-Some content here.
-# Section Two
-More content here.
+alpha
+omega
 ```
 
 Start in Normal mode on line 1, column 1.
@@ -22,15 +20,13 @@ Start in Normal mode on line 1, column 1.
 The buffer should become:
 
 ```text
-# Section One
-----------------------------------------
-Some content here.
+=====alpha
 
 
 
-# Section Two
-test test test test test 
-More content here.
+omega
+status: todo
+status: todo
 ```
 
 ## Commands
@@ -38,10 +34,8 @@ More content here.
 Run these command steps:
 
 ```text
-1. o<Esc>
-2. 40i-<Esc>
-3. jj3O<Esc>
-4. /# Section Two<CR>
-5. o<Esc>
-6. 5itest <Esc>
+1. 5i=<Esc>
+2. j3O<Esc>
+3. /omega<CR>
+4. 2ostatus: todo<Esc>
 ```

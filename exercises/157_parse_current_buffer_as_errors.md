@@ -2,39 +2,37 @@
 
 ## Task
 
-Practice parsing compiler-style lines from the current buffer into quickfix with `:cgetbuffer`.
+Practice parsing compiler-style lines from the current buffer into quickfix with
+`:cgetbuffer`, then use LazyVim keys to view and navigate the results.
 
 ## Start
 
-Open a scratch buffer and insert:
+Open `practice_157_errors.txt`:
 
 ```text
-app.txt:2:1: missing semicolon
-app.txt:4:1: wrong flag
-config.txt:2:1: unknown key
+practice_157_app.txt:2:1: missing semicolon
+practice_157_app.txt:4:1: wrong flag
+practice_157_config.txt:2:1: unknown key
 ```
 
-Start in Normal mode on the `a` in `app.txt` at line 1, column 1.
+Start in Normal mode on the `p` in `practice_157_app.txt` at line 1, column 1.
 
 ## End
 
-The log buffer text should be unchanged. The current buffer should be `config.txt`, the cursor should be on line 2, column 1, and the quickfix list should contain three parsed entries from the original log buffer.
+The quickfix list should be visible with three parsed entries from
+`practice_157_errors.txt`. The current buffer should be
+`practice_157_config.txt` on line 2, column 1.
 
 ## Commands
 
 Run these command steps:
 
 ```text
-1. :let g:kata_157_dir = tempname() | call mkdir(g:kata_157_dir, 'p')<CR>
-2. :call writefile(['alpha ok', 'missing semicolon', 'middle', 'wrong flag'], g:kata_157_dir . '/app.txt')<CR>
-3. :call writefile(['mode=prod', 'unknown_key=true', 'extra_setting=true'], g:kata_157_dir . '/config.txt')<CR>
-4. :execute 'write ' . fnameescape(g:kata_157_dir . '/ci.log')<CR>
-5. :execute 'cd ' . fnameescape(g:kata_157_dir)<CR>
-6. :edit ci.log<CR>
-7. :set errorformat=%f:%l:%c:%m<CR>
-8. :cgetbuffer<CR>
-9. :cc 2<CR>
-10. :buffer ci.log<CR>
-11. :cgetbuffer<CR>
-12. :cc 3<CR>
+1. :edit practice_157_errors.txt<CR>
+2. :set errorformat=%f:%l:%c:%m<CR>
+3. :cgetbuffer<CR>
+4. <leader>xq
+5. :cfirst<CR>
+6. ]q
+7. ]q
 ```

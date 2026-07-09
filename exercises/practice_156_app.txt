@@ -1,0 +1,5 @@
+alpha ok
+broken target
+middle ok
+second failure
+tail ok

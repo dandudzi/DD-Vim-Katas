@@ -2,93 +2,66 @@
 
 ## Task
 
-Practice jumping to C-style section starts with `]]` and `[[`.
+Practice jumping between C-style section starts with `]]` and `[[`.
 
 ## Start
 
-Open a scratch buffer and insert:
+Use the existing practice file `practice_126_section_starts.c`:
 
 ```c
-int read_config(const char *path)
+int read_config(void)
 {
-    if (path == NULL)
-    {
-        return -1;
-    }
-
     return 0;
 }
 
-int parse_args(int argc, char **argv)
+int parse_args(void)
 {
-    if (argc < 2)
-    {
-        return 1;
-    }
-
-    return argc;
+    return 1;
 }
 
-int start_server(int port)
+int start_server(void)
 {
-    if (port < 1024)
-    {
-        return -1;
-    }
-
-    return port;
+    return 2;
 }
 ```
 
-Start in Normal mode on the `i` in `int read_config` on line 1.
+Start in Normal mode in any buffer at line 1, column 1.
 
 ## End
 
-The buffer should remain:
+`practice_126_section_starts.c` should remain unchanged:
 
 ```c
-int read_config(const char *path)
+int read_config(void)
 {
-    if (path == NULL)
-    {
-        return -1;
-    }
-
     return 0;
 }
 
-int parse_args(int argc, char **argv)
+int parse_args(void)
 {
-    if (argc < 2)
-    {
-        return 1;
-    }
-
-    return argc;
+    return 1;
 }
 
-int start_server(int port)
+int start_server(void)
 {
-    if (port < 1024)
-    {
-        return -1;
-    }
-
-    return port;
+    return 2;
 }
 ```
 
-The final cursor position should be on the `{` that starts `start_server` at line 22, column 1.
+After step 8, the cursor should be on the `{` that starts `start_server` at line 12, column 1. After step 9, the split containing `practice_126_section_starts.c` should be closed.
 
 ## Commands
 
 Run these command steps:
 
 ```text
-1. :setfiletype c<CR>
-2. ]]
-3. ]]
-4. [[
+1. :split practice_126_section_starts.c<CR>
+2. :setlocal filetype=c<CR>
+3. gg0
+4. ]]
 5. ]]
-6. ]]
+6. [[
+7. ]]
+8. ]]
+9. :close<CR>
 ```

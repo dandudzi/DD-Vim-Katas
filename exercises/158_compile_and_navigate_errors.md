@@ -2,11 +2,12 @@
 
 ## Task
 
-Practice populating quickfix with `:make`, then moving through reported errors with `:cnext` and `:cprevious`.
+Practice populating quickfix with `:make`, then use LazyVim quickfix keys to
+move through errors and fix each reported line.
 
 ## Start
 
-Open a scratch buffer and insert:
+Open `practice_158_app.txt`:
 
 ```text
 intro
@@ -32,26 +33,23 @@ middle
 FIXED third
 ```
 
-The quickfix list should still contain the three build errors.
+The quickfix list should be visible with three errors from
+`practice_158_build.log`.
 
 ## Commands
 
 Run these command steps:
 
 ```text
-1. :let g:kata_158_dir = tempname() | call mkdir(g:kata_158_dir, 'p')<CR>
-2. :execute 'write ' . fnameescape(g:kata_158_dir . '/app.txt')<CR>
-3. :call writefile(['app.txt:2:1: first error', 'app.txt:4:1: second error', 'app.txt:6:1: third error'], g:kata_158_dir . '/build.log')<CR>
-4. :execute 'cd ' . fnameescape(g:kata_158_dir)<CR>
-5. :edit app.txt<CR>
-6. :set makeprg=cat\ build.log<CR>
-7. :set errorformat=%f:%l:%c:%m<CR>
-8. :make<CR>
+1. :edit practice_158_app.txt<CR>
+2. :set makeprg=cat\ practice_158_build.log<CR>
+3. :set errorformat=%f:%l:%c:%m<CR>
+4. :make<CR>
+5. cwFIXED<Esc>
+6. ]q
+7. cwFIXED<Esc>
+8. ]q
 9. cwFIXED<Esc>
-10. :cnext<CR>
-11. cwFIXED<Esc>
-12. :cnext<CR>
-13. cwFIXED<Esc>
-14. :cprevious<CR>
-15. :cnext<CR>
+10. [q
+11. <leader>xq
 ```

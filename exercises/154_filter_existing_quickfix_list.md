@@ -3,50 +3,42 @@
 ## Task
 
 Practice narrowing an existing quickfix list with the standard `cfilter` plugin.
+Use LazyVim keys to open and move through the filtered list.
 
 ## Start
 
-Open a scratch buffer and insert:
+Open `practice_154_quickfix_filter.txt`:
 
 ```text
-src_main.txt
-TODO core
-plain src
-TODO shared
-
-app_test.txt
-TODO test
-
-vendor_blob.txt
-TODO vendor
-
-docs_notes.txt
-TODO docs
+TODO core auth
+plain spacer
+TODO test checkout
+TODO vendor shim
+TODO docs update
+TODO api health
 ```
 
-Start in Normal mode on line 1, column 1 of the scratch buffer.
+Start in Normal mode on the `T` in `TODO core auth` at line 1, column 1.
 
 ## End
 
-The current quickfix list should be back to the unfiltered `All TODOs` list with five entries, including `vendor_blob.txt`.
+The quickfix list should be visible with four `TODO` entries, excluding
+`TODO vendor shim`. The current buffer should be
+`practice_154_quickfix_filter.txt` on line 1.
 
 ## Commands
 
 Run these command steps:
 
 ```text
-1. :packadd cfilter<CR>
-2. :let g:kata_154_dir = tempname() | call mkdir(g:kata_154_dir, 'p')<CR>
-3. :call writefile(['TODO core', 'plain src', 'TODO shared'], g:kata_154_dir . '/src_main.txt')<CR>
-4. :call writefile(['TODO test'], g:kata_154_dir . '/app_test.txt')<CR>
-5. :call writefile(['TODO vendor'], g:kata_154_dir . '/vendor_blob.txt')<CR>
-6. :call writefile(['TODO docs'], g:kata_154_dir . '/docs_notes.txt')<CR>
-7. :execute 'vimgrep /TODO/gj ' . fnameescape(g:kata_154_dir . '/src_main.txt') . ' ' . fnameescape(g:kata_154_dir . '/app_test.txt') . ' ' . fnameescape(g:kata_154_dir . '/vendor_blob.txt') . ' ' . fnameescape(g:kata_154_dir . '/docs_notes.txt')<CR>
-8. :call setqflist([], 'a', {'title': 'All TODOs'})<CR>
-9. :Cfilter /test/<CR>
-10. :colder<CR>
-11. :Cfilter! /vendor/<CR>
-12. :cnfile<CR>
-13. :cnfile<CR>
-14. :colder<CR>
+1. :edit practice_154_quickfix_filter.txt<CR>
+2. :packadd cfilter<CR>
+3. :vimgrep /TODO/gj %<CR>
+4. <leader>xq
+5. :Cfilter /test/<CR>
+6. :colder<CR>
+7. :Cfilter! /vendor/<CR>
+8. :cfirst<CR>
+9. ]q
+10. [q
 ```

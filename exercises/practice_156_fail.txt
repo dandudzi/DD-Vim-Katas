@@ -1,0 +1,2 @@
+practice_156_app.txt:2:1: build failed
+practice_156_app.txt:4:1: test failed

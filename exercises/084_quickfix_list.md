@@ -2,26 +2,20 @@
 
 ## Task
 
-Practice building a quickfix list with `:vimgrep`, opening it, and moving through entries.
+Practice building a quickfix list with `:vimgrep`, opening it, and moving through entries with built-in quickfix commands.
 
 ## Start
 
-Open a scratch buffer and insert:
+Open a scratch buffer. The command steps create two disposable files for quickfix practice.
 
-```text
-alpha TODO
-plain
-omega TODO
-```
-
-Start in Normal mode on the `a` in `alpha`.
+Start in Normal mode on line 1, column 1.
 
 ## End
 
-The current quickfix list should contain the two `plain` matches from the disposable files, and the current buffer should be `one.txt` on line 2.
+The quickfix list should contain the two `TODO` matches from the disposable files, the quickfix window should be closed, and the current buffer should be `one.txt` on line 1.
 
 ```text
-plain
+alpha TODO
 ```
 
 ## Commands
@@ -30,17 +24,13 @@ Run these command steps:
 
 ```text
 1. :let g:kata_084_dir = tempname() | call mkdir(g:kata_084_dir, 'p')<CR>
-2. :call writefile(['alpha TODO', 'plain', 'omega TODO'], g:kata_084_dir . '/one.txt')<CR>
-3. :call writefile(['TODO beta', 'plain'], g:kata_084_dir . '/two.txt')<CR>
+2. :call writefile(['alpha TODO', 'plain', 'omega'], g:kata_084_dir . '/one.txt')<CR>
+3. :call writefile(['beta TODO', 'plain'], g:kata_084_dir . '/two.txt')<CR>
 4. :execute 'edit ' . fnameescape(g:kata_084_dir . '/one.txt')<CR>
 5. :execute 'vimgrep /TODO/gj ' . fnameescape(g:kata_084_dir) . '/*.txt'<CR>
 6. :copen<CR>
-7. G<CR>
-8. :cclose<CR>
-9. :cfirst<CR>
-10. :cnext<CR>
-11. :cnext<CR>
-12. :cprev<CR>
-13. :execute 'vimgrep /plain/gj ' . fnameescape(g:kata_084_dir) . '/*.txt'<CR>
-14. :cfirst<CR>
+7. :cfirst<CR>
+8. :cnext<CR>
+9. :cprev<CR>
+10. :cclose<CR>
 ```

@@ -2,7 +2,7 @@
 
 ## Task
 
-Practice searching help into the current window's location list with `:lhelpgrep` while leaving the global quickfix list alone.
+Practice searching help into the current window's location list with `:lhelpgrep`, then navigate those matches with LazyVim keys.
 
 ## Start
 
@@ -16,17 +16,15 @@ Start in Normal mode on the `s` in `scratch` at line 1, column 1.
 
 ## End
 
-The current buffer should be a help buffer on a line containing `quickfix`. The current window's location list should contain help matches, and the global quickfix list title should still be `kata-159 global`.
+The current buffer should be a help buffer on a line containing `quickfix`, and the current window's location list should contain help matches.
 
 ## Commands
 
 Run these command steps:
 
 ```text
-1. :call setqflist([], 'r', {'title': 'kata-159 global', 'items': [{'filename': 'keep.txt', 'lnum': 1, 'col': 1, 'text': 'keep quickfix unchanged'}]})<CR>
-2. :lhelpgrep quickfix<CR>
-3. :lopen<CR>
-4. <CR>
-5. :lnext<CR>
-6. :lnext<CR>
+1. :lhelpgrep quickfix<CR>
+2. <leader>xl
+3. <CR>
+4. ]q
 ```

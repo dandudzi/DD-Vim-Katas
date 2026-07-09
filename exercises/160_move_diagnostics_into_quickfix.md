@@ -2,45 +2,34 @@
 
 ## Task
 
-Practice converting Neovim diagnostics into a standard quickfix list with `vim.diagnostic.setqflist()`.
+Practice converting Neovim diagnostics into a quickfix list with
+`vim.diagnostic.setqflist()`, then use LazyVim keys to inspect and navigate it.
 
 ## Start
 
 Open a scratch buffer and insert:
 
 ```text
-ERROR alpha
-WARN beta
-ERROR gamma
+alpha()
+beta()
+gamma()
 ```
 
-Start in Normal mode on the `E` in `ERROR alpha` at line 1, column 1.
+Start in Normal mode on the `a` in `alpha()` at line 1, column 1.
 
 ## End
 
-The buffer should become:
-
-```text
-FIXED alpha
-FIXED beta
-FIXED gamma
-```
-
-The quickfix list should contain three diagnostic entries from the original buffer.
+The quickfix list should be visible with two diagnostic entries from the current
+buffer. The cursor should be on the `a` in `alpha()` at line 1, column 1.
 
 ## Commands
 
 Run these command steps:
 
 ```text
-1. :lua _G.kata_160_ns = vim.api.nvim_create_namespace('kata_160')<CR>
-2. :lua local b = vim.api.nvim_get_current_buf(); vim.diagnostic.set(_G.kata_160_ns, b, { {lnum = 0, col = 0, severity = vim.diagnostic.severity.ERROR, message = 'first error'}, {lnum = 1, col = 0, severity = vim.diagnostic.severity.WARN, message = 'one warning'}, {lnum = 2, col = 0, severity = vim.diagnostic.severity.ERROR, message = 'second error'} })<CR>
-3. :lua vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.ERROR, open = false })<CR>
-4. :lua vim.diagnostic.setqflist({ open = false })<CR>
-5. :cfirst<CR>
-6. cwFIXED<Esc>
-7. :cnext<CR>
-8. cwFIXED<Esc>
-9. :cnext<CR>
-10. cwFIXED<Esc>
+1. :lua local ns = vim.api.nvim_create_namespace('kata_160'); local b = vim.api.nvim_get_current_buf(); vim.diagnostic.set(ns, b, { { lnum = 0, col = 0, severity = vim.diagnostic.severity.ERROR, message = 'alpha needs work' }, { lnum = 2, col = 0, severity = vim.diagnostic.severity.WARN, message = 'gamma needs review' } })<CR>
+2. :lua vim.diagnostic.setqflist({ open = false })<CR>
+3. <leader>xq
+4. ]q
+5. [q
 ```

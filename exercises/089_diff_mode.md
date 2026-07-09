@@ -2,61 +2,32 @@
 
 ## Task
 
-Practice opening a two-way diff, jumping between hunks, pulling one hunk, and pushing one hunk.
+Practice opening two files in diff mode, jumping to one hunk, and obtaining the change.
 
 ## Start
 
-Open a scratch buffer and insert:
-
-```text
-function greet(name) {
-  console.log("Hello, " + name);
-  return true;
-}
-
-const defaultName = "World";
-```
-
-Start in Normal mode on the `f` in `function`.
+From this directory, start in Normal mode in an unnamed scratch buffer with the cursor at line 1, column 1.
 
 ## End
 
-The left buffer should become:
+After `do`, both diff buffers should show:
 
 ```text
-function greet(name) {
-  console.log("Hi, " + name + "!");
-  return true;
-}
-
-const defaultName = "World";
+owner = "team"
+status = "ready"
 ```
 
-The right buffer should become:
-
-```text
-function greet(name) {
-  console.log("Hi, " + name + "!");
-  return true;
-}
-
-const defaultName = "World";
-```
+The final command closes the diff session without saving the practice files.
 
 ## Commands
 
 Run these command steps:
 
 ```text
-1. :let g:kata_089_dir = tempname() | call mkdir(g:kata_089_dir, 'p')<CR>
-2. :call writefile(['function greet(name) {', '  console.log("Hello, " + name);', '  return true;', '}', '', 'const defaultName = "World";'], g:kata_089_dir . '/left.txt')<CR>
-3. :call writefile(['function greet(name) {', '  console.log("Hi, " + name + "!");', '  return true;', '}', '', 'const defaultName = "User";'], g:kata_089_dir . '/right.txt')<CR>
-4. :execute 'edit ' . fnameescape(g:kata_089_dir . '/left.txt')<CR>
-5. :execute 'vertical diffsplit ' . fnameescape(g:kata_089_dir . '/right.txt')<CR>
-6. <C-w>h
-7. ]c
-8. do
-9. ]c
-10. dp
-11. :diffoff!<CR>
+1. :edit practice_089_diff_left.txt<CR>
+2. :vertical diffsplit practice_089_diff_right.txt<CR>
+3. <C-w>p
+4. ]c
+5. do
+6. :diffoff! | qall!<CR>
 ```

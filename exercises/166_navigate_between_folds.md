@@ -6,7 +6,7 @@ Practice moving between closed folds with `zj` and `zk`.
 
 ## Start
 
-Open a scratch buffer and insert:
+Open an empty scratch buffer. Use `practice_166_folds.txt`:
 
 ```text
 one {{{
@@ -20,20 +20,22 @@ three {{{
 }}}
 ```
 
-Start in Normal mode on line 1, column 1.
+Start in Normal mode in the scratch buffer on line 1, column 1.
 
 ## End
 
-The cursor should finish on line 6, the closing marker of the second fold, and the folds should remain closed.
+The `:echo` command should print `6 }}}`. After closing the split, one window should remain showing the scratch buffer.
 
 ## Commands
 
 Run these command steps:
 
 ```text
-1. :setlocal foldmethod=marker foldlevel=0<CR>
-2. zj
+1. :split practice_166_folds.txt<CR>
+2. :setlocal foldmethod=marker foldlevel=0<CR>
 3. zj
-4. zk
-5. :echo line('.') . ' ' . getline('.')<CR>
+4. zj
+5. zk
+6. :echo line('.') . ' ' . getline('.')<CR>
+7. :close<CR>
 ```

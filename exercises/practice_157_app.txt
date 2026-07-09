@@ -1,0 +1,4 @@
+alpha ok
+missing semicolon
+middle ok
+wrong flag

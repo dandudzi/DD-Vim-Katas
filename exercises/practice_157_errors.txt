@@ -1,0 +1,3 @@
+practice_157_app.txt:2:1: missing semicolon
+practice_157_app.txt:4:1: wrong flag
+practice_157_config.txt:2:1: unknown key

@@ -2,41 +2,39 @@
 
 ## Task
 
-Practice turning deterministic shell output into a navigable quickfix list with `:cexpr systemlist(...)`.
+Practice turning shell output into a quickfix list with `:cexpr systemlist(...)`.
+Use LazyVim keys to open and move through the imported results.
 
 ## Start
 
-Open a scratch buffer and insert:
+Open `practice_155_shell_output.txt`:
 
 ```text
-alpha.txt
 TODO alpha first
-plain alpha
+plain spacer
 TODO alpha second
-
-beta.txt
 plain beta
 TODO beta only
 ```
 
-Start in Normal mode on line 1, column 1 of the scratch buffer.
+Start in Normal mode on the `T` in `TODO alpha first` at line 1, column 1.
 
 ## End
 
-The current buffer should be `beta.txt`, the cursor should be on `TODO beta only` at line 2, column 1, and the quickfix list should contain three imported shell results.
+The quickfix list should be visible with three imported shell results. The
+current buffer should be `practice_155_shell_output.txt`, with the cursor on the
+`T` in `TODO beta only` at line 5, column 1.
 
 ## Commands
 
 Run these command steps:
 
 ```text
-1. :let g:kata_155_dir = tempname() | call mkdir(g:kata_155_dir, 'p')<CR>
-2. :call writefile(['TODO alpha first', 'plain alpha', 'TODO alpha second'], g:kata_155_dir . '/alpha.txt')<CR>
-3. :call writefile(['plain beta', 'TODO beta only'], g:kata_155_dir . '/beta.txt')<CR>
-4. :execute 'edit ' . fnameescape(g:kata_155_dir . '/alpha.txt')<CR>
-5. :set errorformat=%f:%l:%m<CR>
-6. :let g:kata_155_cmd = 'grep -Hn TODO ' . shellescape(g:kata_155_dir . '/alpha.txt') . ' ' . shellescape(g:kata_155_dir . '/beta.txt')<CR>
-7. :cexpr systemlist(g:kata_155_cmd)<CR>
-8. :cnext<CR>
-9. :cnext<CR>
+1. :edit practice_155_shell_output.txt<CR>
+2. :set errorformat=%f:%l:%m<CR>
+3. :cexpr systemlist('grep -Hn TODO practice_155_shell_output.txt')<CR>
+4. :cfirst<CR>
+5. <leader>xq
+6. ]q
+7. ]q
 ```
