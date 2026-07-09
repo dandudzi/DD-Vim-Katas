@@ -1,8 +1,8 @@
-# Kata: Substitute Characters and Lines
+# Kata: Change Characters and Lines
 
 ## Task
 
-Practice `s` with and without a count, then use `S` to replace one whole line while keeping indentation.
+Practice `cl` with and without a count, then use `cc` to replace one whole line.
 
 ## Start
 
@@ -39,8 +39,8 @@ status = "complete"
 Run these command steps:
 
 ```text
-1. sa<Esc>
-2. /alice<CR>5sAda<Esc>
-3. /print<CR>Slogger.info(f"Result: {result}")<Esc>
-4. /pending<CR>7scomplete<Esc>
+1. cla<Esc>
+2. /alice<CR>5clAda<Esc>
+3. /print<CR>cclogger.info(f"Result: {result}")<Esc>
+4. /pending<CR>7clcomplete<Esc>
 ```
