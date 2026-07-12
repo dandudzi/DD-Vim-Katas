@@ -10,11 +10,11 @@ motion.
 Open a scratch buffer with two-space indentation active and insert:
 
 ```text
-const root = true;
-const alpha = 1;
-const beta = 2;
-const gamma = 3;
-const omega = 4;
+const root = true
+const alpha = 1
+const beta = 2
+const gamma = 3
+const omega = 4
 ```
 
 Start in Normal mode on the `c` of line 2.
