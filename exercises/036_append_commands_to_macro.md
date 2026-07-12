@@ -2,7 +2,7 @@
 
 ## Task
 
-Practice repairing a macro by recording extra commands into the uppercase form of the same register.
+Practice repairing a macro by appending commands through the uppercase form of its register.
 
 ## Start
 
@@ -15,7 +15,7 @@ Open a scratch buffer and insert:
 4. four
 ```
 
-Start in Normal mode on the `1` on line 1.
+Start in Normal mode on the `1` in line 1.
 
 ## End
 
@@ -33,8 +33,9 @@ The buffer should become:
 Run these command steps:
 
 ```text
-1. :let @a=''<CR>
+1. qaq
 2. qa0f.r)w~q
 3. qAjq
 4. 3@a
 ```
+

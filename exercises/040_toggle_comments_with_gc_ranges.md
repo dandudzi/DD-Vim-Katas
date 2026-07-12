@@ -2,17 +2,21 @@
 
 ## Task
 
-Use `gc` with a motion and a Visual range to toggle Lua comments in a real code file.
+Use `gc` with a motion and a Visual range to toggle Lua comments in an existing practice file.
 
 ## Start
 
-Use the existing practice file `practice_069_gc_ranges.lua`.
+Open a scratch buffer and insert:
 
-Start in Normal mode in any buffer on line 1, column 1 before opening the practice split.
+```text
+practice_069_gc_ranges.lua
+```
+
+Start in Normal mode on the `p` in line 1.
 
 ## End
 
-The split should be closed, and `practice_069_gc_ranges.lua` should contain:
+The practice split should be closed, and `practice_069_gc_ranges.lua` should contain:
 
 ```lua
 -- local function total(items)
@@ -29,10 +33,11 @@ The split should be closed, and `practice_069_gc_ranges.lua` should contain:
 Run these command steps:
 
 ```text
-1. <leader>- (LazyVim: Split Window Below)
-2. :edit practice_069_gc_ranges.lua<CR>
+1. <leader>|
+2. gf
 3. gg0gc4j
 4. /print<CR>Vgc
-5. :write<CR>
-6. <leader>wd (LazyVim: Delete Window)
+5. <C-s>
+6. <leader>wd
 ```
+

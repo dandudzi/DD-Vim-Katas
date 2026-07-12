@@ -2,26 +2,33 @@
 
 ## Task
 
-Practice `ZZ`, `ZQ`, and `:e!` on a disposable file so you can save, discard,
-or reload changes quickly.
+Use `ZZ` to save and close a practice split, then use `ZQ` to discard a later
+change and close that split.
 
 ## Start
 
-Open a scratch buffer and insert:
+In an unnamed scratch buffer, insert:
 
 ```text
+practice_053_quick_save.py
+```
+
+`practice_053_quick_save.py` contains:
+
+```python
 def greet(name):
-    return f"Hello, {name}!"
+    return f"daj"
 
 def farewell(name):
     return f"Goodbye, {name}!"
 ```
 
-Start in Normal mode on line 1, column 1.
+Start in Normal mode on the `p` in `practice_053_quick_save.py` at line 1,
+column 1.
 
 ## End
 
-The disposable file `kata-093.txt` should contain:
+`practice_053_quick_save.py` should contain:
 
 ```text
 def greet(name):
@@ -31,20 +38,19 @@ def farewell(name):
     return f"Goodbye, {name}!"
 ```
 
+Both practice splits should be closed while Neovim remains open.
+
 ## Commands
 
 Run these command steps:
 
 ```text
-1. :file kata-093.txt<CR>:write<CR>
-2. jwwwci"Hi, {name}!<Esc>
-3. ZZ
-4. :edit kata-093.txt<CR>
-5. ggdG
-6. ZQ
-7. :edit kata-093.txt<CR>
-8. Gdd
-9. :edit!<CR>
-10. jwwci"Hi, {name}!<Esc>
-11. :write<CR>
+1. <leader>| (LazyVim: Split Window Right)
+2. gf
+3. /daj<CR>ciwHi, {name}!<Esc>
+4. ZZ
+5. <leader>| (LazyVim: Split Window Right)
+6. gf
+7. /Hi<CR>ciwBye<Esc>
+8. ZQ
 ```

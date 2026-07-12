@@ -14,7 +14,7 @@ bar = 'a'
 foobar = foo + bar
 ```
 
-Start in Normal mode on the `f` in `foo` on line 1.
+Start in Normal mode on the `f` in line 1.
 
 ## End
 
@@ -31,8 +31,9 @@ var foobar = foo + bar;
 Run these command steps:
 
 ```text
-1. :let @a=''<CR>
+1. qaq
 2. qaIvar <Esc>A;<Esc>jq
 3. @a
 4. @@
 ```
+

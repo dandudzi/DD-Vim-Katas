@@ -2,7 +2,7 @@
 
 ## Task
 
-Practice using `is` and `as` to target the current sentence with or without its separator space.
+Practice using `is` and `as` to target a sentence with or without its separator.
 
 ## Start
 
@@ -12,7 +12,7 @@ Open a scratch buffer and insert:
 Alpha begins here. Beta stays centered. Gamma ends now.
 ```
 
-Start in Normal mode on the `B` in `Beta` at line 1, column 20.
+Start in Normal mode on the `B` in `Beta`.
 
 ## End
 
@@ -27,11 +27,7 @@ Alpha begins here. Gamma ends now.
 Run these command steps:
 
 ```text
-1. :set cpoptions-=J<CR>
-2. 1G20|
-3. yis
-4. 1G20|
-5. yas
-6. 1G20|
-7. das
+1. yis
+2. das
 ```
+

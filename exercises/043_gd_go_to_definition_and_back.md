@@ -2,48 +2,33 @@
 
 ## Task
 
-Practice `gd` for same-file TypeScript declarations, then return and move forward again through the jump list.
+Use `gd` to jump to a same-file TypeScript definition, then traverse the jump list back and forward. This requires an attached TypeScript LSP client that supports definition requests.
 
 ## Start
 
-From any buffer, open the shared JS/TS practice file in a vertical split and
-jump to this kata:
+Open a scratch buffer and insert:
 
 ```text
-:vsplit practice_js_ts_filetypes.ts<CR>
-:/return kata073Cleaned;<CR>
-fC
+practice_js_ts_filetypes.ts
 ```
 
-Start in Normal mode on the `C` in `kata073Cleaned` on the line `return kata073Cleaned;`.
+Start in Normal mode on the `p` in `practice_js_ts_filetypes.ts`.
 
 ## End
 
-The Kata 073 section of `practice_js_ts_filetypes.ts` should remain unchanged:
-
-```text
-function kata073Normalize(value: number): number {
-  return value < 0 ? -value : value;
-}
-
-function kata073Report(raw: number): number {
-  const kata073Cleaned = kata073Normalize(raw);
-  return kata073Cleaned;
-}
-```
-
-The cursor should finish on `kata073Normalize` in the first line of the kata section.
+Before closing the practice split, the cursor should be on `kata073Normalize` in
+its function definition. The practice split should then be closed.
 
 ## Commands
 
 Run these command steps:
 
 ```text
-1. :setlocal filetype=typescript<CR>
-2. gd
-3. <C-o>
-4. ?kata073Normalize(raw)<CR>
-5. gd
-6. <C-o>
-7. <C-i>
+1. <leader>| (LazyVim: Split Window Right)
+2. gf
+3. /kata073Normalize(raw)<CR>
+4. gd
+5. <C-o>
+6. <C-i>
+7. <leader>wd (LazyVim: Delete Window)
 ```

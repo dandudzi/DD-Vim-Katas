@@ -17,15 +17,15 @@ Purpose: implementation plan only. This distributes the LazyVim kata update/addi
 ## Numbering for New Katas
 
 - `171_lazyvim_discovery_readiness.md`
-- `094_flash_search_to_edit.md`
+- `090_flash_search_to_edit.md`
 - `173_mini_ai_code_text_objects.md`
 - `174_lazyvim_comment_workflow.md`
-- `095_lazyvim_picker_project_workflow.md`
-- `096_lazyvim_lsp_navigation_edit_loop.md`
-- `097_lazyvim_diagnostics_trouble_loop.md`
-- `098_lazyvim_formatting_linting.md`
-- `099_gitsigns_hunk_workflow.md`
-- `100_lazyvim_completion_snippets.md`
+- `091_lazyvim_picker_project_workflow.md`
+- `092_lazyvim_lsp_navigation_edit_loop.md`
+- `093_lazyvim_diagnostics_trouble_loop.md`
+- `094_lazyvim_formatting_linting.md`
+- `095_gitsigns_hunk_workflow.md`
+- `096_lazyvim_completion_snippets.md`
 - `181_neotest_workflow.md`
 - `182_lazyvim_dap_debugging.md`
 - `183_snacks_workspace_workflows.md`
@@ -59,7 +59,7 @@ Owned existing files:
 
 Owned new files:
 
-- `094_flash_search_to_edit.md`
+- `090_flash_search_to_edit.md`
 - `173_mini_ai_code_text_objects.md`
 - `174_lazyvim_comment_workflow.md`
 
@@ -103,7 +103,7 @@ Owned existing files:
 
 Owned new files:
 
-- `095_lazyvim_picker_project_workflow.md`
+- `091_lazyvim_picker_project_workflow.md`
 - `183_snacks_workspace_workflows.md`
 
 Work groups:
@@ -141,21 +141,21 @@ Owned existing files:
 - `143_reorder_captured_groups.md`
 - `079_change_replacement_case.md`
 - `145_compute_replacement_text.md`
-- `080_traverse_quickfix_history.md`
-- `081_jump_spatially_through_quickfix.md`
-- `082_jump_to_another_quickfix_file.md`
-- `083_filter_existing_quickfix_list.md`
-- `084_create_quickfix_from_shell_output.md`
-- `085_open_quickfix_only_when_useful.md`
-- `086_parse_current_buffer_as_errors.md`
-- `087_compile_and_navigate_errors.md`
-- `088_search_help_into_location_list.md`
-- `089_move_diagnostics_into_quickfix.md`
+- `[deleted: quickfix history]`
+- `080_jump_spatially_through_quickfix.md`
+- `081_jump_to_another_quickfix_file.md`
+- `082_filter_existing_quickfix_list.md`
+- `[deleted: shell output to quickfix]`
+- `083_open_quickfix_only_when_useful.md`
+- `[deleted: buffer to quickfix]`
+- `[deleted: make to quickfix]`
+- `084_search_help_into_location_list.md`
+- `085_move_diagnostics_into_quickfix.md`
 
 Owned new files:
 
-- `096_lazyvim_lsp_navigation_edit_loop.md`
-- `097_lazyvim_diagnostics_trouble_loop.md`
+- `092_lazyvim_lsp_navigation_edit_loop.md`
+- `093_lazyvim_diagnostics_trouble_loop.md`
 
 Work groups:
 
@@ -186,16 +186,16 @@ Owned existing files:
 - `161_choose_source_in_three_way_diff.md`
 - `162_refresh_diff_calculations.md`
 - `163_compare_with_patch_result.md`
-- `090_navigate_between_folds.md`
-- `091_adjust_fold_depth_incrementally.md`
-- `092_reindent_with_equal_operator.md`
+- `086_navigate_between_folds.md`
+- `087_adjust_fold_depth_incrementally.md`
+- `088_reindent_with_equal_operator.md`
 - `169_format_without_moving_cursor.md`
 
 Owned new files:
 
-- `098_lazyvim_formatting_linting.md`
-- `099_gitsigns_hunk_workflow.md`
-- `100_lazyvim_completion_snippets.md`
+- `094_lazyvim_formatting_linting.md`
+- `095_gitsigns_hunk_workflow.md`
+- `096_lazyvim_completion_snippets.md`
 
 Work groups:
 

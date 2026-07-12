@@ -2,48 +2,37 @@
 
 ## Task
 
-Practice setting uppercase global marks and jumping between exact positions in two files.
+Set uppercase marks in two existing files and use them to jump between exact positions.
 
 ## Start
 
-Create two scratch files for the kata. Put this text in `kata-mark-a.txt`:
+Open a scratch buffer and insert:
 
 ```text
-alpha one
-alpha two
+practice_151_alpha.txt
+practice_151_beta.txt
 ```
 
-Put this text in `kata-mark-b.txt`:
-
-```text
-beta one
-beta two
-```
-
-Start in Normal mode in `kata-mark-a.txt` on the `t` in `two`.
+Start in Normal mode on the `p` in `practice_151_alpha.txt`.
 
 ## End
 
-The active file should be `kata-mark-a.txt`, and its buffer should become:
-
-```text
-alpha one
-alpha two
-```
-
-The cursor should finish on the `t` in `two`.
+The practice split should be closed. `practice_151_alpha.txt` should be active
+with the cursor on the `N` in `NOTE alpha`.
 
 ## Commands
 
 Run these command steps:
 
 ```text
-1. mA
-2. :edit kata-mark-b.txt<CR>
-3. 0
-4. 5l
-5. mB
-6. `A
-7. `B
-8. `A
+1. <leader>| (LazyVim: Split Window Right)
+2. gf
+3. j0mA
+4. <C-w>h
+5. j0gf
+6. j0mB
+7. `A
+8. `B
+9. `A
+10. <leader>wd (LazyVim: Delete Window)
 ```

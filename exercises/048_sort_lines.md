@@ -1,8 +1,8 @@
-# Kata: Sort Lines
+# Kata: Sort Lines Through the Shell
 
 ## Task
 
-Practice sorting a range alphabetically and removing duplicate lines with `:sort u`.
+Practice filtering a Visual selection through `sort -u` to alphabetize and deduplicate lines.
 
 ## Start
 
@@ -20,7 +20,7 @@ fig
 apple
 ```
 
-Start in Normal mode on the `b` in the first line.
+Start in Normal mode on the `b` in line 1.
 
 ## End
 
@@ -40,7 +40,7 @@ fig
 Run these command steps:
 
 ```text
-1. gg
-2. V8j
-3. :sort u<CR>
+1. ggV8j
+2. !sort -u<CR>
 ```
+

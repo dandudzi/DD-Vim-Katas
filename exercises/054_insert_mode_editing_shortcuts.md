@@ -2,12 +2,11 @@
 
 ## Task
 
-Practice fixing text and indentation with insert-mode `Ctrl-W`, `Ctrl-U`,
-`Ctrl-T`, and `Ctrl-D`.
+Practice fixing text and indentation with insert-mode `<C-w>`, `<C-u>`, `<C-t>`, and `<C-d>`.
 
 ## Start
 
-Open a scratch buffer and insert:
+Open a scratch buffer with two-space indentation active and insert:
 
 ```text
 function processOrder(order) {
@@ -38,10 +37,10 @@ function processOrder(order) {
 Run these command steps:
 
 ```text
-1. :setlocal shiftwidth=2 tabstop=2 expandtab<CR>
-2. I<C-t><Esc>
-3. jI<C-t><C-t><Esc>
-4. /total<CR>ea<C-w>result<Esc>
-5. jccconsole.log("wrong message here<C-u>    console.log("order processed");<Esc>
-6. jI<C-t><C-t><C-d><Esc>
+1. I<C-t><Esc>
+2. jI<C-t><C-t><Esc>
+3. /total<CR>ea<C-w>result<Esc>
+4. jccconsole.log("wrong message here<C-u>    console.log("order processed");<Esc>
+5. jI<C-t><C-t><C-d><Esc>
 ```
+

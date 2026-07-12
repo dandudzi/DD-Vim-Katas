@@ -2,32 +2,36 @@
 
 ## Task
 
-Practice opening two files in diff mode, jumping to one hunk, and obtaining the change.
+Jump to a changed hunk and obtain the version from the other diff buffer.
 
 ## Start
 
-From this directory, start in Normal mode in an unnamed scratch buffer with the cursor at line 1, column 1.
+Use the prepared files `practice_089_diff_left.txt` and
+`practice_089_diff_right.txt`, already open in a vertical diff split. The left
+buffer contains `status = "draft"`; the right buffer contains
+`status = "ready"`.
+
+Start in Normal mode in the left buffer on the `o` in `owner` at line 1,
+column 1.
 
 ## End
 
-After `do`, both diff buffers should show:
+The left buffer should become:
 
 ```text
 owner = "team"
 status = "ready"
 ```
 
-The final command closes the diff session without saving the practice files.
+The right practice split should be closed without exiting Neovim.
 
 ## Commands
 
 Run these command steps:
 
 ```text
-1. :edit practice_089_diff_left.txt<CR>
-2. :vertical diffsplit practice_089_diff_right.txt<CR>
-3. <C-w>p
-4. ]c
-5. do
-6. :diffoff! | qall!<CR>
+1. ]c
+2. do
+3. <C-l>
+4. <leader>wd (LazyVim: Delete Window)
 ```

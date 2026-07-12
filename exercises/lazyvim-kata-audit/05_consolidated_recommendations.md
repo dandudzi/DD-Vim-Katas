@@ -83,17 +83,17 @@ This file consolidates the LazyVim workflow digest and the three read-only batch
 - `046_quickfix_list.md`: Add optional Trouble quickfix view with `<leader>xQ`, readiness-checked.
 - `101_location_list.md`: Add optional Trouble location-list view `<leader>xl`.
 - `110_lazyvim_ui_trouble_noice_mason.md`: Already strong; use as a model for safe plugin katas.
-- `080_traverse_quickfix_history.md`, `081_jump_spatially_through_quickfix.md`, `082_jump_to_another_quickfix_file.md`, `083_filter_existing_quickfix_list.md`, `084_create_quickfix_from_shell_output.md`, `085_open_quickfix_only_when_useful.md`, `086_parse_current_buffer_as_errors.md`, `087_compile_and_navigate_errors.md`, `088_search_help_into_location_list.md`: Add optional Trouble/picker comparisons while keeping quickfix/location commands primary.
-- `089_move_diagnostics_into_quickfix.md`: Add LazyVim diagnostic variants: `[d`/`]d`, `<leader>cd`, Trouble diagnostics, and Trouble quickfix after `setqflist()`.
+- `[deleted: quickfix history]`, `080_jump_spatially_through_quickfix.md`, `081_jump_to_another_quickfix_file.md`, `082_filter_existing_quickfix_list.md`, `[deleted: shell output to quickfix]`, `083_open_quickfix_only_when_useful.md`, `[deleted: buffer to quickfix]`, `[deleted: make to quickfix]`, `084_search_help_into_location_list.md`: Add optional Trouble/picker comparisons while keeping quickfix/location commands primary.
+- `085_move_diagnostics_into_quickfix.md`: Add LazyVim diagnostic variants: `[d`/`]d`, `<leader>cd`, Trouble diagnostics, and Trouble quickfix after `setqflist()`.
 
 ### Formatting, Folds, Diff, Git
 
-- `045_folding_basics.md`, `150_run_command_on_visible_fold_lines.md`, `090_navigate_between_folds.md`, `091_adjust_fold_depth_incrementally.md`: Keep deterministic manual/marker folds; mention Treesitter folds as real-project context.
+- `045_folding_basics.md`, `150_run_command_on_visible_fold_lines.md`, `086_navigate_between_folds.md`, `087_adjust_fold_depth_incrementally.md`: Keep deterministic manual/marker folds; mention Treesitter folds as real-project context.
 - `049_diff_mode.md`: Keep built-in diff; put gitsigns in a separate hunk kata.
 - `161_choose_source_in_three_way_diff.md`: Note gitsigns covers Git hunks, not three-way `diffget`.
 - `162_refresh_diff_calculations.md`: Note plugin signs may lag differently; `:diffupdate` remains built-in.
 - `163_compare_with_patch_result.md`: Add optional Git/LazyGit note for repository patches.
-- `092_reindent_with_equal_operator.md`: Compare `=` with LazyVim format `<leader>cf` when Conform is configured.
+- `088_reindent_with_equal_operator.md`: Compare `=` with LazyVim format `<leader>cf` when Conform is configured.
 - `169_format_without_moving_cursor.md`: Distinguish prose reflow `gw` from Conform code formatting.
 
 ### Completion, Spell, Insert Mode

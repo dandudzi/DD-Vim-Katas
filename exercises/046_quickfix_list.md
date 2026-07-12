@@ -1,36 +1,35 @@
-# Kata: Build and Navigate a Quickfix List
+# Kata: Navigate a Quickfix List
 
 ## Task
 
-Practice building a quickfix list with `:vimgrep`, opening it, and moving through entries with built-in quickfix commands.
+Create a quickfix list from TODO matches, then navigate it.
 
 ## Start
 
-Open a scratch buffer. The command steps create two disposable files for quickfix practice.
+Open a scratch buffer and insert:
 
-Start in Normal mode on line 1, column 1.
+```text
+practice_151_alpha.txt
+```
+
+Start in Normal mode on the `p` in `practice_151_alpha.txt`.
 
 ## End
 
-The quickfix list should contain the two `TODO` matches from the disposable files, the quickfix window should be closed, and the current buffer should be `one.txt` on line 1.
-
-```text
-alpha TODO
-```
+The quickfix window and practice split should be closed.
 
 ## Commands
 
 Run these command steps:
 
 ```text
-1. :let g:kata_084_dir = tempname() | call mkdir(g:kata_084_dir, 'p')<CR>
-2. :call writefile(['alpha TODO', 'plain', 'omega'], g:kata_084_dir . '/one.txt')<CR>
-3. :call writefile(['beta TODO', 'plain'], g:kata_084_dir . '/two.txt')<CR>
-4. :execute 'edit ' . fnameescape(g:kata_084_dir . '/one.txt')<CR>
-5. :execute 'vimgrep /TODO/gj ' . fnameescape(g:kata_084_dir) . '/*.txt'<CR>
-6. :copen<CR>
-7. :cfirst<CR>
-8. :cnext<CR>
-9. :cprev<CR>
-10. :cclose<CR>
+1. <leader>| (LazyVim: Split Window Right)
+2. gf
+3. <leader>sg
+4. TODO -- practice_151_*.txt
+5. <C-q>
+6. ]q
+7. [q
+8. <leader>xq (LazyVim: Quickfix List)
+9. <leader>wd (LazyVim: Delete Window)
 ```

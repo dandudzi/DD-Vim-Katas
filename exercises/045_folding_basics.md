@@ -2,11 +2,11 @@
 
 ## Task
 
-Practice manual folds by creating two folds, then opening, closing, toggling, and restoring them.
+Practice creating manual folds, then opening, closing, toggling, and restoring them.
 
 ## Start
 
-Open a scratch buffer and insert:
+Open a scratch buffer with manual folding active and insert:
 
 ```text
 Alpha
@@ -18,28 +18,24 @@ Beta
   ship
 ```
 
-Start in Normal mode on the `A` in `Alpha`.
+Start in Normal mode on the `A` in line 1.
 
 ## End
 
-The buffer text should be unchanged, with all manual folds open.
-
-```text
-Alpha
-  plan
-  build
-
-Beta
-  test
-  ship
-```
+The text should remain unchanged, with all folds open.
 
 ## Commands
 
+Run these command steps:
+
 ```text
-1. :setlocal foldmethod=manual<CR>
-2. zfap
-3. /Beta<CR>
-4. zfap
-5. zozczazMzR
+1. zfap
+2. /Beta<CR>
+3. zfap
+4. zo
+5. zc
+6. za
+7. zM
+8. zR
 ```
+

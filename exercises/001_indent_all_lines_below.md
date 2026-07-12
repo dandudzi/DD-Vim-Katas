@@ -7,7 +7,7 @@ motion.
 
 ## Start
 
-Open a scratch buffer, run `:setlocal shiftwidth=2 expandtab`, and insert:
+Open a scratch buffer with two-space indentation active and insert:
 
 ```text
 const root = true;

@@ -1,36 +1,30 @@
-# Kata: File Under Cursor in Split
+# Kata: File Under Cursor in a Split
 
 ## Task
 
-Practice opening the file under the cursor in a split with `<C-w>f`.
+Practice creating a LazyVim vertical split and opening the filename under the cursor with `gf`.
 
 ## Start
 
-Open `practice_136_link.txt`. It contains:
+Open a scratch buffer and insert:
 
 ```text
 practice_136_split_target.txt
 ```
 
-Start in Normal mode on the `p` in `practice_136_split_target.txt` at line 1, column 1.
+Start in Normal mode on the `p` in line 1.
 
 ## End
 
-After opening and closing the split, one window should remain showing `practice_136_link.txt`.
-
-`practice_136_split_target.txt` should remain unchanged:
-
-```text
-split target
-opened with Ctrl-w f
-```
+One window should remain showing the scratch buffer, and the target file should remain unchanged.
 
 ## Commands
 
 Run these command steps:
 
 ```text
-1. :edit practice_136_link.txt<CR>
-2. <C-w>f
-3. :close<CR>
+1. <leader>|
+2. gf
+3. <leader>wd
 ```
+
