@@ -2,46 +2,31 @@
 
 ## Task
 
-Practice setting a local mark, returning to it exactly, and using built-in marks for a Visual selection.
+Practice generating numbered lines, setting a local mark, returning to it
+exactly, and using a built-in Visual-selection mark.
 
 ## Start
 
-Open a scratch buffer and insert:
-
-```text
-alpha one
-beta two
-gamma three
-delta four
-epsilon five
-```
-
-Start in Normal mode on the `t` in `two`.
+Start in Normal mode on line 1, column 1 in any buffer.
 
 ## End
 
-The buffer should become:
-
-```text
-alpha one
-beta two
-gamma three
-delta four
-epsilon five
-```
-
-The cursor should finish on the `r` in `four`.
+The scratch buffer should contain 100 lines. Line 1 should contain `1`, line 2
+should contain `2`, and so on through `100` on line 100. The cursor should
+finish on line 49.
 
 ## Commands
 
 Run these command steps:
 
 ```text
-1. ma
-2. G
-3. `a
-4. j0
-5. vj9l<Esc>
-6. gg
-7. `>
+1. <leader>fn (LazyVim: New File)
+2. i0<Esc>yy99p
+3. ggVGg<C-a>
+4. 28G0ma
+5. G
+6. `a
+7. 40GV49G<Esc>
+8. gg
+9. `>
 ```

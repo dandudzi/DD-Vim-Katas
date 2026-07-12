@@ -6,13 +6,7 @@ Practice opening an existing project file with LazyVim's root file picker.
 
 ## Start
 
-Open a scratch buffer and insert:
-
-```text
-practice_js_ts_filetypes.ts
-```
-
-Start in Normal mode on the `p` in line 1.
+Open this kata file from the Vim-Katas Git repository in LazyVim. Start in Normal mode on line 1, column 1.
 
 ## End
 
@@ -27,4 +21,3 @@ Run these command steps:
 2. practice_js_ts_filetypes
 3. <CR>
 ```
-

@@ -15,7 +15,7 @@ item_01
 item_01
 ```
 
-Start in Normal mode on the `0` in the first line's number.
+Start in Normal mode on the `1` in the first line's number.
 
 ## End
 
@@ -33,5 +33,6 @@ item_05
 Run these command steps:
 
 ```text
-1. <C-v>jjjlg<C-a>
+1. <C-v>jjj
+2. g<C-a>
 ```

@@ -2,17 +2,20 @@
 
 ## Task
 
-Jump to a changed hunk and obtain the version from the other diff buffer.
+Jump to a changed hunk, obtain the version from the other diff buffer, and
+close the right-hand diff window.
 
 ## Start
 
-Use the prepared files `practice_089_diff_left.txt` and
-`practice_089_diff_right.txt`, already open in a vertical diff split. The left
-buffer contains `status = "draft"`; the right buffer contains
-`status = "ready"`.
+From the shell, start Neovim with:
 
-Start in Normal mode in the left buffer on the `o` in `owner` at line 1,
-column 1.
+```text
+nvim -d practice_089_diff_left.txt practice_089_diff_right.txt
+```
+
+The left buffer should contain `status = "draft"`, and the right buffer should
+contain `status = "ready"`. Start in Normal mode in the left buffer on the `o`
+in `owner` at line 1, column 1.
 
 ## End
 
@@ -23,7 +26,7 @@ owner = "team"
 status = "ready"
 ```
 
-The right practice split should be closed without exiting Neovim.
+The right diff window should be closed without exiting Neovim.
 
 ## Commands
 
@@ -32,6 +35,6 @@ Run these command steps:
 ```text
 1. ]c
 2. do
-3. <C-l>
+3. <C-w>l
 4. <leader>wd (LazyVim: Delete Window)
 ```

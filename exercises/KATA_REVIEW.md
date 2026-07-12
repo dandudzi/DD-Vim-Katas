@@ -1,10 +1,5 @@
 # Kata Review Tracker
 
-## Ex Command Tables
-
-- File-first current occurrences: [`KATA_EX_COMMAND_OCCURRENCES.md`](KATA_EX_COMMAND_OCCURRENCES.md)
-- Function-first replacement index: [`KATA_EX_FUNCTION_INDEX.md`](KATA_EX_FUNCTION_INDEX.md)
-
 ## Agent Rule
 
 - Typed Ex commands are accepted only for substitution or direct shell execution and filtering.
@@ -14,21 +9,12 @@
 
 ## Review Result
 
-The Ex-command cleanup is complete.
+The marked deletion and renumbering pass is complete.
 
-- Rewritten: 42 non-accepted occurrences now use native Vim keys, installed LazyVim mappings, or prepared state.
-- Deleted: 6 katas whose core function had no honest key-based workflow.
-- Preserved: all substitution and direct shell-filter katas.
-- Numbering: 123 numbered katas, continuous from `001` through `123`.
-
-Deleted concepts:
-
-- Quickfix history with `:colder` and `:cnewer`.
-- Importing shell output into quickfix with `:cexpr`.
-- Parsing the current buffer into quickfix with `:cgetbuffer`.
-- Populating quickfix with `:make`.
-- Running one Ex command across all buffers with `:bufdo`.
-- Repeating the last Ex command with `@:`.
+- Deleted this pass: 28 marked katas.
+- Remaining: 97 numbered katas.
+- Numbering: continuous from `001` through `097`.
+- Helper and practice filenames were not renumbered.
 
 ## To Delete
 
@@ -41,4 +27,3 @@ None.
 ## To Analyze
 
 None.
-

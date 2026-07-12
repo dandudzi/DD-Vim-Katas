@@ -16,7 +16,8 @@ Start in Normal mode on the `p` in line 1.
 
 ## End
 
-The practice split should be closed, and `practice_069_gc_ranges.lua` should contain:
+The practice split should remain open with a modified-buffer indicator. Its
+unsaved contents should be:
 
 ```lua
 -- local function total(items)
@@ -37,7 +38,4 @@ Run these command steps:
 2. gf
 3. gg0gc4j
 4. /print<CR>Vgc
-5. <C-s>
-6. <leader>wd
 ```
-
