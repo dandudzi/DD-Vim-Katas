@@ -9,14 +9,12 @@ boundaries.
 
 Open a scratch buffer and insert:
 
-```text
 const count = 0;
 const counter = new Counter();
 const countItems = (list) => list.length;
 const recount = () => counter.reset();
 const accounting = getAccounting();
 logEvent("count_updated", { count });
-```
 
 Start in Normal mode on line 1, column 7, on the `c` in `count`.
 
