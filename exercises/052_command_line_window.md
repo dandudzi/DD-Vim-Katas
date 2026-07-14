@@ -9,11 +9,9 @@ an old entry, and running it again.
 
 Open a scratch buffer and insert:
 
-```text
 The quick brown fox jumps over the lazy dog.
 The quick red fox jumps over the sleepy dog.
 The slow brown cat crawls under the lazy dog.
-```
 
 Start in Normal mode on line 1, column 1.
 
