@@ -6,17 +6,12 @@ Practice finding an Ex command without typing command-line completion syntax.
 
 ## Start
 
-Open a scratch buffer and insert:
-
-```text
-command discovery
-```
-
-Start in Normal mode on the `c` in line 1.
+Start in Normal mode in LazyVim. The cursor position does not matter.
 
 ## End
 
-The buffer should remain unchanged after confirming that `colorscheme` appears in the command picker.
+The command picker should be closed after confirming that `colorscheme`
+appears in it.
 
 ## Commands
 
@@ -27,4 +22,3 @@ Run these command steps:
 2. colorscheme
 3. <Esc>
 ```
-

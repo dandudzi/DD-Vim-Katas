@@ -6,21 +6,12 @@ Practice creating, navigating, resizing, and closing split windows with LazyVim 
 
 ## Start
 
-Open a scratch buffer and insert:
-
-```text
-split practice
-```
-
-Start in Normal mode on the `s` in line 1 with one window open.
+Start in Normal mode in any buffer with one window open. The cursor position
+does not matter.
 
 ## End
 
-Only one window should remain, and the buffer should still contain:
-
-```text
-split practice
-```
+Only one window should remain.
 
 ## Commands
 
@@ -36,4 +27,3 @@ Run these command steps:
 7. 8<C-w>_
 8. <C-w>o
 ```
-

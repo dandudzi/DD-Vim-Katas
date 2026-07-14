@@ -6,7 +6,7 @@ Practice searching Vim help and sending the matching topics to the quickfix list
 
 ## Start
 
-Open an empty scratch buffer. Start in Normal mode at line 1, column 1.
+Start in Normal mode in LazyVim. The cursor position does not matter.
 
 ## End
 

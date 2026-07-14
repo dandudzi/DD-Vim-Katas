@@ -6,13 +6,7 @@ Practice opening the LazyVim Snacks terminal and returning to Normal mode.
 
 ## Start
 
-Open a scratch buffer and insert:
-
-```text
-snacks terminal check
-```
-
-Start in Normal mode on the first line.
+Start in Normal mode in LazyVim. The cursor position does not matter.
 
 ## End
 

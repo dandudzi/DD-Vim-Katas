@@ -9,11 +9,13 @@
 
 ## Review Result
 
-The marked deletion and renumbering pass is complete.
+The fix, merge, deletion, and renumbering pass is complete.
 
-- Deleted this pass: 28 marked katas.
-- Remaining: 97 numbered katas.
-- Numbering: continuous from `001` through `097`.
+- Fixed this pass: 11 marked katas.
+- Merged this pass: 3 folding katas into 1.
+- Deleted this pass: 4 marked katas.
+- Remaining: 91 numbered katas.
+- Numbering: continuous from `001` through `091`.
 - Helper and practice filenames were not renumbered.
 
 ## To Delete
@@ -21,6 +23,10 @@ The marked deletion and renumbering pass is complete.
 None.
 
 ## To Fix
+
+None.
+
+## To Merge
 
 None.
 

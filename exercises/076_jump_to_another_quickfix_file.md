@@ -6,15 +6,8 @@ Practice navigating prepared quickfix entries across several files with LazyVim 
 
 ## Start
 
-Open a scratch buffer and insert:
-
-```text
-practice_153_alpha.txt
-practice_153_beta.txt
-practice_153_gamma.txt
-```
-
-Start in Normal mode on the `p` in line 1.
+Start in Normal mode anywhere in the project containing the
+`practice_153_*.txt` files. The cursor position does not matter.
 
 ## End
 
@@ -27,22 +20,11 @@ order. It should be visible, and the current buffer should be
 Run these command steps:
 
 ```text
-1. <leader>|
-2. gf
-3. <leader>wd
-4. j
-5. <leader>|
-6. gf
-7. <leader>wd
-8. j
-9. <leader>|
-10. gf
-11. <leader>wd
-12. <leader>sg
-13. TODO -- practice_153_*.txt
-14. <C-q>
-15. ]q
-16. ]q
-17. ]q
-18. ]q
+1. <leader>sg
+2. TODO -- practice_153_*.txt
+3. <C-q>
+4. ]q
+5. ]q
+6. ]q
+7. ]q
 ```
